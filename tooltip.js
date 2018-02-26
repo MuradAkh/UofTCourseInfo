@@ -4,6 +4,7 @@
  */
 $(document).ready(function () {
 
+    var data = [];
     function getTitle(code) {
         var res = "error";
         var xmlhttp = new XMLHttpRequest();
@@ -17,6 +18,7 @@ $(document).ready(function () {
         xmlhttp.open("GET", "https://cobalt.qas.im/api/1.0/courses/filter?q=code:%22" + code + "%22&key=bolBkU4DDtKmXbbr4j5b0m814s3RCcBm&limit=30", false);
         xmlhttp.send();
 
+        data[code] = res;
         return res;
 
 
@@ -104,38 +106,61 @@ $(document).ready(function () {
 
     }
 
-    $('.corInf').each(function () {
-        var info = getTitle($(this).data('title'));
-        try {
-            var a = info[0].name;
-        } catch (err) {
-            $(this).replaceWith($(this).data('title'));
-        }
+    function load() {
 
-        Tipped.create("." + this.id, function (element) {
-            var breadths = info[0].breadths;
-            if(breadths.length === 0){breadths = "N/A"}
 
-            return {
-                title: "" + info[0].name + "   [" + '<a href=' + getDepartment(info[0].department) + '>' + info[0].department + '</a>' + "]"
-                ,
-                content: (info[0].description + "<br /><br />" + " <b>Prerequisites:</b> " + info[0].prerequisites
-                    + "<br /><b>Exclusions:</b> " + info[0].exclusions
-                    + "<br /><b>Breadths:</b> " + breadths +"<br /><br />" + getOffers(info) +
-                    "<div style='float: right; text-align: right'>" +
-                    "<b><a href='https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme?hl=en'" +
-                    " >" +
-                    "UofT Course Info 2.0</a></b></div>")
+        $('.corInf').each(function () {
+            var title = $(this).data('title');
 
-            };
-        }, {
-            skin: 'light',
-            size: 'x-small',
-            maxWidth: 800,
-            background: '#1a0f9e'
+            var info = data[title];
+            if(info == null){info = getTitle(title)}
+
+            try {
+                var a = info[0].name;
+            } catch (err) {
+                $(this).replaceWith($(this).data('title'));
+            }
+
+            Tipped.create("." + this.id, function (element) {
+                var breadths = info[0].breadths;
+                if (breadths.length === 0) {
+                    breadths = "N/A"
+                }
+
+                return {
+                    title: "" + info[0].name + "   [" + '<a href=' + getDepartment(info[0].department) + '>' + info[0].department + '</a>' + "]"
+                    ,
+                    content: (info[0].description + "<br /><br />" + " <b>Prerequisites:</b> " + info[0].prerequisites
+                        + "<br /><b>Exclusions:</b> " + info[0].exclusions
+                        + "<br /><b>Breadths:</b> " + breadths + "<br /><br />" + getOffers(info) +
+                        "<div style='float: right; text-align: right'>" +
+                        "<b><a href='https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme?hl=en'" +
+                        " >" +
+                        "UofT Course Info 2.0</a></b></div>")
+
+                };
+            }, {
+                skin: 'light',
+                size: 'x-small',
+                maxWidth: 800,
+                background: '#1a0f9e'
+            });
+
+
         });
+    }
 
+    // console.log($(".corInf").length);
+    if($(".corInf").length < 100){
+        load();
+    }else{
+        $(".corInf").each(function () {
+            $(this).replaceWith($(this).data('title'));
 
-    });
+        });
+        alert("UofT Course Info: did not load the tooltips, too many courses mentioned. " +
+            "\n\n" +
+            "The current limit is 100, if you feel like it should be different, let me know in the webstore")
+    }
 
 });
