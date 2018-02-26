@@ -23,6 +23,6 @@
    "name": "UofT Course Info",
    "permissions": [ "activeTab", "*://*/*", "tabs", "storage" ],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "2.0.1",
+   "version": "2.1",
    "web_accessible_resources": ["tipped.css" ]
 }

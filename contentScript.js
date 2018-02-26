@@ -6,6 +6,7 @@
  */
 
 (function () {
+    var counter = 0;
     function allowed(){
         var str = window.location.hostname;
         return !(str.includes('google') || str.includes('youtube'));
@@ -38,6 +39,7 @@
                 'class="corInf $&" data-title = "$&" id = "$&">$&</span>');
 
             if (newHtml !== origText) {
+                counter++;
                 var newSpan = document.createElement('span');
                 newSpan.innerHTML = newHtml;
                 textNode.parentNode.replaceChild(newSpan, textNode);
