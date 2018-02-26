@@ -122,8 +122,10 @@ $(document).ready(function () {
                 content: (info[0].description + "<br /><br />" + " <b>Prerequisites:</b> " + info[0].prerequisites
                     + "<br /><b>Exclusions:</b> " + info[0].exclusions
                     + "<br /><b>Breadths:</b> " + breadths +"<br /><br />" + getOffers(info) +
-                    "<b><p align=\"right\"><a href='https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme?hl=en'>" +
-                    "UofT Course Info 2.0</a></p></b> " )
+                    "<div style='float: right; text-align: right'>" +
+                    "<b><a href='https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme?hl=en'" +
+                    " >" +
+                    "UofT Course Info 2.0</a></b></div>")
 
             };
         }, {
