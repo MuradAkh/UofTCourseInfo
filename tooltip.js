@@ -5,6 +5,7 @@
 $(document).ready(function () {
 
     var data = [];
+    var directory;
     function getTitle(code) {
         var res = "error";
         var xmlhttp = new XMLHttpRequest();
@@ -24,10 +25,34 @@ $(document).ready(function () {
 
     }
 
+    function getDirectory() {
+        var dir;
+        var xmlhttp = new XMLHttpRequest();
+
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                var myArr = JSON.parse(this.responseText);
+                dir = myArr;
+            }
+        };
+        xmlhttp.open("GET", chrome.runtime.getURL("directory.json"), false);
+        xmlhttp.send();
+        return dir;
+    }
+
     function getDepartment(key) {
-        key = key.replace(/ /g, "-");
-        key = "https://fas.calendar.utoronto.ca/section/" + key;
-        return key;
+        // console.log("ln" + directory.length);
+        // key = key.replace(/ /g, "-");
+        // key = "https://fas.calendar.utoronto.ca/section/" + key;
+        for(i = 0; i < directory.length; i++){
+            var name = directory[i].name.toString().toUpperCase();
+            key = key.toUpperCase();
+            if(name.startsWith(key)){
+                console.log(directory[i].url);
+                return directory[i].url;
+            }
+        }
+        return "https://www.utoronto.ca/a-to-z-directory";
 
     }
 
@@ -126,9 +151,10 @@ $(document).ready(function () {
                 if (breadths.length === 0) {
                     breadths = "N/A"
                 }
-
+                var dept =  getDepartment(info[0].department);
                 return {
-                    title: "" + info[0].name + "   [" + '<a href=' + getDepartment(info[0].department) + '>' + info[0].department + '</a>' + "]"
+
+                    title: "" + info[0].name + "   [" + '<a href="' + dept + '">' + info[0].department + '</a>' + "]"
                     ,
                     content: (info[0].description + "<br /><br />" + " <b>Prerequisites:</b> " + info[0].prerequisites
                         + "<br /><b>Exclusions:</b> " + info[0].exclusions
@@ -152,6 +178,7 @@ $(document).ready(function () {
 
     // console.log($(".corInf").length);
     if($(".corInf").length < 100){
+        directory = getDirectory();
         load();
     }else{
         $(".corInf").each(function () {
