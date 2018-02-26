@@ -12,7 +12,6 @@
 
     }
     function fix(match){
-        console.log(match);
         return match.substring(0,3) +  match.substring(4);
     }
 

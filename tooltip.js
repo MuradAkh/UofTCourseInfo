@@ -34,8 +34,30 @@ $(document).ready(function () {
 
     }
 
+
+    //taken from: https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript
+    function cleanArray(actual) {
+        var newArray = new Array();
+        for (var i = 0; i < actual.length; i++) {
+            if (actual[i]) {
+                newArray.push(actual[i]);
+            }
+        }
+        return newArray;
+    }
+
+    Array.prototype.unique = function() {
+        var a = [];
+        for ( i = 0; i < this.length; i++ ) {
+            var current = this[i];
+            if (a.indexOf(current) < 0) a.push(current);
+        }
+        return a;
+    };
+
     function getOffers(info) {
         var utsg = "", utsc = "", utm = "";
+        var profs = [];
         for (i = 0; i < info.length; i++) {
             if (!upToDate(info[i].term)) {
                 continue;
@@ -54,22 +76,31 @@ $(document).ready(function () {
                 utm = utm + "&nbsp;" + link;
             }
 
+            var meets = info[i].meeting_sections;
+            for (j = 0; j < meets.length; j++) {
+                var b = meets[j].instructors;
+                profs = profs.concat(b);
+            }
+
 
         }
 
         if (utsg === "") {
             utsg = "Currently not offered"
         }
-        else if (utsc === "") {
+        if (utsc === "") {
             utsc = "Currently not offered"
         }
-        else if (utm === "") {
+        if (utm === "") {
             utm = "Currently not offered"
         }
 
+        profs = profs.unique();
+        profs = cleanArray(profs);
+
         return "<b>UTSG:</b> " + utsg
             + "<br /><b>UTM:</b> " + utm
-            + "<br /><b>UTSC:</b> " + utsc
+            + "<br /><b>UTSC:</b> " + utsc + "<br /><br /><b>Instructors:</b> " + profs.join(", ")
 
     }
 
@@ -83,7 +114,7 @@ $(document).ready(function () {
 
         Tipped.create("." + this.id, function (element) {
             var breadths = info[0].breadths;
-            if(breadths === ""){breadths = "N/A"}
+            if(breadths.length === 0){breadths = "N/A"}
 
             return {
                 title: "" + info[0].name + "   [" + '<a href=' + getDepartment(info[0].department) + '>' + info[0].department + '</a>' + "]"
