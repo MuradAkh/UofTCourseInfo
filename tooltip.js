@@ -4,9 +4,42 @@
  */
 $(document).ready(function () {
 
+    var size;
+    var link;
+    var brr;
+    var prereq ;
+    var inst ;
+    var sess ;
+    var maxtt;
+    var descript;
+
+    chrome.storage.local.get({
+        size: 'medium',
+        link: 'website',
+        breadths: true,
+        prereq: true,
+        inst: true,
+        sess: true,
+        descript: true,
+        maxtt: 300
+
+    }, function (items) {
+        size = items.size;
+        console.log(size + "sy")
+        link = items.link;
+        brr = items.breadths;
+        prereq = items.prereq;
+        sess = items.sess;
+        maxtt = items.maxtt;
+        inst = items.inst;
+        descript = items.descript;
+        start();
+    });
+
+
     var data = [];
     var directory;
-    function getTitle(code) {
+    function getInfo(code) {
         var res = "error";
         var xmlhttp = new XMLHttpRequest();
 
@@ -41,18 +74,22 @@ $(document).ready(function () {
     }
 
     function getDepartment(key) {
-        // console.log("ln" + directory.length);
-        // key = key.replace(/ /g, "-");
-        // key = "https://fas.calendar.utoronto.ca/section/" + key;
-        for(i = 0; i < directory.length; i++){
-            var name = directory[i].name.toString().toUpperCase();
-            key = key.toUpperCase();
-            if(name.startsWith(key)){
-                console.log(directory[i].url);
-                return directory[i].url;
+        if(link === "artsci") {
+            console.log("ln" + directory.length);
+            key = key.replace(/ /g, "-");
+            return "https://fas.calendar.utoronto.ca/section/" + key;
+        }else {
+
+            for (i = 0; i < directory.length; i++) {
+                var name = directory[i].name.toString().toUpperCase();
+                key = key.toUpperCase();
+                if (name.startsWith(key)) {
+                    console.log(directory[i].url);
+                    return directory[i].url;
+                }
             }
+            return "https://www.utoronto.ca/a-to-z-directory";
         }
-        return "https://www.utoronto.ca/a-to-z-directory";
 
     }
 
@@ -125,9 +162,46 @@ $(document).ready(function () {
         profs = profs.unique();
         profs = cleanArray(profs);
 
-        return "<b>UTSG:</b> " + utsg
-            + "<br /><b>UTM:</b> " + utm
-            + "<br /><b>UTSC:</b> " + utsc + "<br /><br /><b>Instructors:</b> " + profs.join(", ")
+        var output = "";
+        if(sess){
+            output = output + "<b>UTSG:</b> " + utsg
+                + "<br /><b>UTM:</b> " + utm
+                + "<br /><b>UTSC:</b> " + utsc;
+        }
+        if(inst){
+            output = output + "<br /><br /><b>Instructors:</b> " + profs.join(", ");
+
+        }
+        return output;
+
+    }
+
+    function getContent(info){
+        var breadths = info[0].breadths;
+        if (breadths.length === 0) {
+            breadths = "N/A"
+        }
+
+        output = "";
+        if(descript){
+            output = output + info[0].description + "<br /><br />";
+        }
+        if(prereq){
+            output = output + " <b>Prerequisites:</b> " + info[0].prerequisites
+                + "<br /><b>Exclusions:</b> " + info[0].exclusions
+                + "<br />";
+        }
+        if(brr){
+            output = output +"<b>Breadths:</b> " + breadths + "<br /><br />"
+        }
+        return   output
+
+    }
+
+
+    function getTitle(info) {
+        var dept =  getDepartment(info[0].department);
+        return "" + info[0].name + "   [" + '<a href="' + dept + '">' + info[0].department + '</a>' + "]";
 
     }
 
@@ -137,8 +211,9 @@ $(document).ready(function () {
         $('.corInf').each(function () {
             var title = $(this).data('title');
 
+
             var info = data[title];
-            if(info == null){info = getTitle(title)}
+            if(info == null){info = getInfo(title)}
 
             try {
                 var a = info[0].name;
@@ -147,27 +222,22 @@ $(document).ready(function () {
             }
 
             Tipped.create("." + this.id, function (element) {
-                var breadths = info[0].breadths;
-                if (breadths.length === 0) {
-                    breadths = "N/A"
-                }
-                var dept =  getDepartment(info[0].department);
+
                 return {
 
-                    title: "" + info[0].name + "   [" + '<a href="' + dept + '">' + info[0].department + '</a>' + "]"
-                    ,
-                    content: (info[0].description + "<br /><br />" + " <b>Prerequisites:</b> " + info[0].prerequisites
-                        + "<br /><b>Exclusions:</b> " + info[0].exclusions
-                        + "<br /><b>Breadths:</b> " + breadths + "<br /><br />" + getOffers(info) +
+
+                    title: getTitle(info),
+
+                    content: (getContent(info) + getOffers(info) +
                         "<div style='float: right; text-align: right'>" +
-                        "<b><a href='https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme?hl=en'" +
+                        "<a href='chrome-extension://jcbiiafabmhjeiepopiiajnkjhcdieme/settings.html' " +
                         " >" +
-                        "UofT Course Info 2.0</a></b></div>")
+                        "Settings</a></div>")
 
                 };
             }, {
                 skin: 'light',
-                size: 'x-small',
+                size: size,
                 maxWidth: 800,
                 background: '#1a0f9e'
             });
@@ -176,18 +246,30 @@ $(document).ready(function () {
         });
     }
 
-    // console.log($(".corInf").length);
-    if($(".corInf").length < 100){
-        directory = getDirectory();
-        load();
-    }else{
-        $(".corInf").each(function () {
-            $(this).replaceWith($(this).data('title'));
+    function start() {
 
-        });
-        alert("UofT Course Info: did not load the tooltips, too many courses mentioned. " +
-            "\n\n" +
-            "The current limit is 100, if you feel like it should be different, let me know in the webstore")
+        var len = ($(".corInf").length);
+        if (len < maxtt) {
+            directory = getDirectory();
+            load();
+        } else {
+            console.log("UOFTCINFO  tags n " + len);
+            $(".corInf").each(function () {
+                $(this).replaceWith($(this).data('title'));
+
+            });
+            var warning = localStorage.warning || "true";
+            console.log(warning);
+            if (warning === "true") {
+                var show = confirm("UofT Course Info: did not load the tooltips, too many courses mentioned. " +
+                    "\n\n" +
+                    "The current limit is " + maxtt + ", you can now change it in the settings" +
+                    "\n\n Click 'Cancel' to never see this popup again");
+                localStorage.warning = show.toString();
+            }
+
+
+        }
     }
 
 });

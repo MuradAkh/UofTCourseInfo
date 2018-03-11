@@ -39,6 +39,8 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+    //chrome.tabs.executeScript(tab.id, {file: "purge.js"});
+
     if (changeInfo.status === 'complete') {
         if (currentState === "true") {
             chrome.browserAction.setIcon({path: 'true.png', tabId: tab.id});
@@ -50,10 +52,12 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
         //alert("is " + currentState);
         if (currentState === "true") {
+
             execute(tab);
         }
     }
 });
+
 
 function execute(tab) {
     chrome.tabs.executeScript(tab.id, {file: 'contentScript.js'});

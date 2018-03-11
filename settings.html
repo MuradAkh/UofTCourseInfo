@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+</head>
+<body style="font-size: larger; font-family: Arial, sans-serif; color: navy">
+
+<img height="64" src="icon128.png"><b style="font-size: 350%; color: #072fc4">   UofT Course Info</b>
+
+<br /><br /><br />
+
+<table style="width:50%">
+
+    <tr>
+        <td>Tooltip size</td>
+        <td>
+            <label>
+                <select id="size">
+                    <option value="x-small">X-Small</option>
+                    <option value="small">Small</option>
+                    <option value="medium">Medium</option>
+                    <option value="large">Large</option>
+                </select>
+            </label>
+        </td>
+    </tr>
+
+    <tr>
+        <td>Department Link</td>
+        <td>
+            <label>
+                <select id="link">
+                    <option value="website">Department Website</option>
+                    <option value="artsci">Arts and Science Calendar</option>
+                </select>
+            </label>
+        </td>
+    </tr>
+    <tr>
+        <td>Description</td>
+        <td><input id="description" type="checkbox"></td>
+    </tr>
+    <tr>
+        <td>Sessions</td>
+        <td><input id="sessions" type="checkbox"></td>
+    </tr>
+    <tr>
+        <td>Instructors</td>
+        <td><input id="instructors" type="checkbox"></td>
+    </tr>
+
+    <tr>
+        <td>Prerequisites and Exclusions</td>
+        <td><input id="prerequisites" type="checkbox"></td>
+    </tr>
+
+    <tr>
+        <td>Breadths</td>
+        <td><input id="breadths" type="checkbox"></td>
+    </tr>
+
+    <tr>
+        <td>Maximum tooltips per page</td>
+        <td><input id="maxtt" type="number"></td>
+    </tr>
+
+</table>
+<br />
+
+<button id="apply" style="border-color: navy; font-size: 110%; background-color: white; cursor: pointer">Apply settings</button>
+
+<br />
+<br />
+<br />
+
+<a style="color: magenta" href="https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme/reviews?hl=en">
+    Please rate and leave feedback on the webstore!
+</a>
+
+<br />
+
+
+<img src="true.png" > Developed by Murad Akhundov in 2017 - 2018.
+
+<script src="jquery-3.2.1.js"></script>
+<script src="settings.js"></script>
+</body>
+</body>
+</html>

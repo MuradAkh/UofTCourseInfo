@@ -19,7 +19,7 @@
 
     if (allowed()) {
         var match = new RegExp('\\b[A-Z][A-Z][A-Z][1-4a-d][0-9][0-9]', 'mgi');
-        var maymatch = new RegExp('\\b[A-Z][A-Z][A-Z]\\s[1-4a-d][0-9][0-9]', 'mgi');
+        var maymatch = new RegExp('\\b^(?!for)[A-Z][A-Z][A-Z]\\s[1-4a-d][0-9][0-9]', 'mgi');
 
         function handleTextNode(textNode) {
             if (textNode.nodeName !== '#text'
