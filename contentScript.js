@@ -7,17 +7,33 @@
 
 (function () {
     var counter = 0;
-    function allowed(){
-        var str = window.location.hostname;
-        return !(str.includes('google') || str.includes('youtube'));
 
+
+    chrome.storage.local.get({
+            illegal:''
+        }, function (items) {
+            var banned = (items.illegal.replace(/\s/g, '')).split(',');
+            var websites = ['google', 'youtube', 'piazza'].concat(banned);
+            var str = window.location.hostname;
+            for (var i in websites) {
+                if (str.includes(websites[i]) && websites[i] !== '') {
+                    console.log('included');
+                    return
+                }
+
+            }
+            execute()
+        }
+    );
+
+
+
+    function fix(match) {
+        return match.substring(0, 3) + match.substring(4);
     }
-    function fix(match){
-        return match.substring(0,3) +  match.substring(4);
-    }
 
 
-    if (allowed()) {
+    function execute() {
         var match = new RegExp('\\b[A-Z][A-Z][A-Z][1-4a-d][0-9][0-9]', 'mgi');
         var maymatch = new RegExp('\\b^(?!for)[A-Z][A-Z][A-Z]\\s[1-4a-d][0-9][0-9]', 'mgi');
 
@@ -31,8 +47,8 @@
             }
             var origText = textNode.textContent;
             match.lastIndex = 0;
-            maymatch.lastIndex =0;
-            var newHtml  = origText.replace(maymatch, fix);
+            maymatch.lastIndex = 0;
+            var newHtml = origText.replace(maymatch, fix);
             newHtml = newHtml.replace(match,
                 '<span style=" font-weight:normal;color:#000080;;border: 1px  #000080 double ;letter-spacing:1pt;' +
                 'word-spacing:2pt;font-size:12px;text-align:left;font-family:arial black, sans-serif;line-height:1; " ' +
@@ -60,6 +76,7 @@
         });
 
     }
+
 })();
 
 

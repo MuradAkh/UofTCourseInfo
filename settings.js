@@ -8,7 +8,8 @@ $(document).ready(function () {
         inst: true,
         sess: true,
         descript: true,
-        maxtt: 300
+        maxtt: 300,
+        illegal:''
 
     }, function (items) {
         $('#size').val(items.size);
@@ -19,12 +20,12 @@ $(document).ready(function () {
         $('#maxtt').val(items.maxtt);
         $('#instructors').prop('checked', items.inst);
         $('#description').prop('checked', items.descript);
+        $('#illegal').val(items.illegal);
     });
 
 
     $('#apply').click(function () {
 
-        console.log($('#size').val());
         chrome.storage.local.set({
             link: $('#link').val(),
             size: $('#size').val(),
@@ -33,7 +34,8 @@ $(document).ready(function () {
             inst: $('#instructors').prop('checked'),
             sess: $('#sessions').prop('checked'),
             maxtt: $('#maxtt').val(),
-            descript: $('#description').prop('checked')
+            descript: $('#description').prop('checked'),
+            illegal: $('#illegal').val()
 
 
         });
