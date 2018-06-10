@@ -232,7 +232,7 @@ $(document).ready(function () {
                         "<div style='float: right; text-align: right'>" +
                         "<a href='chrome-extension://jcbiiafabmhjeiepopiiajnkjhcdieme/settings.html' " +
                         " >" +
-                        "Settings</a></div>")
+                        "Configure & Explore</a></div>")
 
                 };
             }, {

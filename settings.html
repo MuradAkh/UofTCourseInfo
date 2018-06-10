@@ -3,15 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Settings</title>
+    <link rel="stylesheet" href="settings.css">
 </head>
 <body style="font-size: larger; font-family: Arial, sans-serif; color: navy">
 
-<img height="64" src="icon128.png"><b style="font-size: 350%; color: #072fc4">   UofT Course Info</b>
+<ul>
+    <li><a class="active" href="settings.html">Configure</a></li>
+    <li><a href="mapper/index.html">Course Mapper</a></li>
+    <li><a href="about.html">About</a></li>
+    <li style="float:right"><a href="https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme?hl=en">UofT Course Info</a></li>
 
-<br /><br /><br />
+</ul>
+
+<!--<img height="64" src="icon128.png"><b style="font-size: 350%; color: #072fc4">   UofT Course Info</b>-->
+
+<br />
 
 <table style="width:50%">
-
+    <tr>
+        <td>Highlight detected courses</td>
+        <td><input id="highlight" type="checkbox"></td>
+    </tr>
+    <tr><td><br /></td></tr>
     <tr>
         <td>Tooltip size</td>
         <td>
@@ -56,7 +69,8 @@
     </tr>
 
     <tr>
-        <td>Breadths</td>
+        <td>
+            Breadths</td>
         <td><input id="breadths" type="checkbox"></td>
     </tr>
 
@@ -83,17 +97,6 @@
 <button id="apply" style="border-color: navy; font-size: 110%; background-color: white; cursor: pointer">Apply settings</button>
 
 <br />
-<br />
-
-
-<a style="color: magenta" href="https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme/reviews?hl=en">
-    Please rate and leave feedback on the webstore!
-</a>
-
-<br />
-
-
-<img src="true.png" > Developed by Murad Akhundov in 2017 - 2018.
 
 <script src="jquery-3.2.1.js"></script>
 <script src="settings.js"></script>

@@ -18,7 +18,6 @@ chrome.browserAction.onClicked.addListener(function (tab) {
         );
 
 
-
     } else if (currentState === "false") {
         localStorage.currentState = "true";
         currentState = localStorage.currentState;

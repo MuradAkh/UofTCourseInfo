@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>UofT Course Mapper</title>
+    <link  href="style.css" rel="stylesheet">
+    <link  href="../settings.css" rel="stylesheet">
+    <link  href="vis.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<ul>
+    <li><a href="../settings.html">Configure</a></li>
+    <li><a href="index.html" class="active">Course Mapper</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li style="float:right"><a href="https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme?hl=en">UofT Course Info</a></li>
+</ul>
+<br />
+
+<div style="float: left; width: 60%" id="mynetwork"></div>
+
+<div style="float: right; width: 39%; font-family: Arial,serif">
+        <label for="courses">Parts of Course Codes</label>
+        <input title="split with commas, does not have to be a complete code. ex. CSC1, MAT223, HMB" type="text" id="courses"
+        placeholder="CSC1, CSC236, MAT, PHY15">
+
+        <button id="run">run</button>
+        <hr style="border-color: navy" noshade>
+
+        <br>
+        <label for="code"><b>Code: </b></label><p id="code"></p>
+        <label for="title"><b>Title: </b></label><p id="title"></p>
+        <label for="description"><b>Description: </b></label><p id="description"></p>
+        <label for="prerequisites"><b>Prerequisites: </b></label><p id="prerequisites"></p>
+        <label for="exclusions"><b>Exclusions: </b></label><p id="exclusions"></p>
+
+    <div style="position: absolute; bottom: 0; color:navy">
+        <p>Developed by Murad Akhundov in 2018. Licensed Under MIT License. <a href="https://github.com/MuradAkh/UofTCoursePlotter">Github</a></p>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+<script type="text/javascript" src="vis.min.js"></script>
+<script type="text/javascript" src="coursemap.js"></script>
+
+</body>
+
+
+</html>

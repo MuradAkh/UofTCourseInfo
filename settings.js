@@ -4,6 +4,7 @@ $(document).ready(function () {
         size: 'medium',
         link: 'website',
         breadths: true,
+        highlight: true,
         prereq: true,
         inst: true,
         sess: true,
@@ -15,6 +16,7 @@ $(document).ready(function () {
         $('#size').val(items.size);
         $('#link').val(items.link);
         $('#breadths').prop('checked', items.breadths);
+        $('#highlight').prop('checked', items.highlight);
         $('#prerequisites').prop('checked', items.prereq);
         $('#sessions').prop('checked', items.sess);
         $('#maxtt').val(items.maxtt);
@@ -30,6 +32,7 @@ $(document).ready(function () {
             link: $('#link').val(),
             size: $('#size').val(),
             breadths: $('#breadths').prop('checked'),
+            highlight: $('#highlight').prop('checked'),
             prereq: $('#prerequisites').prop('checked'),
             inst: $('#instructors').prop('checked'),
             sess: $('#sessions').prop('checked'),
