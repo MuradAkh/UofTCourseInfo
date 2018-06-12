@@ -25,7 +25,7 @@ $(document).ready(function () {
 
     }, function (items) {
         size = items.size;
-        console.log(size + "sy")
+        console.log(size + "sy");
         link = items.link;
         brr = items.breadths;
         prereq = items.prereq;
@@ -64,8 +64,7 @@ $(document).ready(function () {
 
         xmlhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                var myArr = JSON.parse(this.responseText);
-                dir = myArr;
+                dir = JSON.parse(this.responseText);
             }
         };
         xmlhttp.open("GET", chrome.runtime.getURL("directory.json"), false);
@@ -101,7 +100,7 @@ $(document).ready(function () {
 
     //taken from: https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript
     function cleanArray(actual) {
-        var newArray = new Array();
+        var newArray = [];
         for (var i = 0; i < actual.length; i++) {
             if (actual[i]) {
                 newArray.push(actual[i]);

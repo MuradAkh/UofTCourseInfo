@@ -25,5 +25,7 @@
    "update_url": "https://clients2.google.com/service/update2/crx",
    "version": "3",
    "options_page": "settings.html",
-   "web_accessible_resources": ["tipped.css", "directory.json", "settings.html"]
+   "web_accessible_resources": ["tipped.css", "directory.json", "settings.html"],
+   "content_security_policy": "script-src 'self' https://code.jquery.com https://ajax.googleapis.com https://cdnjs.cloudflare.com; object-src 'self'"
+
 }
