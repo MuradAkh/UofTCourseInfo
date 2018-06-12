@@ -4,7 +4,7 @@
    },
    "browser_action": {
       "default_icon": {
-         "32": "load.png"
+         "32": "images/load.png"
       },
       "default_title": "Click to Toggle"
    },
@@ -15,8 +15,8 @@
    } ],
    "description": "Adds informative tooltips to University of Toronto courses mentioned across the web",
    "icons": {
-      "128": "icon128.png",
-      "48": "icon48.png"
+      "128": "images/icon128.png",
+      "48": "images/icon48.png"
    },
    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4DfgytR+GzrCMqHW946oGojHg73K75sH2FUYEinr+Fn7VQkDPGZTOwc8uYzXBBamwv6x4XV1eoS17CkCS38S97bhyR0mPJ72On9HkOL1gb8RXKShwOdriDNh/AM/wLK4AEGYYRwutZBZBg3zOYl4dHpPS9Br+6iAs86J7t8Eqkvk1FMtpGrxEdPKca/oqo7+oIdIixIaq67Zn0/A09DcyJkQ+BXmtVeQWtDihTE7+5jpeTA5UHK4CDIqJ/IDupqcSWBUA0OK9XvpwRcOkrQvuZiOq0jiLjc3GdtbZYOX81+kYo7oLifXRTH1PATH9GV4Qh0qH9IzTPEevdIcJAAUpQIDAQAB",
    "manifest_version": 2,
@@ -24,7 +24,7 @@
    "permissions": [ "activeTab", "*://*/*", "tabs", "storage" ],
    "update_url": "https://clients2.google.com/service/update2/crx",
    "version": "3",
-   "options_page": "settings.html",
+   "options_page": "settings/settings.html",
    "web_accessible_resources": ["tipped/tipped.css", "directory.json", "settings.html"],
    "content_security_policy": "script-src 'self' https://code.jquery.com https://ajax.googleapis.com https://cdnjs.cloudflare.com; object-src 'self'"
 

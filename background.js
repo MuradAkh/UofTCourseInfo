@@ -11,7 +11,7 @@ chrome.browserAction.onClicked.addListener(function (tab) {
         chrome.tabs.query({}, function (tabs) {
                 for (var i = 0; i < tabs.length; i++) {
                     chrome.tabs.executeScript(tabs[i].id, {file: "purge.js"});
-                    chrome.browserAction.setIcon({path: 'false.png', tabId: tabs[i].id});
+                    chrome.browserAction.setIcon({path: 'images/false.png', tabId: tabs[i].id});
 
                 }
             }
@@ -24,7 +24,7 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             for (var i = 0; i < tabs.length; i++) {
-                chrome.browserAction.setIcon({path: 'true.png', tabId: tabs[i].id});
+                chrome.browserAction.setIcon({path: 'images/true.png', tabId: tabs[i].id});
                 execute(tabs[i]);
             }
         });
@@ -42,10 +42,10 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
     if (changeInfo.status === 'complete') {
         if (currentState === "true") {
-            chrome.browserAction.setIcon({path: 'true.png', tabId: tab.id});
+            chrome.browserAction.setIcon({path: 'images/true.png', tabId: tab.id});
 
         } else if (currentState === "false") {
-            chrome.browserAction.setIcon({path: 'false.png', tabId: tab.id});
+            chrome.browserAction.setIcon({path: 'images/false.png', tabId: tab.id});
 
         }
 
