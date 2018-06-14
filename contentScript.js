@@ -11,7 +11,7 @@
 
     chrome.storage.local.get({
             illegal:'',
-            highlight: true
+            highlight: false
         }, function (items) {
             var banned =[];
             if(items.illegal !== '') {

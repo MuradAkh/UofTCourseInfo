@@ -4,7 +4,7 @@ $(document).ready(function () {
         size: 'medium',
         link: 'website',
         breadths: true,
-        highlight: true,
+        highlight: false,
         prereq: true,
         inst: true,
         sess: true,

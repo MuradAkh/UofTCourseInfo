@@ -1,0 +1,64 @@
+.pic {
+    max-height: 300px;
+    float: left;
+    width: 18%
+}
+
+.amazon{
+    background-color: #ff9900;
+    font-family: Tahoma, Arial, serif;
+    text-decoration: none;
+    border: 4px solid #ff9900;
+    color: black !important;
+    font-size: larger;
+
+}
+
+.facebook{
+    background-color: #3B5998;
+    font-family: Officina Sans, Arial, serif;
+    text-decoration: none;
+    border: 4px solid #3B5998;
+    color: white !important;
+    font-size: larger;
+}
+
+.ebay{
+    background-color: #e53238;
+    font-family: Univers, Arial, serif;
+    text-decoration: none;
+    border: 4px solid #e53238;
+    color: white !important;
+    font-size: larger;
+
+}
+
+.google{
+    background-color: #34A853;
+    font-family: Helvetica, Arial, serif;
+    text-decoration: none;
+    border: 4px solid #34A853;
+    color: white !important;
+    font-size: larger;
+
+}
+
+#content {
+    font-family: Arial, serif; !important;
+    font-size: large; !important;
+    padding-left: 100px; !important;
+    padding-right: 100px; !important;
+}
+
+#search-books{
+    margin: 0 auto;
+    font-size: xx-large;
+    min-width: 40%;
+    text-align: center;
+
+}
+
+#book-cont{
+    text-align: center;
+}
+

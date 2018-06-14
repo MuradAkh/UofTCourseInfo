@@ -2,21 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <title>Textbooks</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="../settings/settings.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
-<body style="font-family: Arial,serif">
+<body>
 
-<span style="padding-left: 10%"><label for="course-books"> Search by course code </label><input id="course-books">
-<button id="run-course">search</button></span>
-<span style="float: right; padding-right: 10%"><label for="isbn-books"> Search by ISBN </label><input id="isbn-books">
-<button id="run-isbn">search</button></span>
+<ul>
+    <li><a href="../settings/settings.html">Configure</a></li>
+    <li><a href="../mapper/index.html">Course Mapper</a></li>
+    <li><a href="../textbooks/index.html" class="active">Textbooks</a></li>
+    <li><a href="../about.html">About</a></li>
+    <li style="float:right"><a href="https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme?hl=en">UofT Course Info</a></li>
+</ul>
+<br />
+
+<div id="content">
+<div id="book-cont"><input placeholder='Search for courses, book titles, or ISBN' id="search-books"></div>
 
 
 <hr style="border-color: navy" noshade>
 <div id="accordion"></div>
+</div>
 
 <script src="textbooks.js"></script>
 </body>
