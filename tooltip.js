@@ -229,11 +229,14 @@ $(document).ready(function () {
 
                     content: (getContent(info) + getOffers(info) +
                         "<div style='float: right; text-align: right'>" +
-                        "<a href='chrome-extension://jcbiiafabmhjeiepopiiajnkjhcdieme/settings.html' " +
-                        " >" +
-                        "Configure & Explore</a></div>")
+                        "<a target=\"_blank\" style='padding-right: 10px' href='chrome-extension://jcbiiafabmhjeiepopiiajnkjhcdieme/textbooks/index.html?filter?q=course_code:%22" + title +"%22'>"+title+" Textbooks</a>" +
+                        "<a target=\"_blank\" href='chrome-extension://jcbiiafabmhjeiepopiiajnkjhcdieme/settings/settings.html' \" +\n" +
+                        "                        \" >Configure & Explore</a></div>"
 
-                };
+
+                    )
+
+                };1
             }, {
                 skin: 'light',
                 size: size,

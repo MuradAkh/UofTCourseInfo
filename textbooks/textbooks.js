@@ -97,7 +97,7 @@ function addDbook(isbn){
         output += 'Not found <br/>';
     }else{
         if(discount[isbn]['new'] !== 'N/A'){
-            output += 'new: $' + discount[isbn]['new']
+            output += 'new: $' + discount[isbn]['new'] + '<br/>'
 
         }else
             output += '<br/>';
