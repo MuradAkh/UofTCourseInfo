@@ -1,3 +1,11 @@
+/* .nav-item {
+  transition: 0.3s;
+}
+
+.nav-item:hover {
+  background-color: #3172b7;
+} */
+
 .pic {
     max-height: 300px;
     float: left;
@@ -61,4 +69,3 @@
 #book-cont{
     text-align: center;
 }
-
