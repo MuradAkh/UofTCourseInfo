@@ -17,13 +17,11 @@
             if(items.illegal !== '') {
                 banned = (items.illegal.replace(/\s/g, '')).split(',');
             }
-            console.log(banned);
 
             var websites = ['google', 'youtube'].concat(banned);
             var str = window.location.hostname;
             for (var i in websites) {
                 if (str.includes(websites[i])) {
-                    console.log('included');
                     return
                 }
 
@@ -85,7 +83,6 @@
 
             textNodes.push(currentNode);
         }
-        console.log(textNodes);
 
         textNodes.forEach(function (el) {
             handleTextNode(el);

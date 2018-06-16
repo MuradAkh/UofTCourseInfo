@@ -10,7 +10,6 @@ document.getElementById('courses').addEventListener("keyup", function(event) {
 function execute() {
     let input = document.getElementById('courses').value;
     input = input.replace(/\s/g, '');
-    console.log(input);
     let courses = input.split(',');
     let courseMap = [];
 

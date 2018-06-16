@@ -25,7 +25,6 @@ $(document).ready(function () {
 
     }, function (items) {
         size = items.size;
-        console.log(size + "sy");
         link = items.link;
         brr = items.breadths;
         prereq = items.prereq;
@@ -74,7 +73,6 @@ $(document).ready(function () {
 
     function getDepartment(key) {
         if(link === "artsci") {
-            console.log("ln" + directory.length);
             key = key.replace(/ /g, "-");
             return "https://fas.calendar.utoronto.ca/section/" + key;
         }else {
@@ -83,7 +81,6 @@ $(document).ready(function () {
                 var name = directory[i].name.toString().toUpperCase();
                 key = key.toUpperCase();
                 if (name.startsWith(key)) {
-                    console.log(directory[i].url);
                     return directory[i].url;
                 }
             }
@@ -255,13 +252,11 @@ $(document).ready(function () {
             directory = getDirectory();
             load();
         } else {
-            console.log("UOFTCINFO  tags n " + len);
             $(".corInf").each(function () {
                 $(this).replaceWith($(this).data('title'));
 
             });
             var warning = localStorage.warning || "true";
-            console.log(warning);
             if (warning === "true") {
                 var show = confirm("UofT Course Info: did not load the tooltips, too many courses mentioned. " +
                     "\n\n" +
