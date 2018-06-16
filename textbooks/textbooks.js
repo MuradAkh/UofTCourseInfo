@@ -46,10 +46,7 @@ function fetcher(query) {
 
 
 function displayBooks(json) {
-    $('#accordion').accordion({
-        collapsible: true,
-        heightStyle: "content"
-    });
+
 
     json.forEach(function (item) {
         let courses ="Courses:";
@@ -69,9 +66,12 @@ function displayBooks(json) {
 
 
         let content = "<div style='float: right; width: 80%'>" + courses + '<br/><br/>' + bookstore + addDbook(item.isbn) + external + "</div>";
-        $('#accordion').append(title + "<div style='overflow: hidden'>" + image + content + "</div>")
+        $('#accordion').prepend(title + "<div style='overflow: hidden'>" + image + content + "</div>")
     });
-    $('#accordion').accordion("refresh");
+    $('#accordion').accordion({
+        collapsible: true,
+        heightStyle: "content"
+    });
 }
 
 
