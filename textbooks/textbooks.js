@@ -69,7 +69,7 @@ function displayBooks(json) {
 
 
         let content = "<div style='float: right; width: 80%'>" + courses + '<br/><br/>' + bookstore + addDbook(item.isbn) + external + "</div>";
-        $('#accordion').append(title + "<div>" + image + content + "</div>")
+        $('#accordion').append(title + "<div style='overflow: hidden'>" + image + content + "</div>")
     });
     $('#accordion').accordion("refresh");
 }

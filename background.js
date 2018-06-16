@@ -3,6 +3,22 @@
  * Murad Akhundov 2017
  */
 var currentState = localStorage.currentState || "true";
+var on = {
+    path: {
+        "128": "images/Acorn_128.png",
+        "48": "images/Acorn_48.png",
+        "16": "images/Acorn_16.png"
+    }
+};
+
+var off = {
+    path: {
+        "128": "images/Acorn_red_128.png",
+        "48": "images/Acorn_red_48.png",
+        "16": "images/Acorn_red_16.png"
+    }
+};
+
 
 chrome.browserAction.onClicked.addListener(function (tab) {
     if (currentState === "true") {
@@ -11,7 +27,7 @@ chrome.browserAction.onClicked.addListener(function (tab) {
         chrome.tabs.query({}, function (tabs) {
                 for (var i = 0; i < tabs.length; i++) {
                     chrome.tabs.executeScript(tabs[i].id, {file: "purge.js"});
-                    chrome.browserAction.setIcon({path: 'images/false.png', tabId: tabs[i].id});
+                    chrome.browserAction.setIcon(off);
 
                 }
             }
@@ -24,34 +40,19 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
             for (var i = 0; i < tabs.length; i++) {
-                chrome.browserAction.setIcon({path: 'images/true.png', tabId: tabs[i].id});
+                chrome.browserAction.setIcon(on);
                 execute(tabs[i]);
             }
         });
     }
 
 
-
-
 });
 
 
-
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-    //chrome.tabs.executeScript(tab.id, {file: "purge.js"});
-
     if (changeInfo.status === 'complete') {
         if (currentState === "true") {
-            chrome.browserAction.setIcon({path: 'images/true.png', tabId: tab.id});
-
-        } else if (currentState === "false") {
-            chrome.browserAction.setIcon({path: 'images/false.png', tabId: tab.id});
-
-        }
-
-        //alert("is " + currentState);
-        if (currentState === "true") {
-
             execute(tab);
         }
     }
