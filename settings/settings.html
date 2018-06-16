@@ -1,121 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <title>Settings</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-</head>
-<body>
+    <link rel="stylesheet" href="settings.css">
+  </head>
+  <body>
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #11245D">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link active" href="../settings/settings.html">Configure<span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../mapper/index.html">Course Mapper</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../textbooks/index.html">Textbooks</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../about.html">About</a>
-      </li>
-    </ul>
-    <!-- Right element -->
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme?hl=en">UofT Course Info</a>
-      </li>
-    </ul>
-  </nav>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #11245D">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="../settings/settings.html">Configure<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../mapper/index.html">Course Mapper</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../textbooks/index.html">Textbooks</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../about.html">About</a>
+        </li>
+      </ul>
+      <!-- Right element -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme?hl=en">UofT Course Info</a>
+        </li>
+      </ul>
+    </nav>
 
-<!--<img height="64" src="icon128.png"><b style="font-size: 350%; color: #072fc4">   UofT Course Info</b>-->
+    <br />
 
-<br />
+    <div class='container form-background' style="width: 50%">
+      <form>
+        <!-- Upper Section -->
+        <h3 class="settings-header">General</h3>
+        <hr />
+        <div class="form-group row">
+          <div class="col-8">Highlight Detected Courses</div>
+          <div class="col-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="highlight">
+              <label class="form-check-label" for="highlight"></label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="Num1" class="col-8 col-form-label">Max Tooltips per Page</label>
+          <div class="col-4">
+            <input class="form-control" type="number" value="300" id="Num1">
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-8">
+            <label for="illegal" class="col-form-label">Blocked Websites</label>
+          </div>
+          <div class="col-4">
+            <input class="form-control" type="text" id="illegal"/>
+            <small id="blockedHelp" class="form-text text-muted">Separate these by commas<br />ie. google.com, piazza.com</small>
+          </div>
+        </div>
+        <br />
 
-<table style="width:50%">
-    <tr>
-        <td>Highlight detected courses</td>
-        <td><input id="highlight" type="checkbox"></td>
-    </tr>
-    <tr><td><br /></td></tr>
-    <tr>
-        <td>Tooltip size</td>
-        <td>
-            <label>
-                <select id="size">
-                    <option value="x-small">X-Small</option>
-                    <option value="small">Small</option>
-                    <option value="medium">Medium</option>
-                    <option value="large">Large</option>
-                </select>
-            </label>
-        </td>
-    </tr>
+        <!-- Lower Section -->
+        <h3 class="settings-header">Tooltip</h3>
+        <hr />
+        <div class="form-group row">
+          <label for="link" class="col-8 col-form-label">Department Link</label>
+          <div class="col-4">
+            <div class="form-group">
+              <select class="custom-select" id="link" required>
+                <option value="website">Department Website</option>
+                <option value="artsci">Arts and Science Calendar</option>
+              </select>
+              <div class="invalid-feedback">Example invalid custom select feedback</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="size" class="col-8 col-form-label">Tooltip Size</label>
+          <div class="col-4">
+            <div class="form-group">
+              <select class="custom-select" id="size" selected="medium" required>
+                <option value="x-small">X-Small</option>
+                <option value="small">Small</option>
+                <option value="medium">Medium</option>
+                <option value="large">Large</option>
+              </select>
+              <div class="invalid-feedback">Example invalid custom select feedback</div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-8">Description</div>
+          <div class="col-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="description">
+              <label class="form-check-label" for="description"></label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-8">Sessions</div>
+          <div class="col-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="sessions">
+              <label class="form-check-label" for="sessions"></label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-8">Instructors</div>
+          <div class="col-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="instructors">
+              <label class="form-check-label" for="instructors"></label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-8">Prerequisites and Exclusions</div>
+          <div class="col-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="prerequisites">
+              <label class="form-check-label" for="prerequisites"></label>
+            </div>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-8">Breadths</div>
+          <div class="col-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="breadths">
+              <label class="form-check-label" for="breadths"></label>
+            </div>
+          </div>
+        </div>
+      </form>
+      <br />
 
-    <tr>
-        <td>Department Link</td>
-        <td>
-            <label>
-                <select id="link">
-                    <option value="website">Department Website</option>
-                    <option value="artsci">Arts and Science Calendar</option>
-                </select>
-            </label>
-        </td>
-    </tr>
-    <tr>
-        <td>Description</td>
-        <td><input id="description" type="checkbox"></td>
-    </tr>
-    <tr>
-        <td>Sessions</td>
-        <td><input id="sessions" type="checkbox"></td>
-    </tr>
-    <tr>
-        <td>Instructors</td>
-        <td><input id="instructors" type="checkbox"></td>
-    </tr>
+      <!-- Apply settings button -->
+      <div class='d-flex justify-content-center'>
+        <input id="apply" class="btn btn-primary" type="submit" value="Apply">
+      </div>
+    </div>
 
-    <tr>
-        <td>Prerequisites and Exclusions</td>
-        <td><input id="prerequisites" type="checkbox"></td>
-    </tr>
+    <!-- Process form -->
+    <script src="../jquery-3.2.1.js"></script>
+    <script src="settings.js"></script>
 
-    <tr>
-        <td>
-            Breadths</td>
-        <td><input id="breadths" type="checkbox"></td>
-    </tr>
-
-
-    <tr>
-        <td>Maximum tooltips per page</td>
-        <td><input id="maxtt" type="number"></td>
-    </tr>
-
-
-</table>
-<br />
-<p>
-    Block on these websites, put a comma between websites. <br/>
-    <span style="font-size: small; color: grey"> Example: google.com, piazza.com, portal.utoronto.ca </span>
-</p>
-<textarea cols="100" rows="1" id="illegal"></textarea>
-
-<br />
-<br />
-<br />
-
-
-<button id="apply" style="border-color: navy; font-size: 110%; background-color: white; cursor: pointer">Apply settings</button>
-
-<br />
-
-<script src="../jquery-3.2.1.js"></script>
-<script src="settings.js"></script>
-</body>
-</body>
+  </body>
 </html>
