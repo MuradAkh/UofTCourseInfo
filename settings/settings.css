@@ -1,0 +1,19 @@
+
+.form-background {
+  background-color: #f2f3f8;
+  border-radius: 5px;
+  padding: 25px;
+  font-family: 'Open Sans',sans-serif;
+}
+
+.settings-header {}
+/* Adjust aesthetics of the h3 elements in settings box. */
+
+.btn-primary {
+  background-color: #3172b7;
+  border: 0;
+}
+
+.btn-primary:hover {
+  background-color: #0E5BAC;
+}
