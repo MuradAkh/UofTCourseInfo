@@ -26,8 +26,8 @@ $(document).ready(function () {
     let url = window.location.href;
     let params = url.split('?');
     if (params.length === 3) {
-        displayBooks(fetcher(params[1] + '?' + params[2]));
-
+        let query = params[2].substring(params[2].indexOf('%') + 3, params[2].lastIndexOf('%'));
+        displayBooks(fetcher(params[1] + '?' + params[2]), query);
     }
 });
 
@@ -45,8 +45,11 @@ function fetcher(query) {
 }
 
 
-function displayBooks(json) {
+function displayBooks(json, query) {
 
+    if(json.length === 0){
+        $('#no_results').html('No results for <b>' + query + '</b>');
+    }
 
     json.forEach(function (item) {
         let courses ="Courses:";
