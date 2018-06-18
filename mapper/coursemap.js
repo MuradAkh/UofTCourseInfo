@@ -106,7 +106,7 @@ function execute() {
         },
         layout: {
             randomSeed: undefined,
-            improvedLayout: true
+            improvedLayout: true,
             hierarchical: {
                 enabled: true,
                 levelSeparation: 150,
@@ -116,7 +116,7 @@ function execute() {
                 edgeMinimization: true,
                 parentCentralization: false,
                 direction: 'LR',        // UD, DU, LR, RL
-                sortMethod: 'directed'   // hubsize, directed
+                sortMethod: 'hubsize'   // hubsize, directed
             }
         },
         physics: false
