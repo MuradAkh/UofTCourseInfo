@@ -26,7 +26,7 @@
    "name": "UofT Course Info",
    "permissions": [ "activeTab", "*://*/*", "tabs", "storage" ],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "3",
+   "version": "3.1",
    "options_page": "settings/settings.html",
    "web_accessible_resources": ["tipped/tipped.css", "directory.json", "settings/settings.html", "textbooks/index.html", "mapper/index.html"],
    "content_security_policy": "script-src 'self' https://code.jquery.com https://ajax.googleapis.com https://cdnjs.cloudflare.com; object-src 'self' https://code.jquery.com; style-src 'self' 'unsafe-inline' https://code.jquery.com https://maxcdn.bootstrapcdn.com"
