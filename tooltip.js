@@ -1,17 +1,22 @@
+'use-strict';
 /*Licensed under MIT  LICENSE
  * 
  * Murad Akhundov 2017
  */
 $(document).ready(function () {
 
-    var size;
-    var link;
-    var brr;
-    var prereq ;
-    var inst ;
-    var sess ;
-    var maxtt;
-    var descript;
+    let size;
+    let link;
+    let brr;
+    let prereq;
+    let inst;
+    let sess;
+    let maxtt;
+    let descript;
+
+    var data = [];
+    var directory;
+    let num = ($(".corInf").length);
 
     chrome.storage.local.get({
         size: 'medium',
@@ -36,23 +41,29 @@ $(document).ready(function () {
     });
 
 
-    var data = [];
-    var directory;
     function getInfo(code) {
-        var res = "error";
-        var xmlhttp = new XMLHttpRequest();
+        // var res = "error";
+        // var xmlhttp = new XMLHttpRequest();
+        //
+        // xmlhttp.onreadystatechange = function () {
+        //     if (this.readyState === 4 && this.status === 200) {
+        //         var myArr = JSON.parse(this.responseText);
+        //         res = myArr;
+        //     }
+        // };
+        // xmlhttp.open("GET", "https://cobalt.qas.im/api/1.0/courses/filter?q=code:%22" + code + "%22&key=bolBkU4DDtKmXbbr4j5b0m814s3RCcBm&limit=30", false);
+        // xmlhttp.send();
+        //
+        // data[code] = res;
+        $.ajax({
+            url: "https://cobalt.qas.im/api/1.0/courses/filter?q=code:%22" + code + "%22&key=bolBkU4DDtKmXbbr4j5b0m814s3RCcBm&limit=30",
+            success: function (response) {
+                data[code] = response;
+                load(code, response)
 
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-                var myArr = JSON.parse(this.responseText);
-                res = myArr;
             }
-        };
-        xmlhttp.open("GET", "https://cobalt.qas.im/api/1.0/courses/filter?q=code:%22" + code + "%22&key=bolBkU4DDtKmXbbr4j5b0m814s3RCcBm&limit=30", false);
-        xmlhttp.send();
-
-        data[code] = res;
-        return res;
+        });
+        // return res;
 
 
     }
@@ -72,10 +83,10 @@ $(document).ready(function () {
     }
 
     function getDepartment(key) {
-        if(link === "artsci") {
+        if (link === "artsci") {
             key = key.replace(/ /g, "-");
             return "https://fas.calendar.utoronto.ca/section/" + key;
-        }else {
+        } else {
 
             for (i = 0; i < directory.length; i++) {
                 var name = directory[i].name.toString().toUpperCase();
@@ -106,9 +117,9 @@ $(document).ready(function () {
         return newArray;
     }
 
-    Array.prototype.unique = function() {
+    Array.prototype.unique = function () {
         var a = [];
-        for ( i = 0; i < this.length; i++ ) {
+        for (i = 0; i < this.length; i++) {
             var current = this[i];
             if (a.indexOf(current) < 0) a.push(current);
         }
@@ -159,12 +170,12 @@ $(document).ready(function () {
         profs = cleanArray(profs);
 
         var output = "";
-        if(sess){
+        if (sess) {
             output = output + "<b>UTSG:</b> " + utsg
                 + "<br /><b>UTM:</b> " + utm
                 + "<br /><b>UTSC:</b> " + utsc;
         }
-        if(inst){
+        if (inst) {
             output = output + "<br /><br /><b>Instructors:</b> " + profs.join(", ");
 
         }
@@ -172,47 +183,51 @@ $(document).ready(function () {
 
     }
 
-    function getContent(info){
+    function getContent(info) {
         var breadths = info[0].breadths;
         if (breadths.length === 0) {
             breadths = "N/A"
         }
 
         output = "";
-        if(descript){
+        if (descript) {
             output = output + info[0].description + "<br /><br />";
         }
-        if(prereq){
+        if (prereq) {
             output = output + " <b>Prerequisites:</b> " + info[0].prerequisites
                 + "<br /><b>Exclusions:</b> " + info[0].exclusions
                 + "<br />";
         }
-        if(brr){
-            output = output +"<b>Breadths:</b> " + breadths + "<br /><br />"
+        if (brr) {
+            output = output + "<b>Breadths:</b> " + breadths + "<br /><br />"
         }
-        return   output
+        return output
 
     }
 
 
     function getTitle(info) {
-        var dept =  getDepartment(info[0].department);
+        var dept = getDepartment(info[0].department);
         return "" + info[0].name + "   [" + '<a href="' + dept + '">' + info[0].department + '</a>' + "]";
 
     }
 
-    function load() {
-
-
+    function cobaltCourses() {
         $('.corInf').each(function () {
-            var title = $(this).data('title');
+            let title = $(this).data('title');
+            let info = data[title];
+            if (info == null) {
+                getInfo(title)
+            }
+        })
+    }
 
-
-            var info = data[title];
-            if(info == null){info = getInfo(title)}
+    function load(code, info) {
+        $('.' + code).each(function () {
+            // if(info == null){info = getInfo(title)}
 
             try {
-                var a = info[0].name;
+                let a = info[0].name;
             } catch (err) {
                 $(this).replaceWith($(this).data('title'));
             }
@@ -220,20 +235,15 @@ $(document).ready(function () {
             Tipped.create("." + this.id, function (element) {
 
                 return {
-
-
                     title: getTitle(info),
-
                     content: (getContent(info) + getOffers(info) +
                         "<div style='float: right; text-align: right'>" +
-                        "<a target=\"_blank\" style='padding-right: 10px' href='chrome-extension://jcbiiafabmhjeiepopiiajnkjhcdieme/textbooks/index.html?filter?q=course_code:%22" + title +"%22'>"+title+" Textbooks</a>" +
+                        "<a target=\"_blank\" style='padding-right: 10px' href='chrome-extension://jcbiiafabmhjeiepopiiajnkjhcdieme/textbooks/index.html?filter?q=course_code:%22" + code + "%22'>" + code + " Textbooks</a>" +
                         "<a target=\"_blank\" href='chrome-extension://jcbiiafabmhjeiepopiiajnkjhcdieme/settings/settings.html' \" +\n" +
-                        "                        \" >Configure & Explore</a></div>"
+                        "                        \" >Configure & Explore</a></div>")
 
+                };
 
-                    )
-
-                };1
             }, {
                 skin: 'light',
                 size: size,
@@ -247,16 +257,15 @@ $(document).ready(function () {
 
     function start() {
 
-        var len = ($(".corInf").length);
-        if (len < maxtt) {
+        if (num < maxtt) {
             directory = getDirectory();
-            load();
+            cobaltCourses()
         } else {
             $(".corInf").each(function () {
                 $(this).replaceWith($(this).data('title'));
 
             });
-            var warning = localStorage.warning || "true";
+            let warning = localStorage.warning || "true";
             if (warning === "true") {
                 var show = confirm("UofT Course Info: did not load the tooltips, too many courses mentioned. " +
                     "\n\n" +
