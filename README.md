@@ -1,14 +1,7 @@
 # UofT Course Info
 
 
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/jcbiiafabmhjeiepopiiajnkjhcdieme.svg)](https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme)
-
-
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/users/jcbiiafabmhjeiepopiiajnkjhcdieme.svg)](https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme)
-
-
-
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/jcbiiafabmhjeiepopiiajnkjhcdieme.svg)](https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/stars/jcbiiafabmhjeiepopiiajnkjhcdieme.svg)](https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme) [![Chrome Web Store](https://img.shields.io/chrome-web-store/users/jcbiiafabmhjeiepopiiajnkjhcdieme.svg)](https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme) [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/jcbiiafabmhjeiepopiiajnkjhcdieme.svg)](https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme)
 
 
 Adds tooltips to University of Toronto (U of T) courses mentioned on any webpage. Tooltips contain course information such as prerequisites, exclusions, breadths etc. Data provided by Cobalt API
