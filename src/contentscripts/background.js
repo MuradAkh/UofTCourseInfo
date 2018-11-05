@@ -2,8 +2,8 @@
  * 
  * Murad Akhundov 2017
  */
-var currentState = localStorage.currentState || "true";
-var on = {
+let currentState = localStorage.currentState || "true";
+const on = {
     path: {
         "128": "images/Acorn_128.png",
         "48": "images/Acorn_48.png",
@@ -11,7 +11,7 @@ var on = {
     }
 };
 
-var off = {
+const off = {
     path: {
         "128": "images/Acorn_red_128.png",
         "48": "images/Acorn_red_48.png",
@@ -26,7 +26,7 @@ chrome.browserAction.onClicked.addListener(function (tab) {
         currentState = localStorage.currentState;
         chrome.tabs.query({}, function (tabs) {
                 for (var i = 0; i < tabs.length; i++) {
-                    chrome.tabs.executeScript(tabs[i].id, {file: "purge.js"});
+                    chrome.tabs.executeScript(tabs[i].id, {file: "src/contentscripts/purge.js"});
                     chrome.browserAction.setIcon(off);
 
                 }
@@ -39,7 +39,7 @@ chrome.browserAction.onClicked.addListener(function (tab) {
         currentState = localStorage.currentState;
 
         chrome.tabs.query({active: true, currentWindow: true}, function (tabs) {
-            for (var i = 0; i < tabs.length; i++) {
+            for (let i = 0; i < tabs.length; i++) {
                 chrome.browserAction.setIcon(on);
                 execute(tabs[i]);
             }
@@ -58,8 +58,9 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     }
 });
 
-
+console.log("back");
 function execute(tab) {
-    chrome.tabs.executeScript(tab.id, {file: 'contentScript.js'});
-    chrome.tabs.executeScript(tab.id, {file: 'tooltip.js'});
+    console.log("backex");
+    chrome.tabs.executeScript(tab.id, {file: 'src/contentscripts/contentScript.js'});
+    chrome.tabs.executeScript(tab.id, {file: 'src/contentscripts/tooltip.js'});
 }

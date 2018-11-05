@@ -39,8 +39,6 @@ $(document).ready(function () {
             maxtt: $('#maxtt').val(),
             descript: $('#description').prop('checked'),
             illegal: $('#illegal').val()
-
-
         });
 
         alert("UofT Course Info: Settings applied successfully");

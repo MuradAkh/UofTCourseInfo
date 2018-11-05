@@ -14,8 +14,8 @@ $(document).ready(function () {
     let maxtt;
     let descript;
 
-    var data = [];
-    var directory;
+    let data = [];
+    let directory;
     let num = ($(".corInf").length);
 
     chrome.storage.local.get({
@@ -42,19 +42,6 @@ $(document).ready(function () {
 
 
     function getInfo(code) {
-        // var res = "error";
-        // var xmlhttp = new XMLHttpRequest();
-        //
-        // xmlhttp.onreadystatechange = function () {
-        //     if (this.readyState === 4 && this.status === 200) {
-        //         var myArr = JSON.parse(this.responseText);
-        //         res = myArr;
-        //     }
-        // };
-        // xmlhttp.open("GET", "https://cobalt.qas.im/api/1.0/courses/filter?q=code:%22" + code + "%22&key=bolBkU4DDtKmXbbr4j5b0m814s3RCcBm&limit=30", false);
-        // xmlhttp.send();
-        //
-        // data[code] = res;
         $.ajax({
             url: "https://cobalt.qas.im/api/1.0/courses/filter?q=code:%22" + code + "%22&key=bolBkU4DDtKmXbbr4j5b0m814s3RCcBm&limit=30",
             success: function (response) {
@@ -69,15 +56,15 @@ $(document).ready(function () {
     }
 
     function getDirectory() {
-        var dir;
-        var xmlhttp = new XMLHttpRequest();
+        let dir;
+        const xmlhttp = new XMLHttpRequest();
 
         xmlhttp.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
                 dir = JSON.parse(this.responseText);
             }
         };
-        xmlhttp.open("GET", chrome.runtime.getURL("directory.json"), false);
+        xmlhttp.open("GET", chrome.runtime.getURL("../../data/directory.json"), false);
         xmlhttp.send();
         return dir;
     }
@@ -108,8 +95,8 @@ $(document).ready(function () {
 
     //taken from: https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript
     function cleanArray(actual) {
-        var newArray = [];
-        for (var i = 0; i < actual.length; i++) {
+        let newArray = [];
+        for (let i = 0; i < actual.length; i++) {
             if (actual[i]) {
                 newArray.push(actual[i]);
             }
@@ -189,7 +176,7 @@ $(document).ready(function () {
             breadths = "N/A"
         }
 
-        output = "";
+        let output = "";
         if (descript) {
             output = output + info[0].description + "<br /><br />";
         }
@@ -238,8 +225,8 @@ $(document).ready(function () {
                     title: getTitle(info),
                     content: (getContent(info) + getOffers(info) +
                         "<div style='float: right; text-align: right'>" +
-                        "<a target=\"_blank\" style='padding-right: 10px' href='chrome-extension://jcbiiafabmhjeiepopiiajnkjhcdieme/textbooks/index.html?filter?q=course_code:%22" + code + "%22'>" + code + " Textbooks</a>" +
-                        "<a target=\"_blank\" href='chrome-extension://jcbiiafabmhjeiepopiiajnkjhcdieme/settings/settings.html' \" +\n" +
+                        "<a target=\"_blank\" style='padding-right: 10px' href='http://murad-akh.ca/uoftbooks/cinfo/index.html?filter?q=course_code:%22" + code + "%22'>" + code + " Textbooks</a>" +
+                        "<a target=\"_blank\" href='chrome-extension://jcbiiafabmhjeiepopiiajnkjhcdieme/src/settings/settings.html' \" +\n" +
                         "                        \" >Configure & Explore</a></div>")
 
                 };
@@ -267,7 +254,7 @@ $(document).ready(function () {
             });
             let warning = localStorage.warning || "true";
             if (warning === "true") {
-                var show = confirm("UofT Course Info: did not load the tooltips, too many courses mentioned. " +
+                var show = confirm("UofT Course Info: did not load the contentscripts, too many courses mentioned. " +
                     "\n\n" +
                     "The current limit is " + maxtt + ", you can now change it in the settings" +
                     "\n\n Click 'Cancel' to never see this popup again");
