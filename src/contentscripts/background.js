@@ -45,8 +45,6 @@ chrome.browserAction.onClicked.addListener(function (tab) {
             }
         });
     }
-
-
 });
 
 
@@ -58,9 +56,13 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     }
 });
 
-console.log("back");
+
 function execute(tab) {
-    console.log("backex");
-    chrome.tabs.executeScript(tab.id, {file: 'src/contentscripts/contentScript.js'});
-    chrome.tabs.executeScript(tab.id, {file: 'src/contentscripts/tooltip.js'});
+    if(/.*google\....?\/search\?.*/.test(tab.url)){
+        chrome.tabs.executeScript(tab.id, 'src/contentscripts/google.js');
+    }else{
+        chrome.tabs.executeScript(tab.id, {file: 'src/contentscripts/contentScript.js'});
+        chrome.tabs.executeScript(tab.id, {file: 'src/contentscripts/tooltip.js'});
+    }
+
 }
