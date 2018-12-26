@@ -4,7 +4,10 @@
  * Murad Akhundov 2017
  */
 $(document).ready(function () {
+    generateTooltips();
+});
 
+function generateTooltips() {
     let size;
     let link;
     let brr;
@@ -247,5 +250,4 @@ $(document).ready(function () {
 
         }
     }
-
-});
+}

@@ -23,6 +23,8 @@ function getInfo(code) {
                 boot.append(card);
 
                 $("#topstuff").append(boot);
+
+                generateTooltips();
             }
         }
     });
@@ -97,14 +99,16 @@ function createOverview(parent, code, info) {
 }
 
 function createRequirements(parent, code, info) {
+    const format = new RegExp('[A-Z][A-Z][A-Z][1-4a-d][0-9][0-9]', 'mgi');
+
 
     let prerequisites = document.createElement("p");
     prerequisites.className = "card-text";
-    prerequisites.innerText = "Prerequisites: " + info.prerequisites;
+    prerequisites.innerHTML = "Prerequisites: " + info.prerequisites.replace(format, replace);
 
     let exclusions = document.createElement("p");
     exclusions.className = "card-text";
-    exclusions.innerText = "Exclusions: "+ info.exclusions;
+    exclusions.innerHTML = "Exclusions: "+ info.exclusions.replace(format, replace);
 
     parent.append(prerequisites);
     parent.append(exclusions);
