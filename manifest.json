@@ -12,7 +12,7 @@
    },
    "content_scripts": [ {
       "css": [ "lib/tipped/tipped.css", "lib/bootstrap/bootstrapcustom.min.css" ],
-      "js": [ "lib/jquery/jquery-3.2.1.js", "lib/tipped/tipped.js", "src/contentscripts/tooltip.js", "src/contentscripts/contentScript.js","src/contentscripts/google.js" ],
+      "js": [ "lib/jquery/jquery-3.2.1.js", "lib/tipped/tipped.js", "lib/bootstrap/bootstrap.bundle.js", "src/contentscripts/tooltip.js", "src/contentscripts/contentScript.js", "src/contentscripts/util.js","src/contentscripts/google.js" ],
       "matches": [ "\u003Call_urls>" ]
    } ],
    "description": "Adds informative tooltips to University of Toronto courses mentioned across the web",

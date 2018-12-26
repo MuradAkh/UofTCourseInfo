@@ -3,7 +3,7 @@ $(document).ready(function () {
     location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]});
 
     if(/[a-zA-Z]{3}\+?[1-4a-dA-D][0-9]{2}/.test(queryDict["oq"])){
-        getInfo(queryDict["oq"].replace("+", ""));
+        getInfo(queryDict["q"].replace("+", ""));
     }
 });
 
@@ -17,6 +17,8 @@ function getInfo(code) {
                 let boot = document.createElement("div");
                 boot.className = "bootstrapiso";
 
+                let crawled = crawlOfferings(response);
+                response[0]["crawled"] = crawled;
                 let card = createCard(code, response[0]);
                 boot.append(card);
 
@@ -25,9 +27,9 @@ function getInfo(code) {
         }
     });
     // return res;
-
-
 }
+
+
 
 function createHeader(code, name, department) {
     let header = document.createElement("div");
@@ -73,34 +75,7 @@ function createHeader(code, name, department) {
     return header;
 }
 
-
-function createCard(code, info) {
-    let card = document.createElement("div");
-    card.className = "card";
-    card.setAttribute("style", "margin-bottom: 15px;");
-
-    let body = document.createElement("div");
-    body.className = "card-body";
-
-    let description = document.createElement("p");
-    description.className = "card-text";
-    description.innerText = info.description;
-
-    let prerequisites = document.createElement("p");
-    prerequisites.className = "card-text";
-    prerequisites.innerText = "Prerequisites: " + info.prerequisites;
-
-    let exclusions = document.createElement("p");
-    exclusions.className = "card-text";
-    exclusions.innerText = "Exclusions: "+ info.exclusions;
-
-    let extension_label = document.createElement("div");
-    extension_label.className = "card-footer";
-
-    let extension_text = document.createElement("small");
-    extension_text.className = "text-muted";
-    extension_text.innerText = "Provided by UofT Course Info Extension. Not affiliated with University of Toronto or Google.";
-
+function createOverview(parent, code, info) {
     let textbooks = document.createElement("a");
     textbooks.className = "btn btn-primary";
     textbooks.setAttribute("href", "http://murad-akh.ca/uoftbooks/cinfo/index.html?filter?q=course_code:%22" + code + "%22");
@@ -112,16 +87,152 @@ function createCard(code, info) {
     exams.setAttribute("href", "https://exams-library-utoronto-ca.myaccess.library.utoronto.ca/simple-search?location=%2F&query=" + code );
     exams.innerText = "View Exams";
 
+    let description_element = document.createElement("p");
+    description_element.className = "card-text";
+    description_element.innerText = info.description;
 
-    body.append(description);
-    body.append(prerequisites);
-    body.append(exclusions);
-    body.append(textbooks);
-    body.append(exams);
+    parent.append(description_element);
+    parent.append(textbooks);
+    parent.append(exams);
+}
+
+function createRequirements(parent, code, info) {
+
+    let prerequisites = document.createElement("p");
+    prerequisites.className = "card-text";
+    prerequisites.innerText = "Prerequisites: " + info.prerequisites;
+
+    let exclusions = document.createElement("p");
+    exclusions.className = "card-text";
+    exclusions.innerText = "Exclusions: "+ info.exclusions;
+
+    parent.append(prerequisites);
+    parent.append(exclusions);
+}
+
+function createOfferings(parent, code, info) {
+    let utsg = document.createElement("p");
+    utsg.className = "card-text";
+    utsg.innerHTML = "UTSG: " + info.crawled.utsg;
+
+    let utsc = document.createElement("p");
+    utsc.className = "card-text";
+    utsc.innerHTML = "UTSC: " + info.crawled.utsc;
+
+    let utm = document.createElement("p");
+    utm.className = "card-text";
+    utm.innerHTML = "UTM: " + info.crawled.utm;
+
+    parent.append(utsg);
+    parent.append(utsc);
+    parent.append(utm);
+}
+
+function createInstructors(parent, code, info) {
+    let instructors = document.createElement("p");
+    instructors.className = "card-text";
+    instructors.innerText = info.crawled.profs.join(', ');
+
+    parent.append(instructors);
+
+}
+
+
+function createCard(code, info) {
+    let card = document.createElement("div");
+    card.className = "card";
+    card.setAttribute("style", "margin-bottom: 15px;");
+
+    let body = document.createElement("div");
+    body.className = "card-body";
+
+    let extension_label = document.createElement("div");
+    extension_label.className = "card-footer";
+
+    let extension_text = document.createElement("small");
+    extension_text.className = "text-muted";
+    extension_text.innerText = "Provided by UofT Course Info Extension. Not affiliated with University of Toronto or Google.";
+
+    let content = document.createElement("div");
+    content.className = "tab-content";
+
+    let first = true;
+    [
+        {n: "overview", f: createOverview},
+        {n: "requirements", f: createRequirements},
+        {n: "offerings", f: createOfferings},
+        {n: "instructors", f: createInstructors}
+
+        ].forEach(function (obj) {
+        let tab = document.createElement("div");
+        obj.f(tab, code, info);
+        let tab_class = "tab-pane";
+        if(first) tab_class += " show active";
+        tab.className = tab_class;
+        tab.setAttribute("aria-labelledby", obj.n + "-tab");
+        tab.setAttribute("id", obj.n);
+        tab.setAttribute("role", "tabpanel");
+        first = false;
+        content.append(tab);
+    });
+
+
     card.append(createHeader(code, info.name, info.department));
+    body.append(content);
     card.append(body);
     card.append(extension_label);
     extension_label.append(extension_text);
     return card;
 
+}
+
+
+function crawlOfferings(info) {
+    let utsg = "", utsc = "", utm = "";
+    let profs = [];
+    for (let i = 0; i < info.length; i++) {
+        // if (!upToDate(info[i].term)) {
+        //     continue;
+        // }
+        let link = "<a href='http://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId="
+            + info[i].id + "' >" + info[i].term + "; </a>";
+
+        let campus = info[i].campus;
+        if (campus === "UTSG") {
+            utsg = utsg + "&nbsp;" + link;
+        }
+        else if (campus === 'UTSC') {
+            utsc = utsc + "&nbsp;" + link;
+        }
+        else if (campus === 'UTM') {
+            utm = utm + "&nbsp;" + link;
+        }
+
+        let meets = info[i].meeting_sections;
+        for (let j = 0; j < meets.length; j++) {
+            let b = meets[j].instructors;
+            profs = profs.concat(b);
+        }
+    }
+
+    if (utsg === "") {
+        utsg = "Currently not offered"
+    }
+    if (utsc === "") {
+        utsc = "Currently not offered"
+    }
+    if (utm === "") {
+        utm = "Currently not offered"
+    }
+
+    profs = profs.unique();
+    profs = cleanArray(profs);
+
+    return {profs: profs, utsg: utsg, utsc: utsc, utm: utm};
+}
+
+function replace(match) {
+    return '<span class="corInf ' + match + '" data-title = "' + match + '" id = "' + match + '">' +
+        match
+        + '</span>';
 }

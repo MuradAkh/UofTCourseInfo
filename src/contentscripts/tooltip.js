@@ -87,23 +87,6 @@ $(document).ready(function () {
 
     }
 
-    function upToDate(str) {
-        return (str.includes("2018") || str.includes("2017 Fall"))
-
-    }
-
-
-    //taken from: https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript
-    function cleanArray(actual) {
-        let newArray = [];
-        for (let i = 0; i < actual.length; i++) {
-            if (actual[i]) {
-                newArray.push(actual[i]);
-            }
-        }
-        return newArray;
-    }
-
     Array.prototype.unique = function () {
         var a = [];
         for (i = 0; i < this.length; i++) {
