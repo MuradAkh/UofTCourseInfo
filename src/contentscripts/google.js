@@ -87,7 +87,7 @@ function createOverview(parent, code, info) {
     exams.className = "btn btn-primary";
     exams.setAttribute("style", "margin-left: 10px;");
     exams.setAttribute("href", "https://exams-library-utoronto-ca.myaccess.library.utoronto.ca/simple-search?location=%2F&query=" + code );
-    exams.innerText = "View Exams";
+    exams.innerText = "View Past Exams";
 
     let description_element = document.createElement("p");
     description_element.className = "card-text";

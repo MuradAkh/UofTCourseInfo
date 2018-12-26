@@ -106,7 +106,7 @@ function generateTooltips() {
             if (!upToDate(info[i].term)) {
                 continue;
             }
-            var link = "<a href='http://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId="
+            var link = "<a style='color: lightgrey' href='http://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId="
                 + info[i].id + "' >" + info[i].term + "</a>";
 
             var campus = info[i].campus;
@@ -181,7 +181,7 @@ function generateTooltips() {
 
     function getTitle(info) {
         var dept = getDepartment(info[0].department);
-        return "" + info[0].name + "   [" + '<a href="' + dept + '">' + info[0].department + '</a>' + "]";
+        return "" + info[0].name + "   [" + '<a style=\'color: lightgrey\' href="' + dept + '">' + info[0].department + '</a>' + "]";
 
     }
 
@@ -211,8 +211,8 @@ function generateTooltips() {
                     title: getTitle(info),
                     content: (getContent(info) + getOffers(info) +
                         "<div style='float: right; text-align: right'>" +
-                        "<a target=\"_blank\" style='padding-right: 10px' href='http://murad-akh.ca/uoftbooks/cinfo/index.html?filter?q=course_code:%22" + code + "%22'>" + code + " Textbooks</a>" +
-                        "<a target=\"_blank\" href='chrome-extension://jcbiiafabmhjeiepopiiajnkjhcdieme/src/settings/settings.html' \" +\n" +
+                        "<a target=\"_blank\" style='padding-right: 10px; color: lightgrey' href='http://murad-akh.ca/uoftbooks/cinfo/index.html?filter?q=course_code:%22" + code + "%22'>" + code + " Textbooks</a>" +
+                        "<a target=\"_blank\" style='color: lightgrey' href='chrome-extension://jcbiiafabmhjeiepopiiajnkjhcdieme/src/settings/settings.html' \" +\n" +
                         "                        \" >Configure & Explore</a></div>")
 
                 };
