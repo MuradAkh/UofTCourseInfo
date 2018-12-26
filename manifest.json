@@ -29,6 +29,6 @@
    "version": "4.0",
    "options_page": "src/settings/settings.html",
    "web_accessible_resources": ["lib/tipped/tipped.css", "data/directory.json", "src/settings/settings.html", "src/about/index.html"],
-   "content_security_policy": "script-src 'self' https://code.jquery.com https://ajax.googleapis.com https://cdnjs.cloudflare.com; object-src 'self' https://code.jquery.com; style-src 'self' 'unsafe-inline' https://code.jquery.com https://maxcdn.bootstrapcdn.com"
+   "content_security_policy": "script-src 'self' object-src 'self' style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com"
 
 }
