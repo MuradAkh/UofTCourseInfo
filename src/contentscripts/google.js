@@ -12,7 +12,7 @@ function getInfo(code) {
         url: "https://cobalt.qas.im/api/1.0/courses/filter?q=code:%22" + code + "%22&key=bolBkU4DDtKmXbbr4j5b0m814s3RCcBm&limit=30",
         success: function (response) {
             if(response.length > 0) {
-                $(".card-section").remove();
+                $(".card-section").parent().remove();
 
                 let boot = document.createElement("div");
                 boot.className = "bootstrapiso";
@@ -21,7 +21,6 @@ function getInfo(code) {
                 boot.append(card);
 
                 $("#topstuff").append(boot);
-                $("#topstuff").append('<br/>');
             }
         }
     });
@@ -30,21 +29,58 @@ function getInfo(code) {
 
 }
 
+function createHeader(code, name, department) {
+    let header = document.createElement("div");
+    header.className = "card-header";
+    // header.setAttribute("style", "background: navy;");
+
+    let card_title = document.createElement("h5");
+    card_title.className = "card-title";
+    card_title.innerText = code.toUpperCase() + ": " + name;
+
+    let subtitle = document.createElement("h6");
+    subtitle.className = "card-subtitle mb-2 text-muted";
+    subtitle.innerText = department;
+
+    let nav = document.createElement("ul");
+    nav.className = "nav nav-tabs card-header-tabs pull-right";
+    nav.setAttribute("role", "tablist");
+
+    let first = true;
+    ["Overview", "Requirements", "Instructors", "Offerings"].forEach(function (name) {
+       let row = document.createElement("li");
+       row.className = "nav-item";
+
+       let link = document.createElement("a");
+       link.innerText = name;
+       let link_class = "nav-link";
+       if(first) link_class += " active";
+       link.className = link_class;
+       link.setAttribute("id", name.toLowerCase() + "-tab");
+       link.setAttribute("data-toggle", "tab");
+       link.setAttribute("href", "#" + name.toLowerCase());
+       link.setAttribute("role", "tab");
+       link.setAttribute("aria-controls", name.toLowerCase());
+       link.setAttribute("aria-selected", first.toString());
+       first = false;
+       row.append(link);
+       nav.append(row);
+
+    });
+    header.append(card_title);
+    header.append(subtitle);
+    header.append(nav);
+    return header;
+}
+
 
 function createCard(code, info) {
     let card = document.createElement("div");
     card.className = "card";
+    card.setAttribute("style", "margin-bottom: 15px;");
 
-    let card_body = document.createElement("div");
-    card_body.className = "card-body";
-
-    let card_title = document.createElement("h5");
-    card_title.className = "card-title";
-    card_title.innerText = code.toUpperCase() + ": " + info.name;
-
-    let subtitle = document.createElement("h6");
-    subtitle.className = "card-subtitle mb-2 text-muted";
-    subtitle.innerText = info.department;
+    let body = document.createElement("div");
+    body.className = "card-body";
 
     let description = document.createElement("p");
     description.className = "card-text";
@@ -63,7 +99,7 @@ function createCard(code, info) {
 
     let extension_text = document.createElement("small");
     extension_text.className = "text-muted";
-    extension_text.innerText = "Provided by UofT Course Info Extension. Not affiliated with University of Toronto or Google";
+    extension_text.innerText = "Provided by UofT Course Info Extension. Not affiliated with University of Toronto or Google.";
 
     let textbooks = document.createElement("a");
     textbooks.className = "btn btn-primary";
@@ -77,15 +113,13 @@ function createCard(code, info) {
     exams.innerText = "View Exams";
 
 
-
-    card_body.append(card_title);
-    card_body.append(subtitle);
-    card_body.append(description);
-    card_body.append(prerequisites);
-    card_body.append(exclusions);
-    card_body.append(textbooks);
-    card_body.append(exams);
-    card.append(card_body);
+    body.append(description);
+    body.append(prerequisites);
+    body.append(exclusions);
+    body.append(textbooks);
+    body.append(exams);
+    card.append(createHeader(code, info.name, info.department));
+    card.append(body);
     card.append(extension_label);
     extension_label.append(extension_text);
     return card;
