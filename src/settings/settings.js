@@ -9,7 +9,7 @@ $(document).ready(function () {
         inst: true,
         sess: true,
         descript: true,
-        maxtt: 300,
+        maxtt: 1000,
         illegal:''
 
     }, function (items) {
