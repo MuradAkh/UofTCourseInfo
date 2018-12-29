@@ -1,34 +1,55 @@
 {
-   "background": {
-      "scripts": [ "lib/jquery/jquery-3.2.1.js", "lib/tipped/tipped.js", "src/contentscripts/background.js" ]
-   },
-   "browser_action": {
-      "default_icon": {
-         "128": "images/Acorn_128.png",
-         "48": "images/Acorn_48.png",
-         "16": "images/Acorn_16.png"
-      },
-      "default_title": "Click to Toggle"
-   },
-   "content_scripts": [ {
-      "css": [ "lib/tipped/tipped.css", "lib/bootstrap/bootstrapcustom.min.css" ],
-      "js": [ "lib/jquery/jquery-3.2.1.js", "lib/tipped/tipped.js", "lib/bootstrap/bootstrap.bundle.js", "src/contentscripts/tooltip.js", "src/contentscripts/contentScript.js", "src/contentscripts/util.js","src/contentscripts/google.js" ],
-      "matches": [ "\u003Call_urls>" ]
-   } ],
-   "description": "Adds informative tooltips to University of Toronto courses mentioned across the web",
-   "icons": {
+  "background": {
+    "scripts": [
+      "src/contentscripts/background.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": {
       "128": "images/Acorn_128.png",
       "48": "images/Acorn_48.png",
       "16": "images/Acorn_16.png"
-   },
-   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4DfgytR+GzrCMqHW946oGojHg73K75sH2FUYEinr+Fn7VQkDPGZTOwc8uYzXBBamwv6x4XV1eoS17CkCS38S97bhyR0mPJ72On9HkOL1gb8RXKShwOdriDNh/AM/wLK4AEGYYRwutZBZBg3zOYl4dHpPS9Br+6iAs86J7t8Eqkvk1FMtpGrxEdPKca/oqo7+oIdIixIaq67Zn0/A09DcyJkQ+BXmtVeQWtDihTE7+5jpeTA5UHK4CDIqJ/IDupqcSWBUA0OK9XvpwRcOkrQvuZiOq0jiLjc3GdtbZYOX81+kYo7oLifXRTH1PATH9GV4Qh0qH9IzTPEevdIcJAAUpQIDAQAB",
-   "manifest_version": 2,
-   "name": "UofT Course Info",
-   "permissions": [ "activeTab", "*://*/*", "tabs", "storage" ],
-   "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "4.0.2",
-   "options_page": "src/settings/settings.html",
-   "web_accessible_resources": ["lib/tipped/tipped.css", "data/directory.json", "src/settings/settings.html", "src/about/index.html"],
-   "content_security_policy": "script-src 'self' object-src 'self' style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com"
-
+    },
+    "default_title": "Click to Toggle"
+  },
+  "content_scripts": [
+    {
+      "css": [
+        "lib/tipped/tipped.css"
+      ],
+      "js": [
+        "lib/jquery/jquery-3.2.1.js",
+        "lib/tipped/tipped.js",
+        "src/contentscripts/util.js"
+      ],
+      "matches": [
+        "\u003Call_urls>"
+      ]
+    }
+  ],
+  "description": "Adds informative tooltips to University of Toronto courses mentioned across the web",
+  "icons": {
+    "128": "images/Acorn_128.png",
+    "48": "images/Acorn_48.png",
+    "16": "images/Acorn_16.png"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4DfgytR+GzrCMqHW946oGojHg73K75sH2FUYEinr+Fn7VQkDPGZTOwc8uYzXBBamwv6x4XV1eoS17CkCS38S97bhyR0mPJ72On9HkOL1gb8RXKShwOdriDNh/AM/wLK4AEGYYRwutZBZBg3zOYl4dHpPS9Br+6iAs86J7t8Eqkvk1FMtpGrxEdPKca/oqo7+oIdIixIaq67Zn0/A09DcyJkQ+BXmtVeQWtDihTE7+5jpeTA5UHK4CDIqJ/IDupqcSWBUA0OK9XvpwRcOkrQvuZiOq0jiLjc3GdtbZYOX81+kYo7oLifXRTH1PATH9GV4Qh0qH9IzTPEevdIcJAAUpQIDAQAB",
+  "manifest_version": 2,
+  "name": "UofT Course Info",
+  "permissions": [
+    "activeTab",
+    "*://*/*",
+    "tabs",
+    "storage"
+  ],
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "version": "4.1",
+  "options_page": "src/settings/settings.html",
+  "web_accessible_resources": [
+    "lib/tipped/tipped.css",
+    "data/directory.json",
+    "src/settings/settings.html",
+    "src/about/index.html"
+  ],
+  "content_security_policy": "script-src 'self' object-src 'self' style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com"
 }

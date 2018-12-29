@@ -25,7 +25,7 @@ chrome.browserAction.onClicked.addListener(function (tab) {
         localStorage.currentState = "false";
         currentState = localStorage.currentState;
         chrome.tabs.query({}, function (tabs) {
-                for (var i = 0; i < tabs.length; i++) {
+                for (let i = 0; i < tabs.length; i++) {
                     chrome.tabs.executeScript(tabs[i].id, {file: "src/contentscripts/purge.js"});
                     chrome.browserAction.setIcon(off);
 
@@ -50,6 +50,7 @@ chrome.browserAction.onClicked.addListener(function (tab) {
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     if (changeInfo.status === 'complete') {
+        gsearch(tab);
         if (currentState === "true") {
             execute(tab);
         }
@@ -58,11 +59,17 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
 
 function execute(tab) {
-    if(/.*google\....?\/search\?.*/.test(tab.url)){
-        chrome.tabs.executeScript(tab.id, 'src/contentscripts/google.js');
-    }else{
+    if (!/.*google\....?\/search\?.*/.test(tab.url)) {
         chrome.tabs.executeScript(tab.id, {file: 'src/contentscripts/contentScript.js'});
         chrome.tabs.executeScript(tab.id, {file: 'src/contentscripts/tooltip.js'});
     }
 
+}
+
+function gsearch(tab) {
+    if (/.*google\....?\/search\?.*/.test(tab.url)) {
+        chrome.tabs.insertCSS(tab.id, {file: 'lib/bootstrap/bootstrapcustom.min.css'});
+        chrome.tabs.executeScript(tab.id, {file: 'lib/bootstrap/bootstrap.bundle.js'});
+        chrome.tabs.executeScript(tab.id, {file: 'src/contentscripts/google.js'});
+    }
 }

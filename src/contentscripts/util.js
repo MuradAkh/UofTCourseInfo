@@ -17,3 +17,12 @@ function cleanArray(actual) {
     }
     return newArray;
 }
+
+Array.prototype.unique = function () {
+    let a = [];
+    for (let i = 0; i < this.length; i++) {
+        let current = this[i];
+        if (a.indexOf(current) < 0) a.push(current);
+    }
+    return a;
+};

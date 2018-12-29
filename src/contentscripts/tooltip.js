@@ -90,14 +90,6 @@ function generateTooltips() {
 
     }
 
-    Array.prototype.unique = function () {
-        var a = [];
-        for (i = 0; i < this.length; i++) {
-            var current = this[i];
-            if (a.indexOf(current) < 0) a.push(current);
-        }
-        return a;
-    };
 
     function getOffers(info) {
         var utsg = "", utsc = "", utm = "";
