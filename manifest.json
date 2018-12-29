@@ -26,7 +26,7 @@
    "name": "UofT Course Info",
    "permissions": [ "activeTab", "*://*/*", "tabs", "storage" ],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "4.0",
+   "version": "4.0.2",
    "options_page": "src/settings/settings.html",
    "web_accessible_resources": ["lib/tipped/tipped.css", "data/directory.json", "src/settings/settings.html", "src/about/index.html"],
    "content_security_policy": "script-src 'self' object-src 'self' style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com"

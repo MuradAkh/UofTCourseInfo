@@ -2,7 +2,7 @@ $(document).ready(function () {
     let queryDict = {};
     location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]});
 
-    if(/[a-zA-Z]{3}\+?[1-4a-dA-D][0-9]{2}/.test(queryDict["oq"])){
+    if(/[a-zA-Z]{3}\+?[1-4a-dA-D][0-9]{2}/.test(queryDict["q"])){
         getInfo(queryDict["q"].replace("+", ""));
     }
 });
@@ -66,6 +66,7 @@ function createHeader(code, name, department) {
        link.setAttribute("role", "tab");
        link.setAttribute("aria-controls", name.toLowerCase());
        link.setAttribute("aria-selected", first.toString());
+       link.setAttribute("style", "text-decoration: none !important;");
        first = false;
        row.append(link);
        nav.append(row);
@@ -101,7 +102,6 @@ function createOverview(parent, code, info) {
 function createRequirements(parent, code, info) {
     const format = new RegExp('[A-Z][A-Z][A-Z][1-4a-d][0-9][0-9]', 'mgi');
 
-
     let prerequisites = document.createElement("p");
     prerequisites.className = "card-text";
     prerequisites.innerHTML = "Prerequisites: " + info.prerequisites.replace(format, replace);
@@ -110,8 +110,13 @@ function createRequirements(parent, code, info) {
     exclusions.className = "card-text";
     exclusions.innerHTML = "Exclusions: "+ info.exclusions.replace(format, replace);
 
+    let breadths = document.createElement("p");
+    breadths.className = "card-text";
+    breadths.innerHTML = "Breadths: "+ info.breadths;
+
     parent.append(prerequisites);
     parent.append(exclusions);
+    parent.append(breadths);
 }
 
 function createOfferings(parent, code, info) {
