@@ -51,5 +51,5 @@
     "src/settings/settings.html",
     "src/about/index.html"
   ],
-  "content_security_policy": "script-src 'self' object-src 'self' style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com"
+  "content_security_policy": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline' https://maxcdn.bootstrapcdn.com"
 }

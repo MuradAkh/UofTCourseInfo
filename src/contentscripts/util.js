@@ -2,7 +2,7 @@ function upToDate(str) {
     let curr = new Date().getFullYear();
     let prev = curr - 1;
     let next = curr + 1;
-    return (str.includes(curr) || str.includes(prev)|| str.includes(next))
+    return (str.includes(curr) || str.includes(prev) || str.includes(next))
 
 }
 
@@ -26,3 +26,22 @@ Array.prototype.unique = function () {
     }
     return a;
 };
+
+function getSettingsUrl() {
+    return chrome.runtime.getURL(
+        "src/settings/settings.html"
+    )
+}
+
+function getTextbookUrl(code){
+    if (navigator.userAgent.search("Firefox") > -1) {
+        return 'http://murad-akh.ca/uoftbooks/index.html?filter?q=course_code:%22' + code + '%22';
+    } else {
+        return 'http://murad-akh.ca/uoftbooks/cinfo/index.html?filter?q=course_code:%22' + code + '%22';
+    }
+}
+
+
+
+
+

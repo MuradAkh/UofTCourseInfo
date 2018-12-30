@@ -79,7 +79,7 @@ function generateTooltips() {
         } else {
 
             for (i = 0; i < directory.length; i++) {
-                var name = directory[i].name.toString().toUpperCase();
+                let name = directory[i].name.toString().toUpperCase();
                 key = key.toUpperCase();
                 if (name.startsWith(key)) {
                     return directory[i].url;
@@ -92,7 +92,7 @@ function generateTooltips() {
 
 
     function getOffers(info) {
-        var utsg = "", utsc = "", utm = "";
+        let utsg = "", utsc = "", utm = "";
         var profs = [];
         for (i = 0; i < info.length; i++) {
             if (!upToDate(info[i].term)) {
@@ -197,15 +197,25 @@ function generateTooltips() {
                 $(this).replaceWith($(this).data('title'));
             }
 
+            let slink = document.createElement("a");
+            slink.setAttribute("style", "color: lightgrey");
+            slink.setAttribute("href", getSettingsUrl());
+            slink.innerText = "Configure Extension";
+
+            let tlink = document.createElement("a");
+            tlink.setAttribute("style", "color: lightgrey");
+            tlink.setAttribute("href", getTextbookUrl(code));
+            tlink.innerText = code.toUpperCase() + " Textbooks" ;
+
+
             Tipped.create("." + this.id, function (element) {
 
                 return {
                     title: getTitle(info),
                     content: (getContent(info) + getOffers(info) +
                         "<div style='float: right; text-align: right'>" +
-                        "<a target=\"_blank\" style='padding-right: 10px; color: lightgrey' href='http://murad-akh.ca/uoftbooks/cinfo/index.html?filter?q=course_code:%22" + code + "%22'>" + code + " Textbooks</a>" +
-                        "<a target=\"_blank\" style='color: lightgrey' href='chrome-extension://jcbiiafabmhjeiepopiiajnkjhcdieme/src/settings/settings.html' \" +\n" +
-                        "                        \" >Configure & Explore</a></div>")
+                        tlink.outerHTML + " " +
+                        slink.outerHTML + "</div>")
 
                 };
 
