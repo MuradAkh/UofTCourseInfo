@@ -69,7 +69,7 @@ function execute(tab) {
 function gsearch(tab) {
     if (/.*google\....?\/search\?.*/.test(tab.url)) {
         chrome.tabs.insertCSS(tab.id, {file: 'lib/bootstrap/bootstrapcustom.min.css'});
-        chrome.tabs.executeScript(tab.id, {file: 'lib/bootstrap/bootstrap.bundle.js'});
+        chrome.tabs.executeScript(tab.id, {file: 'lib/bootstrap/bootstrap.bundle.min.js'});
         chrome.tabs.executeScript(tab.id, {file: 'src/contentscripts/tooltip.js'});
         chrome.tabs.executeScript(tab.id, {file: 'src/contentscripts/google.js'});
     }
