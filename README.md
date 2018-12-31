@@ -24,4 +24,4 @@ Reddit user /u/mycrookedmouth - icon redesign
 Any external libraries included in the code are covered by their respective licenses. 
 Unless otherwise specified, any code included with the extension is covered by the MIT License.
 
-ANY FILES IN ./lib DIRECTORY ARE NOT COVERED BY THE PROJECT LICENSE
+ANY FILES IN ./dependencies DIRECTORY ARE NOT COVERED BY THE PROJECT LICENSE

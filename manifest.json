@@ -15,11 +15,11 @@
   "content_scripts": [
     {
       "css": [
-        "lib/tipped/tipped.css"
+        "dependencies/tipped/tipped.css"
       ],
       "js": [
-        "lib/jquery/jquery-3.2.1.js",
-        "lib/tipped/tipped.js",
+        "dependencies/jquery/jquery-3.2.1.js",
+        "dependencies/tipped/tipped.js",
         "src/contentscripts/util.js"
       ],
       "matches": [
@@ -46,7 +46,7 @@
   "version": "4.1",
   "options_page": "src/settings/settings.html",
   "web_accessible_resources": [
-    "lib/tipped/tipped.css",
+    "dependencies/tipped/tipped.css",
     "data/directory.json",
     "src/settings/settings.html",
     "src/about/index.html"
