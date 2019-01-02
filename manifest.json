@@ -10,7 +10,9 @@
       "48": "images/Acorn_48.png",
       "16": "images/Acorn_16.png"
     },
-    "default_title": "Click to Toggle"
+    "default_title": "UofT Course Info",
+    "default_popup":"src/popup/popup.html"
+
   },
   "content_scripts": [
     {

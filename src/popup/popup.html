@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>UofT Course Info</title>
+    <link rel="stylesheet" href="../../dependencies/bootstrap/bootstrapcustom.min.css">
+    <link rel="stylesheet" href="popup.css">
+
+</head>
+<body>
+<div class="bootstrapiso card">
+    <div class="card-header">
+        <h5 class="card-title" id="title"><img id="icon" src="../../images/Acorn_128.png" alt=""><b> UofT Course
+            Info</b></h5>
+    </div>
+    <div class="card-body">
+
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="all-dom">
+            <label class="custom-control-label" for="all-dom">Enable Tooltips on all domains</label>
+        </div>
+        <br/>
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="this-dom">
+            <label class="custom-control-label" for="this-dom">Enable Tooltips on <b
+                    id="curr-domain"></b></label>
+        </div>
+
+
+    </div>
+    <div class="card-footer">
+        <a target="_blank" id="settings-link" href="../settings/settings.html" class="card-link">Extension
+            Settings</a>
+    </div>
+</div>
+
+<script src="../../dependencies/jquery/jquery-3.2.1.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+html{
+    min-width: 250px;
+}
+
+#icon{
+    max-height: 20px;
+}
+
+#title{
+    color: #11245D; !important;
+}
