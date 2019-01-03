@@ -7,6 +7,9 @@ $(document).ready(function () {
     generateTooltips();
 });
 
+/** Generate Tooltips for previously labeled course codes
+ *
+ */
 function generateTooltips() {
     // let S_SIZE;
     let S_LINK;
@@ -43,7 +46,10 @@ function generateTooltips() {
         start();
     });
 
-
+    /**
+     *
+     * @param code
+     */
     function getInfo(code) {
         $.ajax({
             url: "https://cobalt.qas.im/api/1.0/courses/filter?q=code:%22" + code + "%22&key=bolBkU4DDtKmXbbr4j5b0m814s3RCcBm&limit=30",
@@ -102,6 +108,11 @@ function generateTooltips() {
 
     }
 
+    /** extract the details: breadths, prereqs, exclusions
+     *
+     * @param info
+     * @returns {string}
+     */
     function getDetails(info) {
         let breadths = info[0].breadths;
         if (breadths.length === 0) {
@@ -121,7 +132,11 @@ function generateTooltips() {
 
     }
 
-
+    /** Get the title bar string
+     *
+     * @param info
+     * @returns {string}
+     */
     function getTitle(info) {
         let dept = getDepartment(info[0].department);
         let deptlink = document.createElement("a");
@@ -135,6 +150,9 @@ function generateTooltips() {
 
     }
 
+    /** Request each course code from cobalt
+     *  If previously requested, return it from the hashmap
+     */
     function cobaltCourses() {
         $('.corInf').each(function () {
             let title = $(this).data('title');
@@ -145,16 +163,19 @@ function generateTooltips() {
         })
     }
 
+    /** Load each tooltip as cobalt responds
+     *  called asynchronously
+     *
+     * @param code a course code (original fetch)
+     * @param info array fetched from cobalt
+     */
     function load(code, info) {
         $('.' + code).each(function () {
-
             try {
                 let a = info[0].name;
             } catch (err) {
                 $(this).replaceWith($(this).data('title'));
             }
-
-
             tippy("." + this.id, {
                 content: buildPopover(code, info),
                 arrow: true,
@@ -168,6 +189,9 @@ function generateTooltips() {
         });
     }
 
+    /** Begin Making Tooltips
+     *  Executed once storage is fetched
+     */
     function start() {
 
         if (num < S_MAXT) {
@@ -191,7 +215,12 @@ function generateTooltips() {
         }
     }
 
-
+    /** Builds a tooltip/popover card with all the info
+     *
+     * @param code original course code
+     * @param info array of fetched courses from cobalt
+     * @returns {string} popover card HTML
+     */
     function buildPopover(code, info) {
 
         let crawled = crawlOfferings(info);
