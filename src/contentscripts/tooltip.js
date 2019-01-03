@@ -8,7 +8,7 @@ $(document).ready(function () {
 });
 
 function generateTooltips() {
-    let S_SIZE;
+    // let S_SIZE;
     let S_LINK;
     let S_BREADTH;
     let S_PREEXL;
@@ -22,7 +22,7 @@ function generateTooltips() {
     let num = ($(".corInf").length);
 
     chrome.storage.local.get({
-        size: 'medium',
+        // size: 'medium',
         link: 'website',
         breadths: true,
         prereq: true,
@@ -32,7 +32,7 @@ function generateTooltips() {
         maxtt: 300
 
     }, function (items) {
-        S_SIZE = items.size;
+        // S_SIZE = items.size;
         S_LINK = items.link;
         S_BREADTH = items.breadths;
         S_PREEXL = items.prereq;

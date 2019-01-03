@@ -25,7 +25,7 @@ $(document).ready(function () {
     }, function (items) {
         urloptions = items.urloptions;
         globoption = items.globoption;
-        if (globoption) $("#all-dom").click();
+        $("#all-dom").attr('checked', globoption);
         setURL();
     });
 
@@ -56,7 +56,7 @@ $(document).ready(function () {
         chrome.tabs.query({'active': true, 'currentWindow': true}, function (tabs) {
             url = (new URL(tabs[0].url)).hostname;
             $("#curr-domain").text(url);
-            if (urloptions[url] !== false) $("#this-dom").click();
+            $("#this-dom").attr('checked', urloptions[url] !== false);
         });
     }
 

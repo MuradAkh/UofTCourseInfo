@@ -1,28 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8">
     <title>Settings</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/dependencies/bootstrap/bootstrapcustom.min.css">
     <link rel="stylesheet" href="settings.css">
-  </head>
-  <body>
+</head>
+<body>
 
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #11245D">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #11245D">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link active" href="settings.html">Configure<span class="sr-only">(current)</span></a>
-      </li>
-      <!--<li class="nav-item">-->
-        <!--<a class="nav-link" href="../mapper/index.html">Course Mapper</a>-->
-      <!--</li>-->
-      <li class="nav-item">
-        <a class="nav-link" href="http://murad-akh.ca/uoftbooks/cinfo/">Textbooks</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="../about/index.html">About</a>
-      </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="settings.html">Configure<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="http://murad-akh.ca/uoftbooks/cinfo/">Textbooks</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="../about/index.html">About</a>
+        </li>
     </ul>
     <!-- Right element -->
     <ul class="navbar-nav ml-auto">
@@ -30,139 +28,137 @@
             <img style="max-height: 35px; padding-right: 10px" src="../../images/Acorn_white_128.png">
         </li>
         <li class="nav-item">
-            <a class="nav-link active" href="https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme?hl=en">UofT Course Info</a>
+            <a class="nav-link active"
+               href="https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme?hl=en">UofT
+                Course Info</a>
         </li>
     </ul>
-  </nav>
+</nav>
 
-    <br />
-
+<div class="bootstrapiso">
+    <br/>
     <div class='container form-background' style="width: 45%">
-      <form>
-        <!-- Upper Section -->
-        <h3 class="settings-header">General</h3>
-        <hr />
-        <div class="form-group row">
-          <div class="col-8">Highlight Detected Courses</div>
-          <div class="col-4">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="highlight">
-              <label class="form-check-label" for="highlight"></label>
+        <form>
+            <!-- Upper Section -->
+            <h3 class="settings-header">General</h3>
+            <hr/>
+            <div class="form-group row">
+                <div class="col-8">Highlight Detected Courses</div>
+                <div class="col-4">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="highlight">
+                        <label class="custom-control-label" for="highlight"></label>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-8">Google Search Info Cards</div>
-          <div class="col-4">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gsearch">
-              <label class="form-check-label" for="highlight"></label>
+            <div class="form-group row">
+                <div class="col-8">Google Search Info Cards</div>
+                <div class="col-4">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="gsearch">
+                        <label class="custom-control-label" for="gsearch"></label>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="maxtt" class="col-8 col-form-label">Max Tooltips per Page</label>
-          <div class="col-4">
-            <input class="form-control" type="number" value="300" id="maxtt">
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-8">
-            <label for="illegal" class="col-form-label">Blocked URL Keywords</label>
-          </div>
-          <div class="col-4">
-            <input class="form-control" type="text" id="illegal"/>
-            <small id="blockedHelp" class="form-text text-muted">Separate these by commas<br />ie. google.com, piazza.com</small>
-          </div>
-        </div>
-        <br />
+            <div class="form-group row">
+                <label for="maxtt" class="col-8 col-form-label">Max Tooltips per Page</label>
+                <div class="col-4">
+                    <input class="form-control" type="number" value="300" id="maxtt">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-8">
+                    <label for="illegal" class="col-form-label">Blocked URL Keywords</label>
+                </div>
+                <div class="col-4">
+                    <input class="form-control" type="text" id="illegal"/>
+                    <small id="blockedHelp" class="form-text text-muted">Separate these by commas<br/>ie. google.com,
+                        piazza.com
+                    </small>
+                </div>
+            </div>
+            <br/>
 
-        <!-- Lower Section -->
-        <h3 class="settings-header">Tooltip</h3>
-        <hr />
-        <div class="form-group row">
-          <label for="link" class="col-8 col-form-label">Department Link</label>
-          <div class="col-4">
-            <div class="form-group">
-              <select class="custom-select" id="link" required>
-                <option value="website">Department Website</option>
-                <option value="artsci">Arts and Science Calendar</option>
-              </select>
-              <div class="invalid-feedback">Example invalid custom select feedback</div>
+            <!-- Lower Section -->
+            <h3 class="settings-header">Tooltip</h3>
+            <hr/>
+            <div class="form-group row">
+                <label for="link" class="col-8 col-form-label">Department Link</label>
+                <div class="col-4">
+                    <div class="form-group">
+                        <select class="custom-select" id="link" required>
+                            <option value="website">Department Website</option>
+                            <option value="artsci">Arts and Science Calendar</option>
+                        </select>
+                        <div class="invalid-feedback">Example invalid custom select feedback</div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="size" class="col-8 col-form-label">Tooltip Size</label>
-          <div class="col-4">
-            <div class="form-group">
-              <select class="custom-select" id="size" selected="medium" required>
-                <option value="x-small">X-Small</option>
-                <option value="small">Small</option>
-                <option value="medium">Medium</option>
-                <option value="large">Large</option>
-              </select>
-              <div class="invalid-feedback">Example invalid custom select feedback</div>
+            <!--<div class="form-group row">-->
+                <!--<label for="size" class="col-8 col-form-label">Tooltip Size</label>-->
+                <!--<div class="col-4">-->
+                    <!--<div class="form-group">-->
+                        <!--<select class="custom-select" id="size" selected="medium" required>-->
+                            <!--<option value="x-small">X-Small</option>-->
+                            <!--<option value="small">Small</option>-->
+                            <!--<option value="medium">Medium</option>-->
+                            <!--<option value="large">Large</option>-->
+                        <!--</select>-->
+                        <!--<div class="invalid-feedback">Example invalid custom select feedback</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="form-group row">
+                <div class="col-8">Description</div>
+                <div class="col-4">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="description">
+                        <label class="custom-control-label" for="description"></label>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-8">Description</div>
-          <div class="col-4">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="description">
-              <label class="form-check-label" for="description"></label>
+            <div class="form-group row">
+                <div class="col-8">Sessions</div>
+                <div class="col-4">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="sessions">
+                        <label class="custom-control-label" for="sessions"></label>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-8">Sessions</div>
-          <div class="col-4">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="sessions">
-              <label class="form-check-label" for="sessions"></label>
+            <div class="form-group row">
+                <div class="col-8">Instructors</div>
+                <div class="col-4">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="instructors">
+                        <label class="custom-control-label" for="instructors"></label>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-8">Instructors</div>
-          <div class="col-4">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="instructors">
-              <label class="form-check-label" for="instructors"></label>
+            <div class="form-group row">
+                <div class="col-8">Prerequisites and Exclusions</div>
+                <div class="col-4">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="prerequisites">
+                        <label class="custom-control-label" for="prerequisites"></label>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-8">Prerequisites and Exclusions</div>
-          <div class="col-4">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="prerequisites">
-              <label class="form-check-label" for="prerequisites"></label>
+            <div class="form-group row">
+                <div class="col-8">Breadths</div>
+                <div class="col-4">
+                    <div class="custom-control custom-checkbox">
+                        <input class="custom-control-input" type="checkbox" id="breadths">
+                        <label class="custom-control-label" for="breadths"></label>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <div class="col-8">Breadths</div>
-          <div class="col-4">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="breadths">
-              <label class="form-check-label" for="breadths"></label>
-            </div>
-          </div>
-        </div>
-      </form>
-      <br />
-
-      <!-- Apply settings button -->
-      <div class='d-flex justify-content-center'>
-        <input id="apply" class="btn btn-primary" type="submit" value="Apply">
-      </div>
+        </form>
     </div>
+</div>
+<!-- Process form -->
+<script src="../../dependencies/jquery/jquery-3.2.1.js"></script>
+<script src="settings.js"></script>
 
-    <!-- Process form -->
-    <script src="../../dependencies/jquery/jquery-3.2.1.js"></script>
-    <script src="settings.js"></script>
-
-  </body>
+</body>
 </html>

@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     chrome.storage.local.get({
-        size: 'medium',
+        // size: 'medium',
         link: 'website',
         breadths: true,
         highlight: false,
@@ -14,7 +14,7 @@ $(document).ready(function () {
         illegal:''
 
     }, function (items) {
-        $('#size').val(items.size);
+        // $('#size').val(items.size);
         $('#link').val(items.link);
         $('#breadths').prop('checked', items.breadths);
         $('#highlight').prop('checked', items.highlight);
@@ -27,12 +27,24 @@ $(document).ready(function () {
         $('#illegal').val(items.illegal);
     });
 
+    $('input').change(function () {
+        apply();
+    });
 
-    $('#apply').click(function () {
+    $('select').change(function () {
+        apply();
+    });
 
+    // $('#apply').click(function () {
+    //     apply();
+    //
+    //     alert("UofT Course Info: Settings applied successfully");
+    // });
+
+    function apply() {
         chrome.storage.local.set({
             link: $('#link').val(),
-            size: $('#size').val(),
+            // size: $('#size').val(),
             breadths: $('#breadths').prop('checked'),
             highlight: $('#highlight').prop('checked'),
             prereq: $('#prerequisites').prop('checked'),
@@ -43,7 +55,5 @@ $(document).ready(function () {
             descript: $('#description').prop('checked'),
             illegal: $('#illegal').val()
         });
-
-        alert("UofT Course Info: Settings applied successfully");
-    })
+    }
 });
