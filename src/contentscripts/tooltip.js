@@ -1,6 +1,6 @@
 'use-strict';
 /*Licensed under MIT  LICENSE
- * 
+ *
  * Murad Akhundov 2017
  */
 $(document).ready(function () {
@@ -8,14 +8,14 @@ $(document).ready(function () {
 });
 
 function generateTooltips() {
-    let size;
-    let link;
-    let brr;
-    let prereq;
-    let inst;
-    let sess;
-    let maxtt;
-    let descript;
+    let S_SIZE;
+    let S_LINK;
+    let S_BREADTH;
+    let S_PREEXL;
+    let S_INST;
+    let S_OFFR;
+    let S_MAXT;
+    let S_DESRPT;
 
     let data = [];
     let directory;
@@ -32,14 +32,14 @@ function generateTooltips() {
         maxtt: 300
 
     }, function (items) {
-        size = items.size;
-        link = items.link;
-        brr = items.breadths;
-        prereq = items.prereq;
-        sess = items.sess;
-        maxtt = items.maxtt;
-        inst = items.inst;
-        descript = items.descript;
+        S_SIZE = items.size;
+        S_LINK = items.link;
+        S_BREADTH = items.breadths;
+        S_PREEXL = items.prereq;
+        S_OFFR = items.sess;
+        S_MAXT = items.maxtt;
+        S_INST = items.inst;
+        S_DESRPT = items.descript;
         start();
     });
 
@@ -73,12 +73,12 @@ function generateTooltips() {
     }
 
     function getDepartment(key) {
-        if (link === "artsci") {
+        if (S_LINK === "artsci") {
             key = key.replace(/ /g, "-");
             return "https://fas.calendar.utoronto.ca/section/" + key;
         } else {
 
-            for (i = 0; i < directory.length; i++) {
+            for (let i = 0; i < directory.length; i++) {
                 let name = directory[i].name.toString().toUpperCase();
                 key = key.toUpperCase();
                 if (name.startsWith(key)) {
@@ -91,80 +91,31 @@ function generateTooltips() {
     }
 
 
-    function getOffers(info) {
-        let utsg = "", utsc = "", utm = "";
-        var profs = [];
-        for (i = 0; i < info.length; i++) {
-            if (!upToDate(info[i].term)) {
-                continue;
-            }
-            var link = "<a style='color: lightgrey' href='http://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId="
-                + info[i].id + "' >" + info[i].term + "</a>";
+    function getOffers(utm, utsc, utsg) {
+        return "<b>UTSG:</b> " + utsg
+            + "<br /><b>UTM:</b> " + utm
+            + "<br /><b>UTSC:</b> " + utsc;
+    }
 
-            var campus = info[i].campus;
-            if (campus === "UTSG") {
-                utsg = utsg + "&nbsp;" + link;
-            }
-            else if (campus === 'UTSC') {
-                utsc = utsc + "&nbsp;" + link;
-            }
-            else if (campus === 'UTM') {
-                utm = utm + "&nbsp;" + link;
-            }
-
-            var meets = info[i].meeting_sections;
-            for (j = 0; j < meets.length; j++) {
-                var b = meets[j].instructors;
-                profs = profs.concat(b);
-            }
-
-
-        }
-
-        if (utsg === "") {
-            utsg = "Currently not offered"
-        }
-        if (utsc === "") {
-            utsc = "Currently not offered"
-        }
-        if (utm === "") {
-            utm = "Currently not offered"
-        }
-
-        profs = profs.unique();
-        profs = cleanArray(profs);
-
-        var output = "";
-        if (sess) {
-            output = output + "<b>UTSG:</b> " + utsg
-                + "<br /><b>UTM:</b> " + utm
-                + "<br /><b>UTSC:</b> " + utsc;
-        }
-        if (inst) {
-            output = output + "<br /><br /><b>Instructors:</b> " + profs.join(", ");
-
-        }
-        return output;
+    function getProfs(profs) {
+        return "<b>Instructors:</b> " + profs.join(", ");
 
     }
 
-    function getContent(info) {
-        var breadths = info[0].breadths;
+    function getDetails(info) {
+        let breadths = info[0].breadths;
         if (breadths.length === 0) {
             breadths = "N/A"
         }
 
         let output = "";
-        if (descript) {
-            output = output + info[0].description + "<br /><br />";
-        }
-        if (prereq) {
+        if (S_PREEXL) {
             output = output + " <b>Prerequisites:</b> " + info[0].prerequisites
                 + "<br /><b>Exclusions:</b> " + info[0].exclusions
                 + "<br />";
         }
-        if (brr) {
-            output = output + "<b>Breadths:</b> " + breadths + "<br /><br />"
+        if (S_BREADTH) {
+            output = output + "<b>Breadths:</b> " + breadths + "<br />"
         }
         return output
 
@@ -172,8 +123,15 @@ function generateTooltips() {
 
 
     function getTitle(info) {
-        var dept = getDepartment(info[0].department);
-        return "" + info[0].name + "   [" + '<a style=\'color: lightgrey\' href="' + dept + '">' + info[0].department + '</a>' + "]";
+        let dept = getDepartment(info[0].department);
+        let deptlink = document.createElement("a");
+        deptlink.setAttribute('href', dept);
+        deptlink.className = 'card-link';
+        deptlink.setAttribute('style', 'margin-left: 10px; float: right; color: lightgray; text-decoration: underline');
+        deptlink.innerHTML = '<b>' + info[0].department + '</b>';
+
+
+        return "" + info[0].name + deptlink.outerHTML;
 
     }
 
@@ -189,7 +147,6 @@ function generateTooltips() {
 
     function load(code, info) {
         $('.' + code).each(function () {
-            // if(info == null){info = getInfo(title)}
 
             try {
                 let a = info[0].name;
@@ -197,34 +154,15 @@ function generateTooltips() {
                 $(this).replaceWith($(this).data('title'));
             }
 
-            let slink = document.createElement("a");
-            slink.setAttribute("style", "color: lightgrey");
-            slink.setAttribute("href", getSettingsUrl());
-            slink.innerText = "Configure Extension";
 
-            let tlink = document.createElement("a");
-            tlink.setAttribute("style", "color: lightgrey");
-            tlink.setAttribute("href", getTextbookUrl(code));
-            tlink.innerText = code.toUpperCase() + " Textbooks" ;
-
-
-            Tipped.create("." + this.id, function (element) {
-
-                return {
-                    title: getTitle(info),
-                    content: (getContent(info) + getOffers(info) +
-                        "<div style='float: right; text-align: right'>" +
-                        tlink.outerHTML + " " +
-                        slink.outerHTML + "</div>")
-
-                };
-
-            }, {
-                skin: 'light',
-                size: size,
-                maxWidth: 800,
-                background: '#1a0f9e'
-            });
+            tippy("." + this.id, {
+                content: buildPopover(code, info),
+                arrow: true,
+                size: 'small',
+                theme: 'light',
+                interactive: 'true',
+                maxWidth: 700
+            })
 
 
         });
@@ -232,7 +170,7 @@ function generateTooltips() {
 
     function start() {
 
-        if (num < maxtt) {
+        if (num < S_MAXT) {
             directory = getDirectory();
             cobaltCourses()
         } else {
@@ -242,14 +180,79 @@ function generateTooltips() {
             });
             let warning = localStorage.warning || "true";
             if (warning === "true") {
-                var show = confirm("UofT Course Info: did not load the contentscripts, too many courses mentioned. " +
+                let show = confirm("UofT Course Info: did not load the contentscripts, too many courses mentioned. " +
                     "\n\n" +
-                    "The current limit is " + maxtt + ", you can now change it in the settings" +
+                    "The current limit is " + S_MAXT + ", you can now change it in the settings" +
                     "\n\n Click 'Cancel' to never see this popup again");
                 localStorage.warning = show.toString();
             }
 
 
         }
+    }
+
+
+    function buildPopover(code, info) {
+
+        let crawled = crawlOfferings(info);
+
+        let slink = document.createElement("a");
+        slink.setAttribute("href", getSettingsUrl());
+        slink.className = 'font-weight-bold';
+        slink.setAttribute('style', 'margin-left: 10px;');
+        slink.innerText = "Configure Extension";
+
+        let tlink = document.createElement("a");
+        tlink.className = 'font-weight-bold';
+        tlink.setAttribute("href", getTextbookUrl(code));
+        tlink.innerText = code.toUpperCase() + " Textbooks";
+
+        let main = document.createElement("div");
+        main.className = "bootstrapiso";
+
+        let card = document.createElement("div");
+        card.className = "card";
+
+        let body = document.createElement("div");
+        body.className = "card-body";
+
+        let description = document.createElement("p");
+        description.className = "card-text";
+        description.innerText = info[0].description;
+
+        let details = document.createElement("p");
+        details.className = "card-text";
+        details.innerHTML = getDetails(info);
+
+        let offerings = document.createElement("p");
+        offerings.className = "card-text";
+        offerings.innerHTML = getOffers(crawled.utm, crawled.utsc, crawled.utsg);
+
+        let extralinks = document.createElement("span");
+        extralinks.setAttribute('style', 'float: right; margin-left: 10px;');
+        extralinks.innerHTML = tlink.outerHTML + "  " + slink.outerHTML;
+
+        let lastline = document.createElement("p");
+        lastline.className = "card-text";
+        if (S_INST) lastline.innerHTML = getProfs(crawled.profs);
+        lastline.append(extralinks);
+
+        let heading = document.createElement("div");
+        heading.className = "card-header bg-primary text-white";
+
+        let card_title = document.createElement("h6");
+        card_title.className = "card-text";
+        card_title.innerHTML = code.toUpperCase() + ": " + getTitle(info);
+
+        card.append(heading);
+        card.append(body);
+        heading.append(card_title);
+        if (S_DESRPT) body.append(description);
+        if (S_BREADTH || S_PREEXL) body.append(details);
+        if (S_OFFR) body.append(offerings);
+        body.append(lastline);
+        main.append(card);
+
+        return main.outerHTML;
     }
 }

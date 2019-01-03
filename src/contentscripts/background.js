@@ -18,6 +18,9 @@ function execute(tab) {
         if (items.urloptions[new URL(tab.url).hostname] !== false && items.globoption) {
             if (!/.*google\....?\/search\?.*/.test(tab.url)) {
                 chrome.tabs.executeScript(tab.id, {file: '/src/contentscripts/contentScript.js'});
+                chrome.tabs.executeScript(tab.id, {file: '/dependencies/tippy/tippy.all.min.js'});
+                chrome.tabs.insertCSS(tab.id, {file: 'dependencies/bootstrap/bootstrapcustom.min.css'});
+                chrome.tabs.insertCSS(tab.id, {file: 'dependencies/tippy/light.css'});
                 chrome.tabs.executeScript(tab.id, {file: '/src/contentscripts/tooltip.js'});
             }
         } else {

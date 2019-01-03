@@ -41,6 +41,52 @@ function getTextbookUrl(code){
     }
 }
 
+function crawlOfferings(info) {
+    let utsg = "", utsc = "", utm = "";
+    let profs = [];
+    for (let i = 0; i < info.length; i++) {
+        if (!upToDate(info[i].term)) {
+            continue;
+        }
+        let link = document.createElement('a');
+        link.setAttribute('href', 'http://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId='
+            + info[i].id);
+        link.innerText = info[i].term + ';  ';
+
+        let campus = info[i].campus;
+        if (campus === "UTSG") {
+            utsg += link.outerHTML;
+        }
+        else if (campus === 'UTSC') {
+            utsc += link.outerHTML;
+        }
+        else if (campus === 'UTM') {
+            utm += link.outerHTML;
+        }
+
+        let meets = info[i].meeting_sections;
+        for (let j = 0; j < meets.length; j++) {
+            let b = meets[j].instructors;
+            profs = profs.concat(b);
+        }
+    }
+
+    if (utsg === "") {
+        utsg = "Currently not offered"
+    }
+    if (utsc === "") {
+        utsc = "Currently not offered"
+    }
+    if (utm === "") {
+        utm = "Currently not offered"
+    }
+
+    profs = profs.unique();
+    profs = cleanArray(profs);
+
+    return {profs: profs, utsg: utsg, utsc: utsc, utm: utm};
+}
+
 
 
 

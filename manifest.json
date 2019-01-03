@@ -17,11 +17,11 @@
   "content_scripts": [
     {
       "css": [
-        "dependencies/tipped/tipped.css"
+        "dependencies/tippy/light.css"
       ],
       "js": [
         "dependencies/jquery/jquery-3.2.1.js",
-        "dependencies/tipped/tipped.js",
+        "dependencies/tippy/tippy.all.min.js",
         "src/contentscripts/util.js"
       ],
       "matches": [
