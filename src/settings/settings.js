@@ -9,6 +9,7 @@ $(document).ready(function () {
         inst: true,
         sess: true,
         descript: true,
+        gsearch: true,
         maxtt: 1000,
         illegal:''
 
@@ -19,6 +20,7 @@ $(document).ready(function () {
         $('#highlight').prop('checked', items.highlight);
         $('#prerequisites').prop('checked', items.prereq);
         $('#sessions').prop('checked', items.sess);
+        $('#gsearch').prop('checked', items.gsearch);
         $('#maxtt').val(items.maxtt);
         $('#instructors').prop('checked', items.inst);
         $('#description').prop('checked', items.descript);
@@ -36,6 +38,7 @@ $(document).ready(function () {
             prereq: $('#prerequisites').prop('checked'),
             inst: $('#instructors').prop('checked'),
             sess: $('#sessions').prop('checked'),
+            gsearch: $('#gsearch').prop('checked'),
             maxtt: $('#maxtt').val(),
             descript: $('#description').prop('checked'),
             illegal: $('#illegal').val()

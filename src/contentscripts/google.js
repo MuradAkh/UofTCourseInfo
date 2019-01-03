@@ -2,9 +2,16 @@ $(document).ready(function () {
     let queryDict = {};
     location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]});
 
-    if(/[a-zA-Z]{3}\+?[1-4a-dA-D][0-9]{2}/.test(queryDict["q"])){
-        getInfo(queryDict["q"].replace("+", ""));
-    }
+    chrome.storage.local.get(
+        {
+            gsearch: true
+        }, function (items) {
+            if(items.gsearch && /[a-zA-Z]{3}\+?[1-4a-dA-D][0-9]{2}/.test(queryDict["q"])){
+                getInfo(queryDict["q"].replace("+", ""));
+            }
+        }
+    )
+
 });
 
 function getInfo(code) {
