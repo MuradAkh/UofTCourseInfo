@@ -32,9 +32,23 @@
 }
 
 .tippy-tooltip.light-theme .tippy-roundarrow {
-    fill: transparent
+    fill: navy;
 }
 
 .tippy-tooltip.light-theme[data-animatefill] {
     background-color: transparent
+}
+
+/* Default (sharp) arrow */
+.tippy-popper[x-placement^='top'] .tippy-tooltip.light-theme .tippy-arrow {
+    border-top-color: #11245D;
+}
+.tippy-popper[x-placement^='bottom'] .tippy-tooltip.light-theme .tippy-arrow {
+    border-bottom-color: #11245D;
+}
+.tippy-popper[x-placement^='left'] .tippy-tooltip.light-theme .tippy-arrow {
+    border-left-color: #11245D;
+}
+.tippy-popper[x-placement^='right'] .tippy-tooltip.light-theme .tippy-arrow {
+    border-right-color: #11245D;
 }

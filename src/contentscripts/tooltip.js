@@ -201,6 +201,8 @@ function generateTooltips() {
             tippy("." + this.id, {
                 content: buildPopover(code, info),
                 arrow: true,
+                arrowType: 'wide',
+                distance: 0,
                 size: 'small',
                 theme: 'light',
                 interactive: 'true',
