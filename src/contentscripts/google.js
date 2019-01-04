@@ -149,15 +149,15 @@ function createRequirements(parent, code, info) {
 function createOfferings(parent, code, info) {
     let utsg = document.createElement("p");
     utsg.className = "card-text";
-    utsg.innerHTML = "UTSG: " + info.crawled.utsg;
+    utsg.innerHTML = "UTSG: " + sessionToLinks(info.crawled.sessions.utsg);
 
     let utsc = document.createElement("p");
     utsc.className = "card-text";
-    utsc.innerHTML = "UTSC: " + info.crawled.utsc;
+    utsc.innerHTML = "UTSC: " +  sessionToLinks(info.crawled.sessions.utsc);
 
     let utm = document.createElement("p");
     utm.className = "card-text";
-    utm.innerHTML = "UTM: " + info.crawled.utm;
+    utm.innerHTML = "UTM: " +  sessionToLinks(info.crawled.sessions.utm);
 
     parent.append(utsg);
     parent.append(utsc);
@@ -167,7 +167,7 @@ function createOfferings(parent, code, info) {
 function createInstructors(parent, code, info) {
     let instructors = document.createElement("p");
     instructors.className = "card-text";
-    instructors.innerText = info.crawled.profs.join(', ');
+    instructors.innerText = info.crawled.profs.all.join(', ');
 
     parent.append(instructors);
 

@@ -33,7 +33,7 @@ function getSettingsUrl() {
     )
 }
 
-function getTextbookUrl(code){
+function getTextbookUrl(code) {
     if (navigator.userAgent.search("Firefox") > -1) {
         return 'http://murad-akh.ca/uoftbooks/index.html?filter?q=course_code:%22' + code + '%22';
     } else {
@@ -41,53 +41,68 @@ function getTextbookUrl(code){
     }
 }
 
+function sessionToLinks(sessions) {
+    let output = '';
+    if (sessions.length === 0) return "Currently not Offered";
+    sessions.forEach((offering) => {
+            let link = document.createElement('a');
+            link.setAttribute('href', 'http://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId='
+                + offering.id);
+            link.innerText = offering.term + ';  ';
+            output += link.outerHTML;
+        }
+    );
+
+    return output;
+}
+
 function crawlOfferings(info) {
-    let utsg = "", utsc = "", utm = "";
-    let profs = [];
+
+    let profs = {
+        all: [],
+        utsg: [],
+        utsc: [],
+        utm: []
+    };
+    let sessions = {
+        utsg: [],
+        utsc: [],
+        utm: []
+    };
+
     for (let i = 0; i < info.length; i++) {
         if (!upToDate(info[i].term)) {
             continue;
         }
-        let link = document.createElement('a');
-        link.setAttribute('href', 'http://coursefinder.utoronto.ca/course-search/search/courseInquiry?methodToCall=start&viewId=CourseDetails-InquiryView&courseId='
-            + info[i].id);
-        link.innerText = info[i].term + ';  ';
+
+        let meets = info[i].meeting_sections;
+        let curr_profs = [];
+        for (let j = 0; j < meets.length; j++) {
+            let b = meets[j].instructors;
+            curr_profs = curr_profs.concat(b);
+        }
+        profs.all = profs.all.concat(curr_profs);
 
         let campus = info[i].campus;
         if (campus === "UTSG") {
-            utsg += link.outerHTML;
-        }
-        else if (campus === 'UTSC') {
-            utsc += link.outerHTML;
-        }
-        else if (campus === 'UTM') {
-            utm += link.outerHTML;
-        }
-
-        let meets = info[i].meeting_sections;
-        for (let j = 0; j < meets.length; j++) {
-            let b = meets[j].instructors;
-            profs = profs.concat(b);
+            sessions.utsg.push({id: info[i].id, term: info[i].term});
+            profs.utsg = profs.utsg.concat(profs);
+        } else if (campus === 'UTSC') {
+            sessions.utsc.push({id: info[i].id, term: info[i].term});
+            profs.utsc = profs.utsc.concat(profs);
+        } else if (campus === 'UTM') {
+            sessions.utm.push({id: info[i].id, term: info[i].term});
+            profs.utm = profs.utm.concat(profs);
         }
     }
 
-    if (utsg === "") {
-        utsg = "Currently not offered"
-    }
-    if (utsc === "") {
-        utsc = "Currently not offered"
-    }
-    if (utm === "") {
-        utm = "Currently not offered"
-    }
+    $.each(profs, (index, value) => {
+        profs[index] = value.unique();
+        profs[index] = cleanArray(profs[index]);
+    });
 
-    profs = profs.unique();
-    profs = cleanArray(profs);
-
-    return {profs: profs, utsg: utsg, utsc: utsc, utm: utm};
+    return {
+        profs: profs,
+        sessions: sessions
+    }
 }
-
-
-
-
-

@@ -120,10 +120,10 @@ function generateTooltips() {
     }
 
 
-    function getOffers(utm, utsc, utsg) {
-        return "<b>UTSG:</b> " + utsg
-            + "<br /><b>UTM:</b> " + utm
-            + "<br /><b>UTSC:</b> " + utsc;
+    function getOffers(sessions) {
+        return "<b>UTSG:</b> " + sessionToLinks(sessions.utsg)
+            + "<br /><b>UTM:</b> " + sessionToLinks(sessions.utm)
+            + "<br /><b>UTSC:</b> " + sessionToLinks(sessions.utsc);
     }
 
     function getProfs(profs) {
@@ -144,9 +144,9 @@ function generateTooltips() {
 
         let output = "";
         if (S_PREEXL) {
-            output = output + " <b>Prerequisites:</b> " + info[0].prerequisites
-                + "<br /><b>Exclusions:</b> " + info[0].exclusions
-                + "<br />";
+            output +=
+                "<b>Prerequisites:</b>" + info[0].prerequisites + "<br />" +
+                "<b>Exclusions:</b> " + info[0].exclusions+ "<br />";
         }
         if (S_BREADTH) {
             output = output + "<b>Breadths:</b> " + breadths + "<br />"
@@ -267,7 +267,7 @@ function generateTooltips() {
 
         let offerings = document.createElement("p");
         offerings.className = "card-text";
-        offerings.innerHTML = getOffers(crawled.utm, crawled.utsc, crawled.utsg);
+        offerings.innerHTML = getOffers(crawled.sessions);
 
         let extralinks = document.createElement("span");
         extralinks.setAttribute('style', 'float: right; margin-left: 10px;');
@@ -275,7 +275,7 @@ function generateTooltips() {
 
         let lastline = document.createElement("p");
         lastline.className = "card-text";
-        if (S_INST) lastline.innerHTML = getProfs(crawled.profs);
+        if (S_INST) lastline.innerHTML = getProfs(crawled.profs.all);
         lastline.append(extralinks);
 
         let heading = document.createElement("div");
