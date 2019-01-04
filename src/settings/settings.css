@@ -17,3 +17,16 @@
 .btn-primary:hover {
   background-color: #0E5BAC;
 }
+
+.navbar {
+    background-color: #11245D;
+}
+
+#logo {
+    max-height: 35px;
+    padding-right: 10px;
+}
+
+#form {
+    width: 45%;
+}
