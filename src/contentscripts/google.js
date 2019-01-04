@@ -1,12 +1,14 @@
 $(document).ready(function () {
     let queryDict = {};
-    location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]});
+    location.search.substr(1).split("&").forEach(function (item) {
+        queryDict[item.split("=")[0]] = item.split("=")[1]
+    });
 
     chrome.storage.local.get(
         {
             gsearch: true
         }, function (items) {
-            if(items.gsearch && /[a-zA-Z]{3}\+?[1-4a-dA-D][0-9]{2}/.test(queryDict["q"])){
+            if (items.gsearch && /[a-zA-Z]{3}\+?[1-4a-dA-D][0-9]{2}/.test(queryDict["q"])) {
                 getInfo(queryDict["q"].replace("+", ""));
             }
         }
@@ -16,9 +18,18 @@ $(document).ready(function () {
 
 function getInfo(code) {
     $.ajax({
-        url: "https://cobalt.qas.im/api/1.0/courses/filter?q=code:%22" + code + "%22&key=bolBkU4DDtKmXbbr4j5b0m814s3RCcBm&limit=30",
+        url: "https://cobalt.qas.im/api/1.0/courses/filter",
+        data: {
+            q: 'code:"' + code + '"',
+            key: "bolBkU4DDtKmXbbr4j5b0m814s3RCcBm",
+            limit: 30
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.error("Status: " + textStatus);
+            console.error("Error: " + errorThrown);
+        },
         success: function (response) {
-            if(response.length > 0) {
+            if (response.length > 0) {
                 $(".card-section").parent().remove();
 
                 let boot = document.createElement("div");
@@ -37,7 +48,6 @@ function getInfo(code) {
     });
     // return res;
 }
-
 
 
 function createHeader(code, name, department) {
@@ -59,24 +69,24 @@ function createHeader(code, name, department) {
 
     let first = true;
     ["Overview", "Requirements", "Instructors", "Offerings"].forEach(function (name) {
-       let row = document.createElement("li");
-       row.className = "nav-item";
+        let row = document.createElement("li");
+        row.className = "nav-item";
 
-       let link = document.createElement("a");
-       link.innerText = name;
-       let link_class = "nav-link";
-       if(first) link_class += " active";
-       link.className = link_class;
-       link.setAttribute("id", name.toLowerCase() + "-tab");
-       link.setAttribute("data-toggle", "tab");
-       link.setAttribute("href", "#" + name.toLowerCase());
-       link.setAttribute("role", "tab");
-       link.setAttribute("aria-controls", name.toLowerCase());
-       link.setAttribute("aria-selected", first.toString());
-       link.setAttribute("style", "text-decoration: none !important;");
-       first = false;
-       row.append(link);
-       nav.append(row);
+        let link = document.createElement("a");
+        link.innerText = name;
+        let link_class = "nav-link";
+        if (first) link_class += " active";
+        link.className = link_class;
+        link.setAttribute("id", name.toLowerCase() + "-tab");
+        link.setAttribute("data-toggle", "tab");
+        link.setAttribute("href", "#" + name.toLowerCase());
+        link.setAttribute("role", "tab");
+        link.setAttribute("aria-controls", name.toLowerCase());
+        link.setAttribute("aria-selected", first.toString());
+        link.setAttribute("style", "text-decoration: none !important;");
+        first = false;
+        row.append(link);
+        nav.append(row);
 
     });
     header.append(card_title);
@@ -94,7 +104,7 @@ function createOverview(parent, code, info) {
     let exams = document.createElement("a");
     exams.className = "btn btn-primary";
     exams.setAttribute("style", "margin-left: 10px;");
-    exams.setAttribute("href", "https://exams-library-utoronto-ca.myaccess.library.utoronto.ca/simple-search?location=%2F&query=" + code );
+    exams.setAttribute("href", "https://exams-library-utoronto-ca.myaccess.library.utoronto.ca/simple-search?location=%2F&query=" + code);
     exams.innerText = "View Past Exams";
 
     let description_element = document.createElement("p");
@@ -115,11 +125,11 @@ function createRequirements(parent, code, info) {
 
     let exclusions = document.createElement("p");
     exclusions.className = "card-text";
-    exclusions.innerHTML = "Exclusions: "+ info.exclusions.replace(format, replace);
+    exclusions.innerHTML = "Exclusions: " + info.exclusions.replace(format, replace);
 
     let breadths = document.createElement("p");
     breadths.className = "card-text";
-    breadths.innerHTML = "Breadths: "+ info.breadths;
+    breadths.innerHTML = "Breadths: " + info.breadths;
 
     parent.append(prerequisites);
     parent.append(exclusions);
@@ -179,11 +189,11 @@ function createCard(code, info) {
         {n: "offerings", f: createOfferings},
         {n: "instructors", f: createInstructors}
 
-        ].forEach(function (obj) {
+    ].forEach(function (obj) {
         let tab = document.createElement("div");
         obj.f(tab, code, info);
         let tab_class = "tab-pane";
-        if(first) tab_class += " show active";
+        if (first) tab_class += " show active";
         tab.className = tab_class;
         tab.setAttribute("aria-labelledby", obj.n + "-tab");
         tab.setAttribute("id", obj.n);

@@ -45,7 +45,7 @@
     "storage"
   ],
   "update_url": "https://clients2.google.com/service/update2/crx",
-  "version": "4.2",
+  "version": "4.3.1",
   "options_page": "src/settings/settings.html",
   "web_accessible_resources": [
     "dependencies/tipped/tipped.css",

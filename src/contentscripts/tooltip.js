@@ -20,62 +20,87 @@ function generateTooltips() {
     let S_MAXT;
     let S_DESRPT;
 
-    let data = [];
+    let fetched = new Set();
     let directory;
     let num = ($(".corInf").length);
 
-    chrome.storage.local.get({
-        // size: 'medium',
-        link: 'website',
-        breadths: true,
-        prereq: true,
-        inst: true,
-        sess: true,
-        descript: true,
-        maxtt: 300
+    fetchStoredData()
+        .then(requestForTooltips)
+        .catch(error => {
+            if (!error instanceof TooManyCoursesError) {
+                console.error(error)
+            }
+        });
 
-    }, function (items) {
-        // S_SIZE = items.size;
-        S_LINK = items.link;
-        S_BREADTH = items.breadths;
-        S_PREEXL = items.prereq;
-        S_OFFR = items.sess;
-        S_MAXT = items.maxtt;
-        S_INST = items.inst;
-        S_DESRPT = items.descript;
-        start();
-    });
+    /** Fetches Stored information. Directory and settings.
+     */
+    async function fetchStoredData() {
+        directory = await fetch(
+            chrome.runtime.getURL("/../../data/directory.json")
+        );
+        await getSettings();
+        if (num > S_MAXT) {
+            handleTooManyCourses();
+            throw new (class TooManyCoursesError extends Error {
+            });
+        }
+    }
 
-    /**
+
+    function getSettings() {
+        return new Promise(function (resolve, reject) {
+            chrome.storage.local.get({
+                // size: 'medium',
+                link: 'website',
+                breadths: true,
+                prereq: true,
+                inst: true,
+                sess: true,
+                descript: true,
+                maxtt: 300
+
+            }, function (items) {
+                if (chrome.runtime.lastError) {
+                    reject(chrome.runtime.lastError.message);
+                } else {
+                    S_LINK = items.link;
+                    S_BREADTH = items.breadths;
+                    S_PREEXL = items.prereq;
+                    S_OFFR = items.sess;
+                    S_MAXT = items.maxtt;
+                    S_INST = items.inst;
+                    S_DESRPT = items.descript;
+                    resolve();
+                }
+            });
+        });
+    }
+
+
+    /** Get information from cobalt, load when done.
      *
      * @param code
      */
     function getInfo(code) {
         $.ajax({
-            url: "https://cobalt.qas.im/api/1.0/courses/filter?q=code:%22" + code + "%22&key=bolBkU4DDtKmXbbr4j5b0m814s3RCcBm&limit=30",
+            url: "https://cobalt.qas.im/api/1.0/courses/filter",
+            data: {
+                q: 'code:"' + code + '"',
+                key: "bolBkU4DDtKmXbbr4j5b0m814s3RCcBm",
+                limit: 30
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.error("Status: " + textStatus);
+                console.error("Error: " + errorThrown);
+            },
             success: function (response) {
-                data[code] = response;
+                fetched.add(code);
                 load(code, response)
-
             }
         });
         // return res;
 
 
-    }
-
-    function getDirectory() {
-        let dir;
-        const xmlhttp = new XMLHttpRequest();
-
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-                dir = JSON.parse(this.responseText);
-            }
-        };
-        xmlhttp.open("GET", chrome.runtime.getURL("../../data/directory.json"), false);
-        xmlhttp.send();
-        return dir;
     }
 
     function getDepartment(key) {
@@ -153,11 +178,10 @@ function generateTooltips() {
     /** Request each course code from cobalt
      *  If previously requested, return it from the hashmap
      */
-    function cobaltCourses() {
+    function requestForTooltips() {
         $('.corInf').each(function () {
             let title = $(this).data('title');
-            let info = data[title];
-            if (info == null) {
+            if (!fetched.has(title)) {
                 getInfo(title)
             }
         })
@@ -189,29 +213,19 @@ function generateTooltips() {
         });
     }
 
-    /** Begin Making Tooltips
-     *  Executed once storage is fetched
-     */
-    function start() {
 
-        if (num < S_MAXT) {
-            directory = getDirectory();
-            cobaltCourses()
-        } else {
-            $(".corInf").each(function () {
-                $(this).replaceWith($(this).data('title'));
+    function handleTooManyCourses() {
+        $(".corInf").each(function () {
+            $(this).replaceWith($(this).data('title'));
 
-            });
-            let warning = localStorage.warning || "true";
-            if (warning === "true") {
-                let show = confirm("UofT Course Info: did not load the contentscripts, too many courses mentioned. " +
-                    "\n\n" +
-                    "The current limit is " + S_MAXT + ", you can now change it in the settings" +
-                    "\n\n Click 'Cancel' to never see this popup again");
-                localStorage.warning = show.toString();
-            }
-
-
+        });
+        let warning = localStorage.warning || "true";
+        if (warning === "true") {
+            let show = confirm("UofT Course Info: did not load the tooltips, too many courses mentioned. " +
+                "\n\n" +
+                "The current limit is " + S_MAXT + ", you can now change it in the settings" +
+                "\n\n Click 'Cancel' to never see this popup again");
+            localStorage.warning = show.toString();
         }
     }
 
