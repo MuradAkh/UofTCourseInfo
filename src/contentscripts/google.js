@@ -35,19 +35,18 @@ function getInfo(code) {
             key: "bolBkU4DDtKmXbbr4j5b0m814s3RCcBm",
             limit: 30
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
+        error: (XMLHttpRequest, textStatus, errorThrown) => {
             console.error("Status: " + textStatus);
             console.error("Error: " + errorThrown);
         },
-        success: function (response) {
+        success:  (response) => {
             if (response.length > 0) {
                 $(".card-section").parent().remove();
 
                 let boot = document.createElement("div");
                 boot.className = "bootstrapiso";
 
-                let crawled = crawlOfferings(response);
-                response[0]["crawled"] = crawled;
+                response[0]["crawled"] = crawlOfferings(response);
                 let card = createCard(code, response[0]);
                 boot.append(card);
 
@@ -79,7 +78,7 @@ function createHeader(code, name, department) {
     nav.setAttribute("role", "tablist");
 
     let first = true;
-    ["Overview", "Requirements", "Instructors", "Offerings"].forEach(function (name) {
+    ["Overview", "Requirements", "Instructors", "Offerings"].forEach(name => {
         let row = document.createElement("li");
         row.className = "nav-item";
 
@@ -200,7 +199,7 @@ function createCard(code, info) {
         {n: "offerings", f: createOfferings},
         {n: "instructors", f: createInstructors}
 
-    ].forEach(function (obj) {
+    ].forEach(obj => {
         let tab = document.createElement("div");
         obj.f(tab, code, info);
         let tab_class = "tab-pane";

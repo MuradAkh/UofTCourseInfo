@@ -3,9 +3,7 @@
  *
  * Murad Akhundov 2017
  */
-$(document).ready(function () {
-    generateTooltips();
-});
+$(document).ready(generateTooltips);
 
 /** Generate Tooltips for previously labeled course codes
  *
@@ -48,7 +46,7 @@ function generateTooltips() {
 
 
     function getSettings() {
-        return new Promise(function (resolve, reject) {
+        return new Promise((resolve, reject) => {
             chrome.storage.local.get({
                 // size: 'medium',
                 link: 'website',
@@ -59,7 +57,7 @@ function generateTooltips() {
                 descript: true,
                 maxtt: 300
 
-            }, function (items) {
+            }, items => {
                 if (chrome.runtime.lastError) {
                     reject(chrome.runtime.lastError.message);
                 } else {
@@ -89,11 +87,11 @@ function generateTooltips() {
                 key: "bolBkU4DDtKmXbbr4j5b0m814s3RCcBm",
                 limit: 30
             },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            error: (XMLHttpRequest, textStatus, errorThrown) => {
                 console.error("Status: " + textStatus);
                 console.error("Error: " + errorThrown);
             },
-            success: function (response) {
+            success: response => {
                 fetched.add(code);
                 load(code, response)
             }

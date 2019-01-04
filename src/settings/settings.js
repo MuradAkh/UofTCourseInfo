@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(document).ready(() => {
 
     chrome.storage.local.get({
         // size: 'medium',
@@ -13,7 +13,7 @@ $(document).ready(function () {
         maxtt: 1000,
         illegal:''
 
-    }, function (items) {
+    }, items => {
         // $('#size').val(items.size);
         $('#link').val(items.link);
         $('#breadths').prop('checked', items.breadths);
@@ -27,13 +27,8 @@ $(document).ready(function () {
         $('#illegal').val(items.illegal);
     });
 
-    $('input').change(function () {
-        apply();
-    });
-
-    $('select').change(function () {
-        apply();
-    });
+    $('input').change(apply);
+    $('select').change(apply);
 
     // $('#apply').click(function () {
     //     apply();

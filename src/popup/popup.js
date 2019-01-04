@@ -14,7 +14,7 @@ const off = {
     }
 };
 
-$(document).ready(function () {
+$(document).ready(() => {
     let url;
     let urloptions;
     let globoption;
@@ -30,7 +30,7 @@ $(document).ready(function () {
     });
 
 
-    $("#this-dom").change(function () {
+    $("#this-dom").change(() => {
         urloptions[url] = $("#this-dom").is(":checked");
         chrome.storage.local.set({
             urloptions: urloptions
@@ -39,7 +39,7 @@ $(document).ready(function () {
         updateTabs();
     });
 
-    $("#all-dom").change(function () {
+    $("#all-dom").change(() => {
         globoption = $("#all-dom").is(":checked");
         chrome.storage.local.set({
             globoption: globoption
@@ -62,7 +62,7 @@ $(document).ready(function () {
 
 
     function updateTabs() {
-        chrome.tabs.query({}, function (tabs) {
+        chrome.tabs.query({}, tabs => {
                 for (let i = 0; i < tabs.length; i++) {
                     if ((urloptions[new URL(tabs[i].url).hostname] !== false) && globoption) {
                         if (!/.*google\....?\/search\?.*/.test(tabs[i].url)) {
