@@ -4,7 +4,7 @@ $(document).ready(function () {
         queryDict[item.split("=")[0]] = item.split("=")[1]
     });
 
-    if(!/[a-zA-Z]{3}\+?[1-4a-dA-D][0-9]{2}/.test(queryDict["q"])) return; // doesn't match
+    if (!/[a-zA-Z]{3}\+?[1-4a-dA-D][0-9]{2}/.test(queryDict["q"])) return; // doesn't match
 
     checkSettings()
         .then(enabled => enabled ? getInfo(queryDict["q"].replace("+", "")) : null)
@@ -39,7 +39,7 @@ function getInfo(code) {
             console.error("Status: " + textStatus);
             console.error("Error: " + errorThrown);
         },
-        success:  (response) => {
+        success: (response) => {
             if (response.length > 0) {
                 $(".card-section").parent().remove();
 
@@ -153,11 +153,11 @@ function createOfferings(parent, code, info) {
 
     let utsc = document.createElement("p");
     utsc.className = "card-text";
-    utsc.innerHTML = "UTSC: " +  sessionToLinks(info.crawled.sessions.utsc);
+    utsc.innerHTML = "UTSC: " + sessionToLinks(info.crawled.sessions.utsc);
 
     let utm = document.createElement("p");
     utm.className = "card-text";
-    utm.innerHTML = "UTM: " +  sessionToLinks(info.crawled.sessions.utm);
+    utm.innerHTML = "UTM: " + sessionToLinks(info.crawled.sessions.utm);
 
     parent.append(utsg);
     parent.append(utsc);
@@ -165,11 +165,21 @@ function createOfferings(parent, code, info) {
 }
 
 function createInstructors(parent, code, info) {
-    let instructors = document.createElement("p");
-    instructors.className = "card-text";
-    instructors.innerText = info.crawled.profs.all.join(', ');
+    let utsg = document.createElement("p");
+    utsg.className = "card-text";
+    utsg.innerHTML = "UTSG: " + info.crawled.profs.utsg.join(', ');
 
-    parent.append(instructors);
+    let utsc = document.createElement("p");
+    utsc.className = "card-text";
+    utsc.innerHTML = "UTSC: " + info.crawled.profs.utsc.join(', ');
+
+    let utm = document.createElement("p");
+    utm.className = "card-text";
+    utm.innerHTML = "UTM: " + info.crawled.profs.utm.join(', ');
+
+    parent.append(utsg);
+    parent.append(utsc);
+    parent.append(utm);
 
 }
 

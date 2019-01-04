@@ -78,21 +78,26 @@ function crawlOfferings(info) {
         let meets = info[i].meeting_sections;
         let curr_profs = [];
         for (let j = 0; j < meets.length; j++) {
-            let b = meets[j].instructors;
-            curr_profs = curr_profs.concat(b);
+            let instructors = meets[j].instructors;
+            instructors.forEach(prof => {
+                let inst_listing = prof.split(" ");
+                for (let k = 0; k < inst_listing.length; k += 2) {
+                    curr_profs.push(inst_listing[k] + " " + inst_listing[k + 1]);
+                }
+            });
         }
         profs.all = profs.all.concat(curr_profs);
 
         let campus = info[i].campus;
         if (campus === "UTSG") {
             sessions.utsg.push({id: info[i].id, term: info[i].term});
-            profs.utsg = profs.utsg.concat(profs);
+            profs.utsg = profs.utsg.concat(curr_profs);
         } else if (campus === 'UTSC') {
             sessions.utsc.push({id: info[i].id, term: info[i].term});
-            profs.utsc = profs.utsc.concat(profs);
+            profs.utsc = profs.utsc.concat(curr_profs);
         } else if (campus === 'UTM') {
             sessions.utm.push({id: info[i].id, term: info[i].term});
-            profs.utm = profs.utm.concat(profs);
+            profs.utm = profs.utm.concat(curr_profs);
         }
     }
 
