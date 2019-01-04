@@ -4,17 +4,28 @@ $(document).ready(function () {
         queryDict[item.split("=")[0]] = item.split("=")[1]
     });
 
-    chrome.storage.local.get(
-        {
-            gsearch: true
-        }, function (items) {
-            if (items.gsearch && /[a-zA-Z]{3}\+?[1-4a-dA-D][0-9]{2}/.test(queryDict["q"])) {
-                getInfo(queryDict["q"].replace("+", ""));
-            }
-        }
-    )
+    if(!/[a-zA-Z]{3}\+?[1-4a-dA-D][0-9]{2}/.test(queryDict["q"])) return; // doesn't match
 
+    checkSettings()
+        .then(enabled => enabled ? getInfo(queryDict["q"].replace("+", "")) : null)
+        .catch(error => console.error(error))
 });
+
+function checkSettings() {
+    return new Promise((resolve, reject) => {
+        chrome.storage.local.get(
+            {
+                gsearch: true
+            }, function (items) {
+                if (chrome.runtime.lastError) {
+                    reject(chrome.runtime.lastError.message);
+                } else {
+                    resolve(items.gsearch);
+                }
+            });
+    })
+}
+
 
 function getInfo(code) {
     $.ajax({
