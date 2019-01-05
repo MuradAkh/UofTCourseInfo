@@ -198,7 +198,10 @@ function uoftprofsFetch(profs, campus, code) {
     profs.forEach(prof => {
         promises.push(new Promise(resolve => {
             fetch("https://uoft-course-info.firebaseio.com/profs/" + campus + prof.split(' ').join('') + '.json')
-                .then(response => response.json())
+                .then(response => {
+                    if (response.ok) return response.json();
+                    else throw new Error('Something went wrong');
+                })
                 .then(response => resolve(proflink(prof, response, code, campus)))
                 .catch(err => {
                     console.error(err);
