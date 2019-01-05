@@ -33,9 +33,10 @@ function generateTooltips() {
     /** Fetches Stored information. Directory and settings.
      */
     async function fetchStoredData() {
-        directory = await fetch(
+        let dirpromise = await fetch(
             chrome.runtime.getURL("/../../data/directory.json")
         );
+        directory = await dirpromise.json();
         await getSettings();
         if (num > S_MAXT) {
             handleTooManyCourses();

@@ -181,6 +181,13 @@ function createInstructors(parent, code, info) {
         .then(response => utm.innerHTML = "UTM: " + response.join(', '))
         .catch(err => console.error(err));
 
+    //commented out bit looks too ugly TODO: make not ugly
+
+    // let credit = document.createElement('p');
+    // credit.innerText = "Official U of T course evaluations data. Analysis provided by uoftprofs.com";
+    // credit.className = 'card-text text-secondary';
+
+    // parent.append(credit);
     parent.append(utsg);
     parent.append(utsc);
     parent.append(utm);
