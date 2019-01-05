@@ -147,7 +147,7 @@ function generateTooltips() {
         if (S_PREEXL) {
             output +=
                 "<b>Prerequisites:</b>" + info[0].prerequisites + "<br />" +
-                "<b>Exclusions:</b> " + info[0].exclusions+ "<br />";
+                "<b>Exclusions:</b> " + info[0].exclusions + "<br />";
         }
         if (S_BREADTH) {
             output = output + "<b>Breadths:</b> " + breadths + "<br />"
@@ -196,19 +196,19 @@ function generateTooltips() {
         $('.' + code).each(function () {
             try {
                 let a = info[0].name;
+                tippy("." + this.id, {
+                    content: buildPopover(code, info),
+                    arrow: true,
+                    arrowType: 'wide',
+                    distance: 0,
+                    size: 'small',
+                    theme: 'light',
+                    interactive: 'true',
+                    maxWidth: 700
+                })
             } catch (err) {
                 $(this).replaceWith($(this).data('title'));
             }
-            tippy("." + this.id, {
-                content: buildPopover(code, info),
-                arrow: true,
-                arrowType: 'wide',
-                distance: 0,
-                size: 'small',
-                theme: 'light',
-                interactive: 'true',
-                maxWidth: 700
-            })
 
 
         });

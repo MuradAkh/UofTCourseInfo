@@ -61,7 +61,7 @@
         function handleTextNode(textNode) {
             if (textNode.nodeName !== '#text'
                 || textNode.parentNode.nodeName === 'SCRIPT'
-                || textNode.parentNode.nodeName === 'T_STYLE'
+                || textNode.parentNode.nodeName === 'STYLE'
             ) {
                 return;
             }
