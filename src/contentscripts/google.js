@@ -167,7 +167,9 @@ function createOfferings(parent, code, info) {
 function createInstructors(parent, code, info) {
     let utsg = document.createElement("p");
     utsg.className = "card-text";
-    utsg.innerHTML = "UTSG: " + info.crawled.profs.utsg.join(', ');
+    Promise.all(uoftprofsFetch(info.crawled.profs.utsg, 'S', code))
+        .then(response => utsg.innerHTML = "UTSG: " + response.join(', '))
+        .catch(err => console.error(err));
 
     let utsc = document.createElement("p");
     utsc.className = "card-text";
@@ -175,14 +177,46 @@ function createInstructors(parent, code, info) {
 
     let utm = document.createElement("p");
     utm.className = "card-text";
-    utm.innerHTML = "UTM: " + info.crawled.profs.utm.join(', ');
+    Promise.all(uoftprofsFetch(info.crawled.profs.utm, 'M', code))
+        .then(response => utm.innerHTML = "UTM: " + response.join(', '))
+        .catch(err => console.error(err));
 
     parent.append(utsg);
     parent.append(utsc);
     parent.append(utm);
-
 }
 
+function uoftprofsFetch(profs, campus, code) {
+    let promises = [];
+    profs.forEach(prof => {
+        promises.push(new Promise(resolve => {
+            fetch("https://uoft-course-info.firebaseio.com/profs/" + campus + prof.split(' ').join('') + '.json')
+                .then(response => response.json())
+                .then(response => resolve(proflink(prof, response, code, campus)))
+                .catch(err => {
+                    console.error(err);
+                    resolve(prof);
+                })
+        }))
+    });
+
+    return promises;
+}
+
+function proflink(prof, fullname, code, campus) {
+    if (fullname === null) return prof;
+    else {
+        let link = document.createElement("a");
+        link.setAttribute('href', 'http://uoftprofs.com/?'
+            + $.param({
+                campus: campus === 'S' ? 'St. George' : 'Mississauga',
+                course: code.toUpperCase(),
+                instructor: fullname.name
+            }));
+        link.innerText = fullname.name;
+        return link.outerHTML;
+    }
+}
 
 function createCard(code, info) {
     let card = document.createElement("div");
