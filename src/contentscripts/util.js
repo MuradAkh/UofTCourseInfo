@@ -33,6 +33,12 @@ function getSettingsUrl() {
     )
 }
 
+function getAboutUrl() {
+    return chrome.runtime.getURL(
+        "src/about/index.html"
+    )
+}
+
 function getTextbookUrl(code) {
     if (navigator.userAgent.search("Firefox") > -1) {
         return 'http://murad-akh.ca/uoftbooks/index.html?filter?q=course_code:%22' + code + '%22';

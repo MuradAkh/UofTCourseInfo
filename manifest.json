@@ -27,6 +27,14 @@
       "matches": [
         "\u003Call_urls>"
       ]
+    },
+    {
+      "js": [
+        "src/contentscripts/textbookLinker.js"
+      ],
+      "matches": [
+        "http://courseinfo.murad-akh.ca/textbooks/cinfo/"
+      ]
     }
   ],
   "description": "Adds informative tooltips to University of Toronto courses mentioned across the web",
