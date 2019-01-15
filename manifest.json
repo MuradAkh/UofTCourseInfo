@@ -33,7 +33,7 @@
         "src/contentscripts/textbookLinker.js"
       ],
       "matches": [
-        "http://courseinfo.murad-akh.ca/textbooks/cinfo/"
+        "http://courseinfo.murad-akh.ca/textbooks/cinfo/*"
       ]
     }
   ],

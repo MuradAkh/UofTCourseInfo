@@ -40,11 +40,11 @@ function getAboutUrl() {
 }
 
 function getTextbookUrl(code) {
-    if (navigator.userAgent.search("Firefox") > -1) {
-        return 'http://murad-akh.ca/uoftbooks/index.html?filter?q=course_code:%22' + code + '%22';
-    } else {
-        return 'http://murad-akh.ca/uoftbooks/cinfo/index.html?filter?q=course_code:%22' + code + '%22';
-    }
+    // if (navigator.userAgent.search("Firefox") > -1) {
+    //     return 'http://courseinfo.murad-akh.ca/textbooks/index.html?filter?q=course_code:%22' + code + '%22';
+    // } else {
+        return 'http://courseinfo.murad-akh.ca/textbooks/cinfo/index.html?filter?q=course_code:%22' + code + '%22';
+    // }
 }
 
 function sessionToLinks(sessions) {

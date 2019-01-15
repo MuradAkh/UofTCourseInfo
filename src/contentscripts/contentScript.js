@@ -23,8 +23,8 @@
 
             const websites = ['google', 'youtube'].concat(banned);
             const str = window.location.hostname;
-            if (window.location.href === "http://murad-akh.ca/uoftbooks/"){
-                window.location.href = "http://murad-akh.ca/uoftbooks/cinfo";
+            if (window.location.href === "http://courseinfo.murad-akh.ca/textbooks/"){
+                window.location.href = "http://courseinfo.murad-akh.ca/textbooks/cinfo";
             }
             for (let i in websites) {
                 if (str.includes(websites[i])) {
