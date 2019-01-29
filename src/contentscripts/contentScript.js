@@ -23,9 +23,6 @@
 
             const websites = ['google', 'youtube'].concat(banned);
             const str = window.location.hostname;
-            if (window.location.href === "http://courseinfo.murad-akh.ca/textbooks/"){
-                window.location.href = "http://courseinfo.murad-akh.ca/textbooks/cinfo";
-            }
             for (let i in websites) {
                 if (str.includes(websites[i])) {
                     return
@@ -55,7 +52,7 @@
 
     function execute() {
         const match = new RegExp('\\b[A-Z][A-Z][A-Z][1-4a-d][0-9][0-9]', 'mgi');
-        const maymatch = new RegExp('\\b^(?!for)[A-Z][A-Z][A-Z]\\s[1-4a-d][0-9][0-9]', 'mgi');
+        const maymatch = new RegExp('\\b(?!for)[A-Z][A-Z][A-Z]\\s[1-4a-d][0-9][0-9]', 'mgi');
 
 
         function handleTextNode(textNode) {

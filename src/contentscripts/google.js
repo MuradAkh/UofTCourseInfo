@@ -108,7 +108,7 @@ function createHeader(code, name, department) {
 function createOverview(parent, code, info) {
     let textbooks = document.createElement("a");
     textbooks.className = "btn btn-primary";
-    textbooks.setAttribute("href", "http://courseinfo.murad-akh.ca/textbooks/cinfo/index.html?filter?q=course_code:%22" + code + "%22");
+    textbooks.setAttribute("href", "http://courseinfo.murad-akh.ca/textbooks/index.html?filter?q=course_code:%22" + code + "%22");
     textbooks.innerText = "View Textbooks";
 
     let exams = document.createElement("a");

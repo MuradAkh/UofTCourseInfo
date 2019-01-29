@@ -43,7 +43,7 @@ function getTextbookUrl(code) {
     // if (navigator.userAgent.search("Firefox") > -1) {
     //     return 'http://courseinfo.murad-akh.ca/textbooks/index.html?filter?q=course_code:%22' + code + '%22';
     // } else {
-        return 'http://courseinfo.murad-akh.ca/textbooks/cinfo/index.html?filter?q=course_code:%22' + code + '%22';
+        return 'http://courseinfo.murad-akh.ca/textbooks/index.html?filter?q=course_code:%22' + code + '%22';
     // }
 }
 
