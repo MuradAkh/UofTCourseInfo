@@ -23,6 +23,8 @@ Data for courses is provided by Cobalt API. Discount Textbook Store data was scr
 
 ## License
 
+<img src='https://opensource.org/files/osi_symbol.png' height=50><img src='https://opensource.org/files/osi_logotype.png' height=50>
+
 Any external libraries included in the code are covered by their respective licenses. 
 Unless otherwise specified, any code included with the extension is covered by the MIT License.
 
