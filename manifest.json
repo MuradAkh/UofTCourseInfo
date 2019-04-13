@@ -20,7 +20,7 @@
         "dependencies/tippy/light.css"
       ],
       "js": [
-        "dependencies/jquery/jquery-3.2.1.js",
+        "dependencies/jquery/jquery.min.js",
         "dependencies/tippy/tippy.all.min.js",
         "src/contentscripts/util.js"
       ],
