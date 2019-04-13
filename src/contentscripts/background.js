@@ -17,6 +17,7 @@ function execute(tab) {
     globoption: true,
     urloptions: {}
   }, function (items) {
+    if(!tab.url.includes('https://') && !tab.url.includes('http://')) return;
     if (items.urloptions[new URL(tab.url).hostname] !== false && items.globoption) {
       if (!/.*google\....?\/search\?.*/.test(tab.url)) {
         chrome.tabs.executeScript(tab.id, {file: '/src/contentscripts/contentScript.js'});
