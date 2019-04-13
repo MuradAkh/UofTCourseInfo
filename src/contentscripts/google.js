@@ -36,8 +36,8 @@ function getInfo(code) {
             limit: 30
         },
         error: (XMLHttpRequest, textStatus, errorThrown) => {
-            console.error("Status: " + textStatus);
-            console.error("Error: " + errorThrown);
+            console.error(`Status: ${textStatus}`);
+            console.error(`Error: ${errorThrown}`);
         },
         success: (response) => {
             if (response.length > 0) {
@@ -108,18 +108,18 @@ function createHeader(code, name, department) {
 function createOverview(parent, code, info) {
     let textbooks = document.createElement("a");
     textbooks.className = "btn btn-primary";
-    textbooks.setAttribute("href", "http://courseinfo.murad-akh.ca/textbooks/index.html?filter?q=course_code:%22" + code + "%22");
+    textbooks.setAttribute("href", `http://courseinfo.murad-akh.ca/textbooks/index.html?filter?q=course_code:%22${code}%22`);
     textbooks.innerText = "View Textbooks";
 
     let exams = document.createElement("a");
     exams.className = "btn btn-primary";
     exams.setAttribute("style", "margin-left: 10px;");
-    exams.setAttribute("href", "https://exams-library-utoronto-ca.myaccess.library.utoronto.ca/simple-search?location=%2F&query=" + code);
+    exams.setAttribute("href", `https://exams-library-utoronto-ca.myaccess.library.utoronto.ca/simple-search?location=%2F&query=${code}`);
     exams.innerText = "View Past Exams";
 
     let description_element = document.createElement("p");
     description_element.className = "card-text";
-    description_element.innerText = info.description;
+    description_element.appendChild(document.createTextNode(info.description));
 
     parent.append(description_element);
     parent.append(textbooks);
@@ -131,15 +131,15 @@ function createRequirements(parent, code, info) {
 
     let prerequisites = document.createElement("p");
     prerequisites.className = "card-text";
-    prerequisites.innerHTML = "Prerequisites: " + info.prerequisites.replace(format, replace);
+    prerequisites.innerHTML = `Prerequisites: ${info.prerequisites.replace(format, replace)}`;
 
     let exclusions = document.createElement("p");
     exclusions.className = "card-text";
-    exclusions.innerHTML = "Exclusions: " + info.exclusions.replace(format, replace);
+    exclusions.innerHTML = `Exclusions: ${info.exclusions.replace(format, replace)}`;
 
     let breadths = document.createElement("p");
     breadths.className = "card-text";
-    breadths.innerHTML = "Breadths: " + info.breadths;
+    breadths.innerHTML = `Breadths: ${info.breadths}`;
 
     parent.append(prerequisites);
     parent.append(exclusions);
@@ -149,15 +149,15 @@ function createRequirements(parent, code, info) {
 function createOfferings(parent, code, info) {
     let utsg = document.createElement("p");
     utsg.className = "card-text";
-    utsg.innerHTML = "UTSG: " + sessionToLinks(info.crawled.sessions.utsg);
+    utsg.innerHTML = `UTSG: ${sessionToLinks(info.crawled.sessions.utsg)}`;
 
     let utsc = document.createElement("p");
     utsc.className = "card-text";
-    utsc.innerHTML = "UTSC: " + sessionToLinks(info.crawled.sessions.utsc);
+    utsc.innerHTML = `UTSC: ${sessionToLinks(info.crawled.sessions.utsc)}`;
 
     let utm = document.createElement("p");
     utm.className = "card-text";
-    utm.innerHTML = "UTM: " + sessionToLinks(info.crawled.sessions.utm);
+    utm.innerHTML = `UTM: ${sessionToLinks(info.crawled.sessions.utm)}`;
 
     parent.append(utsg);
     parent.append(utsc);
@@ -168,17 +168,17 @@ function createInstructors(parent, code, info) {
     let utsg = document.createElement("p");
     utsg.className = "card-text";
     Promise.all(uoftprofsFetch(info.crawled.profs.utsg, 'S', code))
-        .then(response => utsg.innerHTML = "UTSG: " + response.join(', '))
+        .then(response => utsg.innerHTML = `UTSG: ${response.join(', ')}`)
         .catch(err => console.error(err));
 
     let utsc = document.createElement("p");
     utsc.className = "card-text";
-    utsc.innerHTML = "UTSC: " + info.crawled.profs.utsc.join(', ');
+    utsc.innerHTML = `UTSC: ${info.crawled.profs.utsc.join(', ')}`;
 
     let utm = document.createElement("p");
     utm.className = "card-text";
     Promise.all(uoftprofsFetch(info.crawled.profs.utm, 'M', code))
-        .then(response => utm.innerHTML = "UTM: " + response.join(', '))
+        .then(response => utm.innerHTML = `UTM: ${response.join(', ')}`)
         .catch(err => console.error(err));
 
     //commented out bit looks too ugly TODO: make not ugly
@@ -197,7 +197,7 @@ function uoftprofsFetch(profs, campus, code) {
     let promises = [];
     profs.forEach(prof => {
         promises.push(new Promise(resolve => {
-            fetch("https://uoft-course-info.firebaseio.com/profs/" + campus + prof.split(' ').join('') + '.json')
+            fetch(`https://uoft-course-info.firebaseio.com/profs/${campus}${prof.split(' ').join('')}.json`)
                 .then(response => {
                     if (response.ok) return response.json();
                     else throw new Error('Something went wrong');
@@ -241,7 +241,7 @@ function createCard(code, info) {
 
     let extension_text = document.createElement("small");
     extension_text.className = "text-muted";
-    extension_text.innerText = "Provided by UofT Course Info Extension. Not affiliated with University of Toronto or Google.";
+    extension_text.appendChild(document.createTextNode("Provided by UofT Course Info Extension. Not affiliated with University of Toronto or Google."));
 
     let content = document.createElement("div");
     content.className = "tab-content";
@@ -277,7 +277,5 @@ function createCard(code, info) {
 }
 
 function replace(match) {
-    return '<span class="corInf ' + match + '" data-title = "' + match + '" id = "' + match + '">' +
-        match
-        + '</span>';
+    return `<span class="corInf ${match}" data-title = "${match}" id = "${match}">${match}</span>`;
 }

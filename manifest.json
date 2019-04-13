@@ -50,7 +50,8 @@
     "activeTab",
     "*://*/*",
     "tabs",
-    "storage"
+    "storage",
+    "notifications"
   ],
   "update_url": "https://clients2.google.com/service/update2/crx",
   "version": "4.4.0",
