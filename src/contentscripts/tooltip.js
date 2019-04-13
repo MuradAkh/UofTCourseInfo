@@ -227,7 +227,7 @@ function generateTooltips() {
 
     });
     let warning = localStorage.warning || "true";
-    if (warning) {
+    if (warning === "true") {
       // let show = confirm("UofT Course Info: did not load the tooltips, too many courses mentioned. " +
       //     "\n\n" +
       //     "The current limit is " + S_MAXT + ", you can now change it in the settings" +
@@ -235,7 +235,7 @@ function generateTooltips() {
 
       chrome.runtime.sendMessage({msg: "TMN"}, response => {
         switch (response) {
-          case 'DISABLE': localStorage.warning = show.toString(); break;
+          case 'DISABLE': localStorage.warning = "false"; break;
           case 'SETTINGS': window.open(getSettingsUrl(), '_blank')
         }
       });
