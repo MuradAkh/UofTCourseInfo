@@ -10,6 +10,8 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 });
 
 
+
+
 function execute(tab) {
   chrome.storage.local.get({
     globoption: true,
@@ -22,7 +24,10 @@ function execute(tab) {
         chrome.tabs.insertCSS(tab.id, {file: 'dependencies/bootstrap/bootstrapcustom.min.css'});
         chrome.tabs.insertCSS(tab.id, {file: 'dependencies/tippy/light.css'});
         chrome.tabs.executeScript(tab.id, {file: '/src/contentscripts/tooltip.js'});
+        chrome.tabs.executeScript(tab.id, {file: '/src/contentscripts/infiniteScroll.js'});
       }
+
+
     } else {
       chrome.tabs.executeScript(tab.id, {file: "/src/contentscripts/purge.js"});
     }

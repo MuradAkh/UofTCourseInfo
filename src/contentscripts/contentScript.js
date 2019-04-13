@@ -5,32 +5,34 @@
  *   The code was adapted to work with the rest of the extension
  */
 
-(function () {
+(findCourses)();
+
+function findCourses() {
     const T_STYLE = 'style=" font-weight:normal;color:#000080;;border: 1px  #000080 double ;letter-spacing:1pt; ' +
-        'word-spacing:2pt;font-size:12px;text-align:left;font-family:arial black, sans-serif;line-height:1; "';
+      'word-spacing:2pt;font-size:12px;text-align:left;font-family:arial black, sans-serif;line-height:1; "';
 
     let counter = 0;
     let highlight = false;
 
     chrome.storage.local.get({
-            illegal: '',
-            highlight: false
-        }, function (items) {
-            let banned = [];
-            if (items.illegal !== '') {
-                banned = (items.illegal.replace(/\s/g, '')).split(',');
-            }
+          illegal: '',
+          highlight: false
+      }, function (items) {
+          let banned = [];
+          if (items.illegal !== '') {
+              banned = (items.illegal.replace(/\s/g, '')).split(',');
+          }
 
-            const websites = ['google', 'youtube'].concat(banned);
-            const str = window.location.hostname;
-            for (let i in websites) {
-                if (str.includes(websites[i])) {
-                    return
-                }
-            }
-            highlight = items.highlight;
-            execute()
-        }
+          const websites = ['google', 'youtube'].concat(banned);
+          const str = window.location.hostname;
+          for (let i in websites) {
+              if (str.includes(websites[i])) {
+                  return
+              }
+          }
+          highlight = items.highlight;
+          execute()
+      }
     );
 
 
@@ -39,14 +41,14 @@
     }
 
     function get_style() {
-        if(highlight) return T_STYLE;
+        if (highlight) return T_STYLE;
         return '';
     }
 
     function replace(match) {
         return '<span ' + get_style() + ' class="corInf ' + match + '" data-title = "' + match + '" id = "' + match + '">' +
-            match.substring(0, 3) + '<b></b>' + match.substring(3)
-            + '</span>';
+          match.substring(0, 3) + '<b></b>' + match.substring(3)
+          + '</span>';
     }
 
 
@@ -57,8 +59,8 @@
 
         function handleTextNode(textNode) {
             if (textNode.nodeName !== '#text'
-                || textNode.parentNode.nodeName === 'SCRIPT'
-                || textNode.parentNode.nodeName === 'STYLE'
+              || textNode.parentNode.nodeName === 'SCRIPT'
+              || textNode.parentNode.nodeName === 'STYLE'
             ) {
                 return;
             }
@@ -93,4 +95,4 @@
 
     }
 
-})();
+}
