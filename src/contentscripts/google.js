@@ -1,4 +1,4 @@
-$(document).ready(function () {
+(function () {
     let queryDict = {};
     location.search.substr(1).split("&").forEach(function (item) {
         queryDict[item.split("=")[0]] = item.split("=")[1]
@@ -9,7 +9,7 @@ $(document).ready(function () {
     checkSettings()
         .then(enabled => enabled ? getInfo(queryDict["q"].replace("+", "")) : null)
         .catch(error => console.error(error))
-});
+})();
 
 function checkSettings() {
     return new Promise((resolve, reject) => {
@@ -31,7 +31,7 @@ function getInfo(code) {
     $.ajax({
         url: "https://cobalt.qas.im/api/1.0/courses/filter",
         data: {
-            q: 'code:"' + code + '"',
+            q: `code:"${code}"`,
             key: "bolBkU4DDtKmXbbr4j5b0m814s3RCcBm",
             limit: 30
         },
@@ -242,6 +242,14 @@ function createCard(code, info) {
     let extension_text = document.createElement("small");
     extension_text.className = "text-muted";
     extension_text.appendChild(document.createTextNode("Provided by UofT Course Info Extension. Not affiliated with University of Toronto or Google."));
+
+    const feedback = document.createElement('a');
+    feedback.setAttribute("style", "float: right; color: mediumvioletred");
+    feedback.setAttribute("href", "https://forms.gle/eBBmuiywqHjiM8aE8");
+    feedback.appendChild(document.createTextNode("Feedback :)"));
+    extension_text.appendChild(feedback);
+
+
 
     let content = document.createElement("div");
     content.className = "tab-content";

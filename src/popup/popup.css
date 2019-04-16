@@ -1,5 +1,5 @@
 html{
-    min-width: 250px;
+    min-width: 300px;
 }
 
 #icon{
@@ -8,4 +8,8 @@ html{
 
 #title{
     color: #11245D; !important;
+}
+
+#feedback-link{
+    color: mediumvioletred;
 }

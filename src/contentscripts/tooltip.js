@@ -90,7 +90,7 @@ function generateTooltips() {
     $.ajax({
       url: "https://cobalt.qas.im/api/1.0/courses/filter",
       data: {
-        q: 'code:"' + code + '"',
+        q: `code:"${code}"`,
         key: "bolBkU4DDtKmXbbr4j5b0m814s3RCcBm",
         limit: 30
       },
@@ -111,7 +111,7 @@ function generateTooltips() {
   function getDepartment(key) {
     if (S_LINK === "artsci") {
       key = key.replace(/ /g, "-");
-      return "https://fas.calendar.utoronto.ca/section/" + key;
+      return `https://fas.calendar.utoronto.ca/section/${key}`;
     } else {
 
       for (let i = 0; i < directory.length; i++) {
@@ -128,9 +128,7 @@ function generateTooltips() {
 
 
   function getOffers(sessions) {
-    return "<b>UTSG:</b> " + sessionToLinks(sessions.utsg)
-      + "<br /><b>UTM:</b> " + sessionToLinks(sessions.utm)
-      + "<br /><b>UTSC:</b> " + sessionToLinks(sessions.utsc);
+    return `<b>UTSG:</b> ${sessionToLinks(sessions.utsg)}<br /><b>UTM:</b> ${sessionToLinks(sessions.utm)}<br /><b>UTSC:</b> ${sessionToLinks(sessions.utsc)}`;
   }
 
   function getProfs(profs) {
