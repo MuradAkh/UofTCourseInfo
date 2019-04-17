@@ -7,6 +7,10 @@ function upToDate(str) {
 }
 
 
+class TooManyCoursesError extends Error {
+}
+
+
 //taken from: https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript
 function cleanArray(actual) {
     let newArray = [];

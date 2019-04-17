@@ -5,8 +5,6 @@
  */
 $(document).ready(generateTooltips);
 
-class TooManyCoursesError extends Error {
-}
 
 /** Generate Tooltips for previously labeled course codes
  *

@@ -9,7 +9,7 @@ function onElementHeightChange(elm, callback){
     if( elm.onElementHeightChangeTimer )
       clearTimeout(elm.onElementHeightChangeTimer);
 
-    elm.onElementHeightChangeTimer = setTimeout(run, 5000);
+    elm.onElementHeightChangeTimer = setTimeout(run, 2500);
   })();
 }
 
