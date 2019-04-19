@@ -1,0 +1,14 @@
+body{
+    height: 100vh;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #fcfcfc;
+    margin: 0;
+    display: flex;
+}
+
+div{
+    display: block;
+}

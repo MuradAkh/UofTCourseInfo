@@ -70,6 +70,10 @@
     text-align: center;
 }
 
+#feedback-btn{
+    text
+}
+
 .ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active, a.ui-button:active, .ui-button:active, .ui-button.ui-state-active:hover {
     border: 1px solid #11245D;
     background: #11245D;

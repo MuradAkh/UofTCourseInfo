@@ -15,11 +15,11 @@ $(document).ready(function () {
     function handle() {
         let query = $('#search-books').val();
         if (/[0-9]{13}/.test(query)) {
-            window.location.href = 'index.html?filter?q=isbn:"' + query + '"'
+            window.location.href = `index.html?filter?q=isbn:"${query}"`
         } else if (/\b[a-zA-Z]{3}([1-4]|\b)([0-9]|\b)([0-9]|\b)/.test(query)) {
-            window.location.href = 'index.html?filter?q=course_code:"' + query + '"';
+            window.location.href = `index.html?filter?q=course_code:"${query}"`;
         } else {
-            window.location.href = 'index.html?search?q="' + query + '"';
+            window.location.href = `index.html?search?q="${query}"`;
 
         }
     }
@@ -40,7 +40,7 @@ function fetcher(query) {
             json = JSON.parse(this.responseText);
         }
     };
-    xmlhttp.open("GET", 'http://cobalt.murad-akh.ca/api/1.0/textbooks/' + query + '&key=bolBkU4DDtKmXbbr4j5b0m814s3RCcBm&limit=100', false);
+    xmlhttp.open("GET", `http://cobalt.murad-akh.ca/api/1.0/textbooks/${query}&key=bolBkU4DDtKmXbbr4j5b0m814s3RCcBm&limit=100`, false);
     xmlhttp.send();
     return json;
 }
@@ -59,20 +59,20 @@ function displayBooks(json, query) {
         });
 
         // monstrosity
-        let title = "<h3><b>" + item.title + "</b>  " + item.author + "<span style='float: right'>ISBN:" + item.isbn + "</span></h3>";
-        let facebook = "<a class='facebook' href=" + FB_URL + item.courses[0].code.substring(0, 6) + ">Search on Facebook" + "</a>";
-        let ebay = "<a class='ebay' href=" + EBAY_URL + item.isbn + ">Shop  on Ebay" + "</a>";
-        let google = "<a class='google' href=" + GOOG_URL + item.isbn + ">Search on Google Books" + "</a>";
-        let amazon = "<a class='amazon' href=" + AMZN_URL + item.isbn + ">Shop on Amazon" + "</a>";
-        let external = "<br/><br/>" + facebook + '<span style="padding: 3%"> </span>' + amazon + '<span style="padding: 3%"> </span>' + ebay + '<span style="padding: 3%"> </span>' + google;
-        let image = "<img class='pic' src='" + item.image + "'>";
+        let title = `<h3><b>${item.title}</b>  ${item.author}<span style='float: right'>ISBN:${item.isbn}</span></h3>`;
+        let facebook = `<a class='facebook' href=${FB_URL}${item.courses[0].code.substring(0, 6)}>Search on Facebook</a>`;
+        let ebay = `<a class='ebay' href=${EBAY_URL}${item.isbn}>Shop  on Ebay</a>`;
+        let google = `<a class='google' href=${GOOG_URL}${item.isbn}>Search on Google Books</a>`;
+        let amazon = `<a class='amazon' href=${AMZN_URL}${item.isbn}>Shop on Amazon</a>`;
+        let external = `<br/><br/>${facebook}<span style="padding: 3%"> </span>${amazon}<span style="padding: 3%"> </span>${ebay}<span style="padding: 3%"> </span>${google}`;
+        let image = `<img class='pic' src='${item.image}'>`;
         let bookstore = '<b>UofT BookStore</b><br/>';
-        bookstore += ("new: $" + item.price + "<br/>");
-        bookstore += 'See the <a href="' + item.url + '">listing</a> for more information, including the price for a used item';
+        bookstore += (`new: $${item.price}<br/>`);
+        bookstore += `See the <a href="${item.url}">listing</a> for more information, including the price for a used item`;
 
 
-        let content = "<div style='float: right; width: 80%'>" + courses + '<br/><br/>' + bookstore + addDbook(item.isbn) + external + "</div>";
-        $('#accordion').prepend(title + "<div style='overflow: hidden'>" + image + content + "</div>")
+        let content = `<div style='float: right; width: 80%'>${courses}<br/><br/>${bookstore}${addDbook(item.isbn)}${external}</div>`;
+        $('#accordion').prepend(`${title}<div style='overflow: hidden'>${image}${content}</div>`)
     });
     $('#accordion').accordion({
         collapsible: true,
