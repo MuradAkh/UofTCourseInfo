@@ -81,3 +81,18 @@ function createNotification() {
     });
   }, 10000);
 }
+
+
+chrome.runtime.onInstalled.addListener(function(details){
+  if(details.reason === "update"){
+    let first_run = false;
+    if (!localStorage['ranb']) {
+      first_run = true;
+      localStorage['ranb'] = '1';
+    }
+
+    if (first_run) chrome.tabs.create({url: "http://courseinfo.murad-akh.ca/feedback/index.html"});
+  }
+});
+
+
