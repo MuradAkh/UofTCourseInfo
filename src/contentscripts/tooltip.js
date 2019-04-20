@@ -206,7 +206,8 @@ function generateTooltips() {
           size: 'small',
           theme: 'light',
           interactive: 'true',
-          maxWidth: 700
+          maxWidth: 700,
+          delay: [450, 20]
         })
       } catch (err) {
         $(this).replaceWith($(this).data('title'));

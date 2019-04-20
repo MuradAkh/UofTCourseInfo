@@ -56,7 +56,7 @@ function getInfo(code) {
           cos.appendChild(document.createTextNode(`Cosecant of ${num} is ${1/ Math.sin(num)}`));
           cos.className = "text-muted";
           cos.setAttribute('style', 'float: right; margin-top: 5px; margin-bottom: -10px');
-          // boot.appendChild(cos);
+          boot.appendChild(cos);
 
         }else{
           card.setAttribute("style", "margin-bottom: 20px");
