@@ -3,13 +3,13 @@
  *
  * Murad Akhundov 2017
  */
-$(document).ready(generateTooltips);
+$(document).ready(() => generateTooltips(true));
 
 
 /** Generate Tooltips for previously labeled course codes
  *
  */
-function generateTooltips() {
+function generateTooltips(notify) {
   // let S_SIZE;
   let S_LINK;
   let S_BREADTH;
@@ -224,7 +224,7 @@ function generateTooltips() {
 
     });
     let warning = localStorage.warning || "true";
-    if (warning === "true") {
+    if (warning === "true" && notify) {
       // let show = confirm("UofT Course Info: did not load the tooltips, too many courses mentioned. " +
       //     "\n\n" +
       //     "The current limit is " + S_MAXT + ", you can now change it in the settings" +
