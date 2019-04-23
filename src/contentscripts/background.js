@@ -10,14 +10,12 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 });
 
 
-
-
 function execute(tab) {
   chrome.storage.local.get({
     globoption: true,
     urloptions: {}
   }, function (items) {
-    if(!tab.url.includes('https://') && !tab.url.includes('http://')) return;
+    if (!tab.url.includes('https://') && !tab.url.includes('http://')) return;
     if (items.urloptions[new URL(tab.url).hostname] !== false && items.globoption) {
       if (!/.*google\....?\/search\?.*/.test(tab.url)) {
         chrome.tabs.executeScript(tab.id, {file: '/src/contentscripts/contentScript.js'});
@@ -45,46 +43,50 @@ function gsearch(tab) {
 }
 
 chrome.runtime.onMessage.addListener(
-  function (request, sender, sendResponse) {
-    if (request.msg === 'TMN') createNotification(sendResponse);
+  (request, sender, sendResponse) => {
+    if (request.msg === 'TMN')
+      createNotification().then(sendResponse);
+    return true;
   });
 
-function createNotification() {
-  const buttons =  [
+async function createNotification() {
+  const buttons = [
     {
-      "title": "Disable Notifications on this page"
+      "title": "Ignore"
     }, {
-      "title": "Change Limit in the Settings"
+      "title": "Settings"
     }
   ];
+
   chrome.notifications.create('limit', {
     "type": "basic",
     "iconUrl": chrome.extension.getURL("/images/Acorn_128.png"),
     "title": "UofT Course Info",
-    "message": "Could not load tooltips. Too many courses mentioned, you can change this limit in the settings.",
+    "message": "Could not load tooltips. Too many courses mentioned, you can change this limit in the settings or ignore on this page",
     "buttons": buttons
-  }, (id) => {});
-
-  chrome.notifications.onButtonClicked.addListener((id, index) => {
-    chrome.notifications.clear(id);
-    switch (buttons[index].title) {
-      case "Change Limit in the Settings": sendResponse({'msg': 'SETTINGS'});
-      break;
-      case "Disable this Notification": sendResponse({'msg': 'DISABLE'})
-    }
+  }, (id) => {
   });
 
+  return new Promise((resolve, reject) => {
 
-//include this line if you want to clear the notification after 5 seconds
-  setTimeout(function () {
-    chrome.notifications.clear("notificationName", function () {
+    chrome.notifications.onButtonClicked.addListener((id, index) => {
+      chrome.notifications.clear(id);
+      switch (buttons[index].title) {
+        case "Settings":
+          resolve({'msg': 'SETTINGS'});
+          break;
+        case "Ignore":
+          resolve({'msg': 'DISABLE'})
+      }
     });
-  }, 10000);
+
+    chrome.notifications.onClosed.addListener(() => resolve({msg: 'NOTHING'}))
+  })
 }
 
 
-chrome.runtime.onInstalled.addListener(function(details){
-  if(details.reason === "update"){
+chrome.runtime.onInstalled.addListener(function (details) {
+  if (details.reason === "update") {
     let first_run = false;
     if (!localStorage['ranb']) {
       first_run = true;

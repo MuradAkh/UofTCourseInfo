@@ -231,7 +231,7 @@ function generateTooltips() {
       //     "\n\n Click 'Cancel' to never see this popup again");
 
       chrome.runtime.sendMessage({msg: "TMN"}, response => {
-        switch (response) {
+        switch (response.msg) {
           case 'DISABLE': localStorage.warning = "false"; break;
           case 'SETTINGS': window.open(getSettingsUrl(), '_blank')
         }
