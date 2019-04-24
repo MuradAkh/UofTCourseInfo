@@ -6,7 +6,6 @@ function upToDate(str) {
 
 }
 
-
 class TooManyCoursesError extends Error {
 }
 

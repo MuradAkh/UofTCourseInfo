@@ -11,7 +11,8 @@ $(document).ready(() => {
         descript: true,
         gsearch: true,
         maxtt: 1000,
-        illegal:''
+        illegal:'',
+        globoption: true
 
     }, items => {
         // $('#size').val(items.size);
@@ -24,11 +25,17 @@ $(document).ready(() => {
         $('#maxtt').val(items.maxtt);
         $('#instructors').prop('checked', items.inst);
         $('#description').prop('checked', items.descript);
+        $('#enablepops').prop('checked', items.globoption);
         $('#illegal').val(items.illegal);
     });
 
     $('input').change(apply);
     $('select').change(apply);
+    $('#enablepops').change(() => {
+        if ($("#enablepops").is(":checked")) chrome.browserAction.setIcon(on);
+        else chrome.browserAction.setIcon(off);
+        updateTabs()
+    });
 
     // $('#apply').click(function () {
     //     apply();
@@ -37,6 +44,8 @@ $(document).ready(() => {
     // });
 
     function apply() {
+
+
         chrome.storage.local.set({
             link: $('#link').val(),
             // size: $('#size').val(),
@@ -48,7 +57,8 @@ $(document).ready(() => {
             gsearch: $('#gsearch').prop('checked'),
             maxtt: $('#maxtt').val(),
             descript: $('#description').prop('checked'),
-            illegal: $('#illegal').val()
+            illegal: $('#illegal').val(),
+            globoption: $('#enablepops').prop('checked'),
         });
     }
 });

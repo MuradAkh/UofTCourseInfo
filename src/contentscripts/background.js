@@ -6,6 +6,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.status === 'complete') {
     gsearch(tab);
     execute(tab);
+    acorn(tab)
   }
 });
 
@@ -25,8 +26,6 @@ function execute(tab) {
         chrome.tabs.executeScript(tab.id, {file: '/src/contentscripts/tooltip.js'});
         chrome.tabs.executeScript(tab.id, {file: '/src/contentscripts/infiniteScroll.js'});
       }
-
-
     } else {
       chrome.tabs.executeScript(tab.id, {file: "/src/contentscripts/purge.js"});
     }
@@ -39,6 +38,21 @@ function gsearch(tab) {
     chrome.tabs.executeScript(tab.id, {file: 'dependencies/bootstrap/bootstrap.bundle.min.js'});
     chrome.tabs.executeScript(tab.id, {file: 'src/contentscripts/tooltip.js'});
     chrome.tabs.executeScript(tab.id, {file: 'src/contentscripts/google.js'});
+  }
+}
+
+function acorn(tab) {
+  if (/.*acorn\.utoronto\.ca.*/.test(tab.url)) {
+    if(!localStorage.acornOne){
+      chrome.notifications.create('limit', {
+        "type": "basic",
+        "iconUrl": chrome.extension.getURL("/images/Acorn_128.png"),
+        "title": "UofT Course Info",
+        "message": "Don't want to see tooltips/popovers on Acorn? Click on the extension icon to disable!",
+      }, (id) => {
+        localStorage.acornOne = "1";
+      });
+    }
   }
 }
 
