@@ -3,6 +3,9 @@ const AMZN_URL = 'https://www.amazon.ca/s/field-keywords=';
 const EBAY_URL = 'https://www.ebay.ca/sch/i.html?_nkw=';
 const GOOG_URL = 'https://www.google.com/search?tbm=bks&q=';
 
+const cprovider = localStorage.provider !== undefined ? JSON.parse(localStorage.provider) : false;
+
+
 $(document).ready(function () {
 
     document.getElementById('search-books').addEventListener("keyup", function (event) {
@@ -55,16 +58,21 @@ function displayBooks(json, query) {
     json.forEach(function (item) {
         let courses = "Courses:";
         item.courses.forEach(function (course) {
-            courses += " " + course.code;
+            courses += ` ${course.code}`;
         });
 
         // monstrosity
         let title = `<h3><b>${item.title}</b>  ${item.author}<span style='float: right'>ISBN:${item.isbn}</span></h3>`;
-        let facebook = `<a class='facebook' href=${FB_URL}${item.courses[0].code.substring(0, 6)}>Search on Facebook</a>`;
-        let ebay = `<a class='ebay' href=${EBAY_URL}${item.isbn}>Shop  on Ebay</a>`;
-        let google = `<a class='google' href=${GOOG_URL}${item.isbn}>Search on Google Books</a>`;
-        let amazon = `<a class='amazon' href=${AMZN_URL}${item.isbn}>Shop on Amazon</a>`;
-        let external = `<br/><br/>${facebook}<span style="padding: 3%"> </span>${amazon}<span style="padding: 3%"> </span>${ebay}<span style="padding: 3%"> </span>${google}`;
+        let facebook = `<a class='btn-outline-primary btn' href=${FB_URL}${item.courses[0].code.substring(0, 6)}>Facebook</a>`;
+        let ebay = `<a class='btn-outline-primary btn margined' href=${EBAY_URL}${item.isbn}>Ebay</a>`;
+        let google = `<a class='btn-outline-primary btn margined' href=${GOOG_URL}${item.isbn}>Google Books</a>`;
+        let amazon = `<a class='btn-outline-primary btn margined' href=${AMZN_URL}${item.isbn}>Amazon</a>`;
+        let custom = '';
+        if (cprovider) custom = `<a class='btn-outline-primary btn margined' href=${cprovider.providerUrl}${item.isbn}>${cprovider.providerNickName}</a>`;
+
+        const addCustom = `<a href="" id="addCustom" class="card-link" href=${cprovider.providerUrl}${item.isbn}>Add/Change Custom Search Provider (Advanced)</a>`;
+
+        let external = `</br></br>${facebook}${amazon}${ebay}${google}${custom}<br>${addCustom}`;
         let image = `<img class='pic' src='${item.image}'>`;
         let bookstore = '<b>UofT BookStore</b><br/>';
         bookstore += (`new: $${item.price}<br/>`);
@@ -74,6 +82,8 @@ function displayBooks(json, query) {
         let content = `<div style='float: right; width: 80%'>${courses}<br/><br/>${bookstore}${addDbook(item.isbn)}${external}</div>`;
         $('#accordion').prepend(`${title}<div style='overflow: hidden'>${image}${content}</div>`)
     });
+    $('#addCustom').click(addProvider);
+
     $('#accordion').accordion({
         collapsible: true,
         heightStyle: "content"
@@ -94,6 +104,11 @@ function getDiscount() {
   return json;
 }
 
+function addProvider(){
+    const providerUrl = window.prompt("Enter ISBN search provider url, in format: www.exampleprovider.com/search?q= ");
+    const providerNickName = window.prompt("Add a nickname");
+    localStorage.provider = JSON.stringify({providerNickName, providerUrl});
+}
 
 function addDbook(isbn) {
     let discount = getDiscount();
@@ -116,5 +131,5 @@ function addDbook(isbn) {
 
     }
 
-    return '<br/><br/>' + output + '<br/><a href="http://www.discounttextbookstoronto.com">Visit the website for more info</a>';
+    return '<br/><br/>' + output + '<br/><a class="card-link" href="http://www.discounttextbookstoronto.com">Visit the website for more info</a>';
 }
