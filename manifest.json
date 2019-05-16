@@ -54,7 +54,7 @@
     "notifications"
   ],
   "update_url": "https://clients2.google.com/service/update2/crx",
-  "version": "4.5.6",
+  "version": "4.5.7",
   "options_page": "src/settings/settings.html",
   "web_accessible_resources": [
     "dependencies/tipped/tipped.css",
