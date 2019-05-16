@@ -8,8 +8,7 @@
 (findCourses)();
 
 function findCourses() {
-    const T_STYLE = 'style=" font-weight:normal;color:#000080;;border: 1px  #000080 double ;letter-spacing:1pt; ' +
-      'word-spacing:2pt;font-size:12px;text-align:left;font-family:arial black, sans-serif;line-height:1; "';
+    const T_STYLE = "style=\" font-weight:normal;color:#000080;;border: 1px  #000080 double ;letter-spacing:1pt; word-spacing:2pt;font-size:12px;text-align:left;font-family:arial black, sans-serif;line-height:1; \"";
 
     let counter = 0;
     let highlight = false;
@@ -37,6 +36,8 @@ function findCourses() {
 
 
     function delete_space(match) {
+        console.log(match.length);
+        if(match.length === 6) return match;
         return match.substring(0, 3) + match.substring(4);
     }
 
@@ -46,15 +47,13 @@ function findCourses() {
     }
 
     function replace(match) {
-        return '<span ' + get_style() + ' class="corInf ' + match + '" data-title = "' + match + '" id = "' + match + '">' +
-          match.substring(0, 3) + '<b></b>' + match.substring(3)
-          + '</span>';
+        const code = delete_space(match);
+        return `<span ${get_style()} class="corInf ${code}" data-title ="${match}" data-code="${code}">${match.substring(0, 3)}<b></b>${match.substring(3)}</span>`;
     }
 
 
     function execute() {
-        const match = new RegExp('\\b[A-Z][A-Z][A-Z][1-4a-d][0-9][0-9]', 'mgi');
-        const maymatch = new RegExp('\\b(?!for)[A-Z][A-Z][A-Z]\\s[1-4a-d][0-9][0-9]', 'mgi');
+        const match = new RegExp('\\b(?!for)[A-Z][A-Z][A-Z]\\s?[1-4a-d][0-9][0-9]', 'mgi');
 
 
         function handleTextNode(textNode) {
@@ -66,9 +65,7 @@ function findCourses() {
             }
             let origText = textNode.textContent;
             match.lastIndex = 0;
-            maymatch.lastIndex = 0;
-            let newHtml = origText.replace(maymatch, delete_space);
-            newHtml = newHtml.replace(match, replace);
+            let newHtml = origText.replace(match, replace);
 
 
             if (newHtml !== origText) {

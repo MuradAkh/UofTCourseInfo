@@ -130,7 +130,7 @@ function generateTooltips(notify) {
   }
 
   function getProfs(profs) {
-    return "<b>Instructors:</b> " + profs.join(", ");
+    return `<b>Instructors:</b> ${profs.join(", ")}`;
 
   }
 
@@ -172,7 +172,7 @@ function generateTooltips(notify) {
     deptlink.innerHTML = '<b>' + info[0].department + '</b>';
 
 
-    return "" + info[0].name + deptlink.outerHTML;
+    return `${info[0].name}${deptlink.outerHTML}`;
 
   }
 
@@ -181,7 +181,7 @@ function generateTooltips(notify) {
    */
   function requestForTooltips() {
     $('.corInf').each(function () {
-      let title = $(this).data('title');
+      let title = $(this).data('code');
       if (!fetched.has(title)) {
         getInfo(title)
       }
@@ -198,7 +198,7 @@ function generateTooltips(notify) {
     $('.' + code).each(function () {
       try {
         let a = info[0].name;
-        tippy("." + this.id, {
+        tippy(`.${$(this).data('code')}`, {
           content: buildPopover(code, info),
           arrow: true,
           arrowType: 'wide',
