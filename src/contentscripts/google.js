@@ -296,5 +296,5 @@ function createCard(code, info) {
 }
 
 function replace(match) {
-  return `<span class="corInf ${match}" data-title = "${match}" id = "${match}">${match}</span>`;
+  return `<span class="corInf ${match}" data-title="${match}"  data-code="${match}">${match}</span>`;
 }
