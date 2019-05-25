@@ -50,6 +50,14 @@ function getInfo(code) {
         let card = createCard(code, response[0]);
         boot.append(card);
 
+        chrome.runtime.sendMessage(
+          {msg: "ANL",
+            eventCategory: 'Courses',
+            eventAction: 'Search',
+            eventLabel: code
+
+          }, () => {});
+
         if (code.includes('csc')) {
           const num = parseInt(code.substring(3, 7));
           const cos = document.createElement('small');

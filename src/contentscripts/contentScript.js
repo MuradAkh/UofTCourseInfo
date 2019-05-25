@@ -36,7 +36,6 @@ function findCourses() {
 
 
     function delete_space(match) {
-        console.log(match.length);
         if(match.length === 6) return match;
         return match.substring(0, 3) + match.substring(4);
     }
