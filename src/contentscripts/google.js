@@ -9,6 +9,9 @@
   checkSettings()
     .then(enabled => enabled ? getInfo(queryDict["q"].replace("+", "")) : null)
     .catch(error => console.error(error))
+
+
+
 })();
 
 function checkSettings() {
@@ -73,6 +76,19 @@ function getInfo(code) {
         $("#topstuff").append(boot);
 
         generateTooltips();
+
+        $(".cinfo-link").click( function(event){
+          chrome.runtime.sendMessage(
+            {msg: "ANL",
+              eventCategory: 'Navigation',
+              eventAction: 'Search Navigation',
+              eventLabel: event.target.innerText
+
+            }, () => {});
+        });
+
+
+
       }
     }
   });
@@ -104,7 +120,7 @@ function createHeader(code, name, department) {
 
     let link = document.createElement("a");
     link.innerText = name;
-    let link_class = "nav-link";
+    let link_class = "nav-link cinfo-link";
     if (first) link_class += " active";
     link.className = link_class;
     link.setAttribute("id", name.toLowerCase() + "-tab");
@@ -127,12 +143,12 @@ function createHeader(code, name, department) {
 
 function createOverview(parent, code, info) {
   let textbooks = document.createElement("a");
-  textbooks.className = "btn btn-primary";
+  textbooks.className = "btn btn-primary cinfo-link";
   textbooks.setAttribute("href", `http://courseinfo.murad-akh.ca/textbooks/index.html?filter?q=course_code:%22${code}%22`);
   textbooks.innerText = "View Textbooks";
 
   let exams = document.createElement("a");
-  exams.className = "btn btn-primary";
+  exams.className = "btn btn-primary cinfo-link";
   exams.setAttribute("style", "margin-left: 10px;");
   exams.setAttribute("href", `https://exams-library-utoronto-ca.myaccess.library.utoronto.ca/simple-search?location=%2F&query=${code}`);
   exams.innerText = "View Past Exams";
@@ -243,6 +259,7 @@ function proflink(prof, fullname, code, campus) {
         course: code.toUpperCase(),
         instructor: fullname.name
       }));
+    link.className = 'cinfo-link';
     link.innerText = fullname.name;
     return link.outerHTML;
   }
