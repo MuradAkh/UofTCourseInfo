@@ -1,6 +1,7 @@
 
 # ![](https://i.imgur.com/7lorkX2.png)
 
+** This extension is currently not working due to outage of the Cobalt API **
 
 |Browser|Version|Rating|Users| Link |
 |--|--|--|--|--|
