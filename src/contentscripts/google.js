@@ -8,9 +8,8 @@
 
   checkSettings()
     .then(enabled => enabled ? getInfo(queryDict["q"].replace("+", "")) : null)
+      .then(generateCards)
     .catch(error => console.error(error))
-
-
 
 })();
 
@@ -29,70 +28,52 @@ function checkSettings() {
   })
 }
 
+function generateCards(response){
+  if (response.length > 0) {
+    $(".card-section").parent().remove();
 
-function getInfo(code) {
-  $.ajax({
-    url: "https://cobalt.qas.im/api/1.0/courses/filter",
-    data: {
-      q: `code:"${code}"`,
-      key: "bolBkU4DDtKmXbbr4j5b0m814s3RCcBm",
-      limit: 30
-    },
-    error: (XMLHttpRequest, textStatus, errorThrown) => {
-      console.error(`Status: ${textStatus}`);
-      console.error(`Error: ${errorThrown}`);
-    },
-    success: (response) => {
-      if (response.length > 0) {
-        $(".card-section").parent().remove();
+    let boot = document.createElement("div");
+    boot.className = "bootstrapiso";
 
-        let boot = document.createElement("div");
-        boot.className = "bootstrapiso";
+    response[0]["crawled"] = crawlOfferings(response);
+    const code = response[0].code.substr(0, 6);
+    let card = createCard(code, response[0]);
+    boot.append(card);
 
-        response[0]["crawled"] = crawlOfferings(response);
-        let card = createCard(code, response[0]);
-        boot.append(card);
+    chrome.runtime.sendMessage(
+        {msg: "ANL",
+          eventCategory: 'Courses',
+          eventAction: 'Search',
+          eventLabel: code
 
-        chrome.runtime.sendMessage(
+        }, () => {});
+
+    if (code.includes('csc')) {
+      const num = parseInt(code.substring(3, 7));
+      const cos = document.createElement('small');
+      cos.appendChild(document.createTextNode(`Cosecant of ${num} is ${1/ Math.sin(num)}`));
+      cos.className = "text-muted";
+      cos.setAttribute('style', 'float: right; margin-top: 5px; margin-bottom: -10px');
+      boot.appendChild(cos);
+
+    }else{
+      card.setAttribute("style", "margin-bottom: 20px");
+    }
+
+    $("#topstuff").append(boot);
+
+    generateTooltips();
+
+    $(".cinfo-link").click( function(event){
+      chrome.runtime.sendMessage(
           {msg: "ANL",
-            eventCategory: 'Courses',
-            eventAction: 'Search',
-            eventLabel: code
+            eventCategory: 'Navigation',
+            eventAction: 'Search Navigation',
+            eventLabel: event.target.innerText
 
           }, () => {});
-
-        if (code.includes('csc')) {
-          const num = parseInt(code.substring(3, 7));
-          const cos = document.createElement('small');
-          cos.appendChild(document.createTextNode(`Cosecant of ${num} is ${1/ Math.sin(num)}`));
-          cos.className = "text-muted";
-          cos.setAttribute('style', 'float: right; margin-top: 5px; margin-bottom: -10px');
-          boot.appendChild(cos);
-
-        }else{
-          card.setAttribute("style", "margin-bottom: 20px");
-        }
-
-        $("#topstuff").append(boot);
-
-        generateTooltips();
-
-        $(".cinfo-link").click( function(event){
-          chrome.runtime.sendMessage(
-            {msg: "ANL",
-              eventCategory: 'Navigation',
-              eventAction: 'Search Navigation',
-              eventLabel: event.target.innerText
-
-            }, () => {});
-        });
-
-
-
-      }
-    }
-  });
-  // return res;
+    });
+  }
 }
 
 
@@ -164,7 +145,7 @@ function createOverview(parent, code, info) {
 
 function createRequirements(parent, code, info) {
   const format = new RegExp('[A-Z][A-Z][A-Z][1-4a-d][0-9][0-9]', 'mgi');
-
+  if(info.prerequisites === null) info.prerequisites = ""
   let prerequisites = document.createElement("p");
   prerequisites.className = "card-text";
   prerequisites.innerHTML = `Prerequisites: ${info.prerequisites.replace(format, replace)}`;
@@ -233,16 +214,13 @@ function uoftprofsFetch(profs, campus, code) {
   let promises = [];
   profs.forEach(prof => {
     promises.push(new Promise(resolve => {
-      fetch(`https://uoft-course-info.firebaseio.com/profs/${campus}${prof.split(' ').join('')}.json`)
-        .then(response => {
-          if (response.ok) return response.json();
-          else throw new Error('Something went wrong');
-        })
-        .then(response => resolve(proflink(prof, response, code, campus)))
-        .catch(err => {
-          console.error(err);
-          resolve(prof);
-        })
+      // fetchResource(`https://uoft-course-info.firebaseio.com/profs/${campus}${prof.split(' ').join('')}.json`)
+      //   .then(response => resolve(proflink(prof, response, code, campus)))
+      //   .catch(err => {
+      //     console.error(err);
+      //     resolve(prof);
+      //   })
+      resolve(prof)
     }))
   });
 

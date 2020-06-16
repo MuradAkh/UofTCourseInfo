@@ -68,15 +68,27 @@ ga('require', 'displayfeatures');
 
 chrome.runtime.onMessage.addListener(
   (request, sender, sendResponse) => {
-    if (request.msg === 'TMN')
+    if (request.msg === 'TMN') {
       createNotification().then(sendResponse);
+    }
 
-    if(request.msg === 'ANL')
+    else if (request.msg === 'FETCH'){
+      console.log(request.url)
+      fetch(request.url)
+          .then(r => r.json())
+          .then(r => sendResponse(r))
+          .catch(console.error)
+    }
+
+    else if(request.msg === 'ANL') {
       ga('send', 'event', {
         'eventCategory': request.eventCategory,
         'eventAction': request.eventAction,
         'eventLabel': request.eventLabel
       });
+    }
+
+
     return true;
   });
 

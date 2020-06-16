@@ -9,6 +9,21 @@ function upToDate(str) {
 class TooManyCoursesError extends Error {
 }
 
+function fetchResource(url){
+    return new Promise((resolve, reject)=>{
+        chrome.runtime.sendMessage(
+            {msg: "FETCH", url: url},
+            response => {
+                console.log(response)
+                resolve(response.response)});
+    })
+}
+
+function getInfo(code) {
+    return fetchResource(`https://nikel.ml/api/courses/search?code=${code}`)
+}
+
+
 
 //taken from: https://stackoverflow.com/questions/281264/remove-empty-elements-from-an-array-in-javascript
 function cleanArray(actual) {
@@ -98,13 +113,13 @@ function crawlOfferings(info) {
         profs.all = profs.all.concat(curr_profs);
 
         let campus = info[i].campus;
-        if (campus === "UTSG") {
+        if (campus === "St. George") {
             sessions.utsg.push({id: info[i].id, term: info[i].term});
             profs.utsg = profs.utsg.concat(curr_profs);
-        } else if (campus === 'UTSC') {
+        } else if (campus === "Scarborough") {
             sessions.utsc.push({id: info[i].id, term: info[i].term});
             profs.utsc = profs.utsc.concat(curr_profs);
-        } else if (campus === 'UTM') {
+        } else if (campus === "Mississauga") {
             sessions.utm.push({id: info[i].id, term: info[i].term});
             profs.utm = profs.utm.concat(curr_profs);
         }

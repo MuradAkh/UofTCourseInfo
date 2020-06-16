@@ -24,18 +24,18 @@ function generateTooltips(notify) {
     let num = ($(".corInf").length);
 
     fetchStoredData()
-      .then(requestForTooltips)
-      .catch(error => {
-          if (!error instanceof TooManyCoursesError) {
-              console.error(error)
-          }
-      });
+        .then(requestForTooltips)
+        .catch(error => {
+            if (!error instanceof TooManyCoursesError) {
+                console.error(error)
+            }
+        });
 
     /** Fetches Stored information. Directory and settings.
      */
     async function fetchStoredData() {
         let dirpromise = await fetch(
-          chrome.runtime.getURL("/../../data/directory.json")
+            chrome.runtime.getURL("/../../data/directory.json")
         );
         directory = await dirpromise.json();
         await getSettings();
@@ -84,23 +84,17 @@ function generateTooltips(notify) {
      *
      * @param code
      */
-    function getInfo(code) {
-        $.ajax({
-            url: "https://cobalt.qas.im/api/1.0/courses/filter",
-            data: {
-                q: `code:"${code}"`,
-                key: "bolBkU4DDtKmXbbr4j5b0m814s3RCcBm",
-                limit: 30
-            },
-            error: (XMLHttpRequest, textStatus, errorThrown) => {
-                console.error("Status: " + textStatus);
-                console.error("Error: " + errorThrown);
-            },
-            success: response => {
+    /** Get information from cobalt, load when done.
+     *
+     * @param code
+     */
+    function buildWithinfo(code) {
+        getInfo(code).then(
+            response => {
                 fetched.add(code);
                 load(code, response)
             }
-        });
+        )
     }
 
     function getDepartment(key) {
@@ -138,15 +132,15 @@ function generateTooltips(notify) {
      */
     function getDetails(info) {
         let breadths = info[0].breadths;
-        if (breadths.length === 0) {
+        if (!breadths || breadths.length === 0) {
             breadths = "N/A"
         }
 
         let output = "";
         if (S_PREEXL) {
             output +=
-              "<b>Prerequisites:</b>" + info[0].prerequisites + "<br />" +
-              "<b>Exclusions:</b> " + info[0].exclusions + "<br />";
+                "<b>Prerequisites:</b>" + info[0].prerequisites + "<br />" +
+                "<b>Exclusions:</b> " + info[0].exclusions + "<br />";
         }
         if (S_BREADTH) {
             output = output + "<b>Breadths:</b> " + breadths + "<br />"
@@ -181,7 +175,7 @@ function generateTooltips(notify) {
             let title = $(this).data('code');
             if($(this).data('fetched') === 'true') return;
             if (!fetched.has(title)) {
-                getInfo(title)
+                buildWithinfo(title)
             }
             $(this).data('fetched', 'true')
         })
@@ -209,15 +203,16 @@ function generateTooltips(notify) {
             });
 
             chrome.runtime.sendMessage(
-              {
-                  msg: "ANL",
-                  eventCategory: 'Courses',
-                  eventAction: 'Tooltip',
-                  eventLabel: code
+                {
+                    msg: "ANL",
+                    eventCategory: 'Courses',
+                    eventAction: 'Tooltip',
+                    eventLabel: code
 
-              }, () => {
-              })
+                }, () => {
+                })
         } catch (err) {
+            console.error(err)
             $('.' + code).each(function () {
                 $(this).replaceWith($(this).data('title'));
             })
