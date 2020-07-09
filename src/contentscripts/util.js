@@ -20,7 +20,7 @@ function fetchResource(url){
 }
 
 function getInfo(code) {
-    return fetchResource(`https://nikel.ml/api/courses/search?code=${code}`)
+    return fetchResource(`https://nikel.ml/api/courses?code=${code}`)
 }
 
 

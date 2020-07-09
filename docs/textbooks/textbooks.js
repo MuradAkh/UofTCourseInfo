@@ -43,7 +43,7 @@ function fetcher(query) {
             json = JSON.parse(this.responseText);
         }
     };
-    xmlhttp.open("GET", `http://cobalt.murad-akh.ca/api/1.0/textbooks/${query}&key=bolBkU4DDtKmXbbr4j5b0m814s3RCcBm&limit=100`, false);
+    xmlhttp.open("GET", `https://nikel.ml/api/textbooks${query}`, false);
     xmlhttp.send();
     return json;
 }
