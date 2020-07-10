@@ -1,8 +1,6 @@
 
 # ![](https://i.imgur.com/7lorkX2.png)
 
-** This extension is currently not working due to outage of the Cobalt API **
-
 |Browser|Version|Rating|Users| Link |
 |--|--|--|--|--|
 |Chrome| [![](https://img.shields.io/chrome-web-store/v/jcbiiafabmhjeiepopiiajnkjhcdieme.svg?label=&style=for-the-badge)](https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme)  | [![](https://img.shields.io/chrome-web-store/rating/jcbiiafabmhjeiepopiiajnkjhcdieme.svg?label=&style=for-the-badge)](https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme) |  [![](https://img.shields.io/chrome-web-store/users/jcbiiafabmhjeiepopiiajnkjhcdieme.svg?label=&style=for-the-badge)](https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme) | [![](https://i.imgur.com/5xGgaWQ.png)](https://chrome.google.com/webstore/detail/uoft-course-info/jcbiiafabmhjeiepopiiajnkjhcdieme)
@@ -33,7 +31,9 @@ ANY FILES IN ./dependencies DIRECTORY ARE NOT COVERED BY THE PROJECT LICENSE
 
 ## Acknowledgements
 
-UofT Cobalt team for developing an awesome API!
+UofT Cobalt API - made creating the extension easy (Used in the earlier versions of the extension)
+
+UofT Nikel API - for brining back open data to uoft!
 
 Aniket Kali - web design help for settings, textbooks page, and about page
 
