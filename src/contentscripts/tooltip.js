@@ -139,8 +139,8 @@ function generateTooltips(notify) {
         let output = "";
         if (S_PREEXL) {
             output +=
-                "<b>Prerequisites:</b>" + info[0].prerequisites + "<br />" +
-                "<b>Exclusions:</b> " + info[0].exclusions + "<br />";
+                "<b>Prerequisites:</b> " + (info[0].prerequisites || "N/A") + "<br />" +
+                "<b>Exclusions:</b> " + (info[0].exclusions || "N/A") + "<br />";
         }
         if (S_BREADTH) {
             output = output + "<b>Breadths:</b> " + breadths + "<br />"
