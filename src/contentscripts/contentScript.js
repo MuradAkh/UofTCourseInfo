@@ -22,7 +22,8 @@ function findCourses() {
               banned = (items.illegal.replace(/\s/g, '')).split(',');
           }
 
-          const websites = ['google', 'youtube'].concat(banned);
+          // default blacklist plus user banned
+          const websites = ['duckduckgo', 'google', 'youtube'].concat(banned);
           const str = window.location.hostname;
           for (let i in websites) {
               if (str.includes(websites[i])) {
